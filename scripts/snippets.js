@@ -1,26 +1,15 @@
 // scripts/snippets.js
+
+// Single-click on the “Preview” button handles navigation.
+// (We no longer need double-click on the card—just click on the button.)
+
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('a.snippet-card').forEach(card => {
-    let clickCount = 0;
-    let timer;
-
-    card.addEventListener('click', e => {
-      clickCount++;
-      // Always prevent the default single‑click navigation
-      e.preventDefault();
-
-      if (clickCount === 1) {
-        // Reset count after 400ms
-        timer = setTimeout(() => {
-          clickCount = 0;
-        }, 400);
-      }
-
-      if (clickCount === 2) {
-        clearTimeout(timer);
-        // On second click, actually navigate
-        window.location.href = card.getAttribute('href');
-      }
+  document.querySelectorAll('.preview-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      // Prevent any bubbling
+      e.stopPropagation();
+      // Navigate
+      window.location.href = btn.getAttribute('href');
     });
   });
 });
