@@ -1,0 +1,2 @@
+echo images/*.exe >> .gitignore
+echo *.png >> .gitignore
