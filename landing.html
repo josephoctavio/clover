@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clover · Welcome</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .nav-buttons button {
+      margin-left: 0.5rem;
+    }
+    .hero {
+      padding: 4rem 1rem;
+      text-align: center;
+    }
+    .hero h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+    .hero p { color: #555; }
+
+    /* Modal backdrop */
+    #auth-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    /* Modal content */
+    #auth-modal .modal-content {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    /* Close button */
+    #auth-modal .close-btn {
+      position: absolute;
+      top: 0.5rem; right: 0.75rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+    /* Forms */
+    .form-wrapper { display: none; }
+    .form-wrapper.active { display: flex; flex-direction: column; }
+    .form-wrapper input, .form-wrapper button {
+      width: 100%; margin: 0.5rem 0; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;
+    }
+    .toggle-link {
+      text-align: center;
+      cursor: pointer;
+      color: blue;
+      text-decoration: underline;
+      margin-top: 1rem;
+    }
+    .oauth-buttons a {
+      display: block;
+      text-align: center;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      background: #eee;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="site-title">Clover</h1>
+    <div class="nav-buttons">
+      <button onclick="openAuth('login')">Log In</button>
+      <button onclick="openAuth('register')">Register</button>
+      <button onclick="location.href='upload.html'">Create Work</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h2>Welcome to Clover</h2>
+    <p>Your open‑source hub for web components &amp; templates.</p>
+  </section>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <span class="close-btn" aria-label="Close" onclick="closeAuth()">×</span>
+      <h2 id="form-title">Log In</h2>
+
+      <!-- Login Form -->
+      <div class="form-wrapper active" id="login-form">
+        <input type="email" id="login-email" placeholder="Email" required />
+        <input type="password" id="login-password" placeholder="Password" required />
+        <button onclick="submitLogin()">Log In</button>
+        <div class="oauth-buttons">
+          <a href="http://localhost:3000/api/auth/google">Sign in with Google</a>
+          <a href="http://localhost:3000/api/auth/github">Sign in with GitHub</a>
+        </div>
+        <div class="toggle-link" onclick="switchAuth('register')">
+          Don’t have an account? Create one now
+        </div>
+      </div>
+
+      <!-- Register Form -->
+      <div class="form-wrapper" id="register-form">
+        <input type="text" id="register-name" placeholder="Full Name" required />
+        <input type="email" id="register-email" placeholder="Email" required />
+        <input type="password" id="register-password" placeholder="Password" required />
+        <button onclick="submitRegister()">Create Account</button>
+        <div class="oauth-buttons">
+          <a href="http://localhost:3000/api/auth/google">Sign up with Google</a>
+          <a href="http://localhost:3000/api/auth/github">Sign up with GitHub</a>
+        </div>
+        <div class="toggle-link" onclick="switchAuth('login')">
+          Already have an account? Log in now
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content... -->
+
+  <script>
+    // Modal controls
+    const modal = document.getElementById('auth-modal');
+
+    function openAuth(mode) {
+      modal.style.display = 'flex';
+      switchAuth(mode);
+    }
+
+    function closeAuth() {
+      modal.style.display = 'none';
+    }
+
+    // Close on backdrop click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeAuth();
+    });
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAuth();
+    });
+
+    // Toggle between login/register
+    function switchAuth(to) {
+      const login = document.getElementById('login-form');
+      const register = document.getElementById('register-form');
+      const title = document.getElementById('form-title');
+      if (to === 'register') {
+        login.classList.remove('active');
+        register.classList.add('active');
+        title.innerText = 'Create Account';
+      } else {
+        register.classList.remove('active');
+        login.classList.add('active');
+        title.innerText = 'Log In';
+      }
+    }
+
+    // Submit handlers
+    async function submitLogin() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const res = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (data.token) {
+        localStorage.setItem('auth_token', data.token);
+        closeAuth();
+        window.location.reload();
+      } else {
+        alert('Login failed');
+      }
+    }
+
+    async function submitRegister() {
+      const name = document.getElementById('register-name').value;
+      const email = document.getElementById('register-email').value;
+      const password = document.getElementById('register-password').value;
+      const res = await fetch('http://localhost:3000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+      const data = await res.json();
+      if (data.token) {
+        localStorage.setItem('auth_token', data.token);
+        closeAuth();
+        window.location.reload();
+      } else {
+        alert('Registration failed');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  // Local auth
+  email        String  @unique
+  passwordHash String?
+
+  // OAuth
+  googleId String? @unique
+  githubId String? @unique
+
+  // Profile
+  name      String?
+  avatarUrl String?
+
+  // Relations
+  snippets     Snippet[]
+  templates    Template[]
+  likeDislikes LikeDislike[]
+  purchases    Purchase[]
+}
+
+model Snippet {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  code        String
+  liveDemoUrl String?
+  isPremium   Boolean  @default(false)
+  price       Float?
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  createdAt   DateTime @default(now())
+}
+
+model Template {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  previewImageUrl String?
+  zipUrl          String?
+  label           String   @default("Classic")
+  price           Float?
+  author          User     @relation(fields: [authorId], references: [id])
+  authorId        String
+  createdAt       DateTime @default(now())
+}
+
+model LikeDislike {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  targetType String
+  targetId   String
+  isLike     Boolean
+  reason     String?
+  createdAt  DateTime @default(now())
+}
+
+model Purchase {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  assetType String
+  assetId   String
+  amount    Float
+  currency  String
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+}
