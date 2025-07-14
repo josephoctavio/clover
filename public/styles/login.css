@@ -1,0 +1,467 @@
+/* login.css */
+
+/* Global styles */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #010201 0%, #151556 100%);
+  color: #fff;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Layout container */
+.split-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* LEFT: Login Card */
+.left-pane {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+}
+
+.login-card {
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  transform: translateY(-30px);
+}
+
+.login-card h1 {
+  font-family: 'Alexandria', sans-serif;
+  font-size: 2.2rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 1.5rem;
+}
+
+/* Benefits List */
+.benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  color: #d6d6e6;
+  font-family: 'Exo 2', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.benefits li {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+.benefits li i {
+  margin-right: 12px;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.benefits li:nth-child(1) i { color: #76f8a2; }
+.benefits li:nth-child(2) i { color: #facc15; }
+.benefits li:nth-child(3) i { color: #7dd3fc; }
+
+/* OAuth Buttons */
+.oauth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.oauth-btn.github,
+.oauth-btn.google-btn {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  max-width: 280px;
+  width: 100%;
+  margin: 0 auto 0.75rem auto;
+}
+
+.oauth-btn.github:hover,
+.oauth-btn.google-btn:hover {
+  background: #222;
+}
+
+.oauth-btn.github img {
+  height: 18px;
+  width: 18px;
+  filter: brightness(0) invert(1);
+}
+
+/* Google Button */
+.oauth-btn.google-btn {
+  background: #111;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  gap: 10px;
+  max-width: 280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.oauth-btn.google-btn:hover {
+  background: #222;
+}
+
+.oauth-btn.google-btn svg {
+  height: 18px;
+  width: 18px;
+}
+
+/* Divider Line */
+.divider {
+  margin: 1.5rem 0 1rem;
+  font-size: 0.9rem;
+  color: #999;
+  position: relative;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.divider::before { left: 0; }
+.divider::after  { right: 0; }
+
+/* Continue with Email */
+.email-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 280px;
+  margin: 1rem auto 0;
+}
+
+.email-btn {
+  background: #b315bf;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-height: 44px;
+  text-align: center;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.email-btn:hover {
+  background: #9e12a7;
+}
+
+/* RIGHT: Sliding Pane */
+.right-pane {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Panels positioned absolutely but height auto */
+.mascot-box,
+.email-form-box {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateX(0) translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  height: auto;
+}
+
+/* Mascot initial */
+.right-pane.form-visible .mascot-box {
+  transform: scale(0.94) translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* Form initial: off to right */
+.email-form-box {
+  flex-direction: column;
+  gap: 1rem;
+  transform: translateX(100%) translateY(-50%);
+  opacity: 0;
+}
+
+/* Toggle panels */
+.right-pane.form-visible .mascot-box {
+  transform: scale(0.94) translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.right-pane.form-visible .email-form-box {
+  transform: translateX(0) translateY(-50%);
+  opacity: 1;
+}
+
+/* Email Form Box (Modern Dev UI) */
+.email-form-box {
+  background: #0c0c2d;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 20px rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  max-width: 360px;
+  width: 90%;
+}
+
+/* Input layout wrapper */
+.input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Side by side on desktop */
+@media (min-width: 768px) {
+  .input-row {
+    flex-direction: row;
+  }
+}
+
+/* Form inputs */
+#login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#login-form input {
+  flex: none;
+  padding: 0.75rem 1rem;
+  line-height: 1.4;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #14143d;
+  color: #fff;
+  font-size: 0.95rem;
+  transition: border 0.25s ease, box-shadow 0.25s ease;
+}
+
+#login-form input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+#login-form input:focus,
+#login-form input:not(:placeholder-shown) {
+  border: 1px solid #6e1b60;
+  box-shadow: 0 0 0 2px rgba(179, 21, 191, 0.3);
+  outline: none;
+}
+
+/* Submit button */
+#login-form button[type="submit"] {
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #b315bf;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+#login-form button[type="submit"]:hover {
+  background-color: #9e12a7;
+}
+
+/* Error Message */
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: -0.25rem;
+}
+
+/* Footer links */
+.terms,
+.footer-link {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 1.25rem;
+}
+
+.terms a,
+.footer-link a {
+  color: #f8e7f8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .split-container {
+    flex-direction: column;
+  }
+  .left-pane,
+  .right-pane {
+    width: 100%;
+    padding: 1.5rem;
+  }
+  .mascot-box img {
+    max-width: 240px;
+  }
+}
+
+/* Icon Styling */
+h1 i {
+  margin-right: 10px;
+  font-size: 2rem;
+  vertical-align: middle;
+}
+
+.icon-green {  color: #00ff7f; }
+.icon-yellow { color: #FFD700; }
+.icon-blue   { color: #3daeff; }
+
+/* Mascot image sizing */
+.mascot-box img {
+  max-width: 500px;
+  width: 90%;
+  height: auto;
+}
+.form-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+.form-subtext {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.forgot-password {
+  font-size: 0.8rem;
+  color: #f8e7f8;
+  text-decoration: underline;
+  align-self: flex-end;
+  margin-top: 0.25rem;
+}
+
+.icon-purple {
+  color: #b315bf;
+}
+.email-form-box {
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-group i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.form-group input {
+  padding-left: 2.25rem; /* Leaves room for the icon */
+}
+input {
+  background-color: #14143d;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  outline: none;
+}
+.form-group {
+  margin-bottom: 1rem; /* or 1.25rem for more space */
+}
+#signup-form button[type="submit"] {
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #b315bf;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+#signup-form button[type="submit"]:hover {
+  background-color: #9e12a7;
+}
+.signup-btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#signup-form button[type="submit"] {
+  width: 100%;
+  max-width: 280px;
+}

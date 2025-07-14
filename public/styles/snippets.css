@@ -1,0 +1,92 @@
+/* SNIPPETS GRID (keep your existing responsive grid setup) */
+#snippets-grid {
+  display: grid;
+  gap: 1.5rem;
+  padding: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  #snippets-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  #snippets-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* SNIPPET CARD */
+.snippet-card {
+  position: relative;            /* for absolute children */
+  background: #111;
+  border-radius: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  min-height: 280px;
+}
+
+.snippet-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Live-preview area */
+.snippet-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+/* PREVIEW BUTTON – TRANSPARENT BLACK BACKGROUND */
+.preview-button {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 1px solid transparent;      /* thinner base border */
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.2s ease;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.snippet-card:hover .preview-button {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* THIN NEON PURPLE GLOW ON FOCUS/ACTIVE */
+.preview-button:focus,
+.preview-button:active {
+  outline: none;
+  box-shadow: 
+    0 0 4px rgba(191, 0, 255, 0.7),   /* tight purple glow */
+    0 0 8px rgba(191, 0, 255, 0.5);   /* outer softer glow */
+}
+
+
+/* PUBLISHER NAME */
+/* centered at the bottom of the card */
+.publisher {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin: 0;
+  pointer-events: none;
+}

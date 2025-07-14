@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Component Preview – Clover</title>
+
+  <!-- Highlight.js Theme -->
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai-sublime.min.css"
+/>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+ <link
+  href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+  rel="stylesheet"
+/>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/component-preview.css" />
+
+  <!-- Highlight.js Core -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"
+    defer
+  ></script>
+  <!-- Optional Languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js" defer></script>
+
+  <!-- Component Logic -->
+  <script src="scripts/component-preview.js" defer></script>
+</head>
+<body>
+<header>
+  <div class="left-header">
+    <h1 class="site-title">
+      <a href="index.html">Clover</a>
+    </h1>
+  </div>
+</header>
+
+<div class="container">
+  <div class="preview-container">
+    <!-- Preview Box -->
+    <div class="live-preview" id="preview-box"></div>
+
+    <!-- Code Tabs + Output -->
+    <div class="code-section">
+      <!-- Pill-style tab switch and author -->
+      <div class="code-tabs">
+  <div class="tab-switch">
+    <div class="tab-slider" id="tab-slider"></div>
+    <button id="html-tab" class="tab-btn active">HTML</button>
+    <button id="css-tab" class="tab-btn">CSS</button>
+  </div>
+<div id="author-info" class="author-info">Loading...</div>
+
+</div>
+
+      <!-- Code output -->
+      <pre><code id="code-box" class="hljs language-html"></code></pre>
+    </div>
+  </div>
+
+  <!-- Meta Section -->
+  <div class="meta-section">
+    <div id="metadata" class="metadata"></div>
+    <div id="description" class="description"></div>
+  </div>
+
+  <!-- Back Button -->
+  <div class="back-button-wrapper">
+    <a href="index.html" class="back-button">← Back to Snippets</a>
+  </div>
+</div>
+
+  <!-- Highlight init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      hljs.highlightAll();
+    });
+  </script>
+</body>
+</html>

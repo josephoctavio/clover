@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clover – Explore</title>
+  <link rel="stylesheet" href="styles/snippets.css" />
+  <link rel="stylesheet" href="explore.css" />
+  <style>
+    .explore-header {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--clover-violet, #837484);
+      text-transform: capitalize;
+    }
+
+    .no-results {
+      text-align: center;
+      color: #999;
+      font-size: 1.2rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="explore-container" style="padding: 2rem;">
+    <h1 class="explore-header" id="category-title">Explore</h1>
+
+    <div id="snippet-grid" class="snippet-grid">
+      <!-- Snippet cards will be injected here -->
+    </div>
+
+    <div id="no-results" class="no-results" style="display: none;">
+      No snippets found for this category.
+    </div>
+  </main>
+
+  <script src="scripts/explore.js"></script>
+</body>
+</html>
