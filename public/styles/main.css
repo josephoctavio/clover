@@ -18,12 +18,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(
-    to bottom,
-    #010201 0%,       /* Clover Black starts */
-    #010201 25%,      /* Hold Clover Black for the first quarter */
-    #010130 100%      /* Then fade to Clover Indigo */
-  );
+background: #0b0b22;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: 100% 100vh; /* Lock gradient to 1 screen height */

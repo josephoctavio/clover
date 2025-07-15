@@ -46,16 +46,17 @@
 
         <div class="divider">or</div>
 
-        <div class="email-wrapper">
-         <button class="email-btn" id="show-signup-form">Sign up with Email</button>
-        </div>
+<div class="email-wrapper">
+  <button class="email-btn" id="show-login-form">Log in with Email</button>
+</div>
 
         <p class="terms">
           By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
         </p>
-        <p class="footer-link">
-          Already have an account? <a href="#" id="switch-to-signin">Log in</a>
-        </p>
+<p class="footer-link">
+  Don’t have an account? <a href="#" id="switch-to-signin">Sign up</a>
+</p>
+
 
       </div>
     </div>
@@ -75,6 +76,7 @@
   <p class="form-subtext">Access exclusive components and collaborate with the community</p>
 
   <form id="login-form">
+  
     <div class="form-group">
       <input type="email" id="email" placeholder="Email" required />
     </div>
@@ -123,72 +125,6 @@
   </div>
 </form>
 </div>
-
-
-
-
-<script>
-  const rightPane = document.querySelector('.right-pane');
-  const mascotBox       = document.getElementById('mascot-box');
-  const signupFormBox   = document.getElementById('signup-form');
-  const signinFormBox   = document.getElementById('signin-form');
-
-  const emailToggleBtn = document.getElementById('show-signup-form');
-  const footerLink      = document.getElementById('switch-to-signin');
-
-  let currentForm = null;
-
-  function showForm(form) {
-    currentForm = form;
-    rightPane.classList.add('form-visible');
-    mascotBox.style.opacity = '0';
-
-    // Hide both first
-    signupFormBox.style.transform = 'translateX(100%) translateY(-50%)';
-    signinFormBox.style.transform = 'translateX(100%) translateY(-50%)';
-    signupFormBox.style.opacity = '0';
-    signinFormBox.style.opacity = '0';
-
-    if (form === 'signup') {
-      signupFormBox.style.transform = 'translateX(0) translateY(-50%)';
-      signupFormBox.style.opacity = '1';
-      emailToggleBtn.textContent = 'Cancel';
-    } else {
-      signinFormBox.style.transform = 'translateX(0) translateY(-50%)';
-      signinFormBox.style.opacity = '1';
-      emailToggleBtn.textContent = 'Cancel';
-    }
-  }
-
-  function hideForms() {
-    currentForm = null;
-    rightPane.classList.remove('form-visible');
-    mascotBox.style.opacity = '1';
-    signupFormBox.style.opacity = '0';
-    signinFormBox.style.opacity = '0';
-    emailToggleBtn.textContent = 'Sign up with Email';
-  }
-
-  // Email (Sign Up) button toggles sign-up form
-  emailToggleBtn.addEventListener('click', () => {
-    if (currentForm === 'signup') {
-      hideForms();
-    } else {
-      showForm('signup');
-    }
-  });
-
-  // Footer link toggles sign-in form
-  footerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    if (currentForm === 'signin') {
-      hideForms();
-    } else {
-      showForm('signin');
-    }
-  });
-</script>
-
+<script src="scripts/login.js"></script>
 </body>
 </html>

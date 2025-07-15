@@ -301,7 +301,7 @@
   <div class="accordion-header">Asset Type</div>
   <div class="accordion-body">
     <label><input type="checkbox" value="free"> Free</label>
-    <label><input type="checkbox" value="premium"> Premium</label>
+    <label><input type="checkbox" value="premium"> %%</label>
   </div>
 </div>
 
@@ -376,23 +376,77 @@
     </div>
   </div>
 
-  <!-- Main Scripts -->
-   <script>
+  <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const createBtn = document.querySelector('.btn'); // or '.create-btn' if you rename it
-    const token = localStorage.getItem('cloverToken');
+    const rightPane = document.querySelector('.right-pane');
+    const mascotBox = document.getElementById('mascot-box');
+    const signupFormBox = document.getElementById('signup-form');
+    const signinFormBox = document.getElementById('signin-form');
 
-    if (createBtn) {
-      createBtn.addEventListener('click', () => {
-        if (!token) {
-          // Not logged in
-          window.location.href = '/login.html';
-        } else {
-          // Logged in
-          window.location.href = '/upload.html'; // or open upload modal
-        }
-      });
+    const emailToggleBtn = document.getElementById('show-signup-form');
+    const footerLink = document.getElementById('switch-to-signin');
+
+    let currentForm = null;
+
+    function showForm(form) {
+      currentForm = form;
+      rightPane.classList.add('form-visible');
+      mascotBox.style.opacity = '0';
+
+      // Reset all form states
+      signupFormBox.classList.remove('active');
+      signinFormBox.classList.remove('active');
+
+      if (form === 'signup') {
+        signupFormBox.classList.add('active');
+        emailToggleBtn.textContent = 'Cancel';
+        footerLink.textContent = "Already have an account? Log in";
+        footerLink.id = 'switch-to-signin';
+      } else {
+        signinFormBox.classList.add('active');
+        emailToggleBtn.textContent = 'Cancel';
+        footerLink.textContent = "Don't have an account? Sign up";
+        footerLink.id = 'switch-to-signup';
+      }
     }
+
+    function hideForms() {
+      currentForm = null;
+      rightPane.classList.remove('form-visible');
+      mascotBox.style.opacity = '1';
+      signupFormBox.classList.remove('active');
+      signinFormBox.classList.remove('active');
+      emailToggleBtn.textContent = 'Sign up with Email';
+      footerLink.textContent = "Already have an account? Log in";
+      footerLink.id = 'switch-to-signin';
+    }
+
+    // Email sign-up toggle
+    emailToggleBtn.addEventListener('click', () => {
+      if (currentForm === 'signup') {
+        hideForms();
+      } else {
+        showForm('signup');
+      }
+    });
+
+    // Footer link toggle
+    footerLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentForm === 'signin') {
+        showForm('signup');
+      } else {
+        showForm('signin');
+      }
+    });
+
+    // Mascot animation fix
+    const mascotImage = document.querySelector('.mascot-box img');
+    mascotImage.addEventListener('click', () => {
+      mascotImage.classList.remove('clicked');
+      void mascotImage.offsetWidth;
+      mascotImage.classList.add('clicked');
+    });
   });
 </script>
 
