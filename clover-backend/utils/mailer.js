@@ -1,5 +1,12 @@
 // utils/mailer.js
+
 const nodemailer = require('nodemailer');
+console.log('📧 Using email config:', {
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  user: process.env.EMAIL_USER
+});
+
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,

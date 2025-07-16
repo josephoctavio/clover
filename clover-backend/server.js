@@ -133,7 +133,6 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// POST /api/forgot-password
 app.post('/api/forgot-password', async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'Email is required' });
@@ -143,19 +142,25 @@ app.post('/api/forgot-password', async (req, res) => {
     if (!user) return res.status(404).json({ error: 'No user found with that email' });
 
     // Generate 6-digit reset token & set expiry (1 hour)
-const resetToken = Math.floor(100000 + Math.random() * 900000).toString();
-user.resetToken = resetToken;
-user.resetTokenExpiry = Date.now() + 60 * 60 * 1000;
-await user.save();
+    const resetToken = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    user.tokens = {
+      reset: {
+        code: resetToken,
+        expires: Date.now() + 60 * 60 * 1000
+      }
+    };
 
-    // Send password‑reset email
-    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+    await user.save();
+
+    // Send email
     await sendMail({
       to: user.email,
-      subject: 'Clover Password Reset',
+      subject: 'Your Clover Reset Code',
       html: `
-        <p>You requested a password reset. Click <a href="${resetLink}">here</a> to choose a new password.</p>
-        <p>This link expires in 1 hour.</p>
+        <p>Your password reset code is:</p>
+        <h2>${resetToken}</h2>
+        <p>It expires in 1 hour. If you didn’t request this, you can ignore it.</p>
       `
     });
 
@@ -165,29 +170,33 @@ await user.save();
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-// POST /api/reset-password
+
+// POST /api/reset-password — using 6-digit code
 app.post('/api/reset-password', async (req, res) => {
-  const { token, newPassword } = req.body;
-  if (!token || !newPassword) {
-    return res.status(400).json({ error: 'Token and new password are required' });
+  const { email, code, newPassword } = req.body;
+
+  if (!email || !code || !newPassword) {
+    return res.status(400).json({ error: 'Email, code, and new password are required' });
   }
 
   try {
-    const user = await User.findOne({
-      resetToken: token,
-      resetTokenExpiry: { $gt: Date.now() }
-    });
-    if (!user) {
-      return res.status(400).json({ error: 'Invalid or expired token' });
+    const user = await User.findOne({ email });
+
+    if (
+      !user ||
+      !user.tokens?.reset ||
+      user.tokens.reset.code !== code ||
+      user.tokens.reset.expires < Date.now()
+    ) {
+      return res.status(400).json({ error: 'Invalid or expired code' });
     }
 
-    // Hash the new password and clear reset fields
-    user.password           = await bcrypt.hash(newPassword, 10);
-    user.resetToken         = undefined;
-    user.resetTokenExpiry   = undefined;
+    // Hash new password and clear the reset token
+    user.password = await bcrypt.hash(newPassword, 10);
+    user.tokens.reset = undefined;
     await user.save();
 
-    res.json({ message: 'Password reset successfully' });
+    return res.json({ message: 'Password reset successfully 🌱' });
   } catch (err) {
     console.error('Reset password error:', err);
     res.status(500).json({ error: 'Internal server error' });
