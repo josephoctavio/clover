@@ -544,7 +544,7 @@ a,
 }
 
 
-/* Login Button (Uiverse style) */
+/* Login Button (my dreaming style) */
 .login-btn {
   cursor: pointer;
   padding: 0.6em 0.9em;
@@ -1538,4 +1538,73 @@ iframe {
 /* When fading out before change */
 .input.fade-out {
   opacity: 0.3;
+}
+/* Container */
+.user-menu {
+  position: relative;
+  display: inline-block;
+  font-family: Poppins, sans-serif;
+}
+
+/* Button (username) */
+.username-box {
+  display: flex;
+  align-items: center;
+  background-color: #010201;
+  border: 1px solid white; /* Reduced border */
+  border-radius: 10px;
+  padding: 8px 14px;
+  color: white;
+  cursor: pointer;
+}
+
+.username-box:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Caret */
+.dropdown-caret {
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #010201;
+  border: 1px solid white;
+  border-radius: 10px;
+  margin-top: 6px;
+  padding: 8px;
+  z-index: 999;
+  min-width: 180px;  /* Wider horizontally */
+  max-height: 100px; /* Shorter vertically */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+}
+
+/* Show dropdown when open */
+.user-menu.open .dropdown-content {
+  display: block;
+}
+
+/* Button inside dropdown */
+.dropdown-content button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  padding: 8px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-content button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }

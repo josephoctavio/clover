@@ -1,0 +1,19 @@
+/* styles/verify.css */
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  background-color: #010201;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#verification-container {
+  text-align: center;
+}
+
+#status-message {
+  font-size: 1.6rem;
+}

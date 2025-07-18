@@ -289,12 +289,103 @@ document.addE
 
 
 
+window.addEventListener('DOMContentLoaded', () => {
+  const joinBtn = document.getElementById('join-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+  const isLoggedIn = localStorage.getItem('cloverUser');
 
-ventListener('DOMContentLoaded', () => {
-  const token = localStorage.getItem('cloverToken');
-  const createBtn = document.querySelector('.create-btn');
+  if (isLoggedIn) {
+    if (joinBtn) joinBtn.style.display = 'none';
+    if (logoutBtn) logoutBtn.style.display = 'inline-block';
+  } else {
+    if (joinBtn) joinBtn.style.display = 'inline-block';
+    if (logoutBtn) logoutBtn.style.display = 'none';
+  }
 
-  if (token && createBtn) {
-    createBtn.style.display = 'inline-block';
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('cloverUser');
+      window.location.href = 'index.html';
+    });
+  }
+});
+window.addEventListener('DOMContentLoaded', () => {
+  const joinBtn = document.getElementById('join-btn');
+  const userMenuContainer = document.getElementById('user-menu-container');
+
+  const isLoggedIn = localStorage.getItem('cloverUser');
+  const username   = localStorage.getItem('username');
+console.log('🛠️ user-menu init:', {
+  isLoggedIn: localStorage.getItem('cloverUser'),
+  username: localStorage.getItem('username'),
+});
+
+  if (isLoggedIn && username) {
+    // hide join button
+    if (joinBtn) joinBtn.style.display = 'none';
+
+userMenuContainer.innerHTML = `
+  <div class="user-menu" id="user-menu">
+    <div class="user-menu-box">
+      <div class="username-box">
+        <span class="dropdown-toggle">${username}</span>
+        <span class="dropdown-caret" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none"
+               xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 7L10 12L15 7" stroke="white" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+      <div class="dropdown-content" id="dropdown-content">
+        <button id="logout-btn">Logout</button>
+      </div>
+    </div>
+  </div>
+`;
+
+
+// dropdown toggle logic
+const userMenu      = document.getElementById('user-menu');
+const dropdownPanel = document.getElementById('dropdown-content');
+
+// Toggle dropdown on click
+userMenu.addEventListener('click', (e) => {
+  e.stopPropagation(); // Prevent window click event from firing
+  const isOpen = dropdownPanel.style.display === 'block';
+
+  // Toggle dropdown visibility
+  dropdownPanel.style.display = isOpen ? 'none' : 'block';
+
+  // Toggle `.open` class for caret rotation
+  userMenu.classList.toggle('open', !isOpen);
+});
+
+// Close dropdown when clicking outside
+window.addEventListener('click', (e) => {
+  if (!userMenu.contains(e.target)) {
+    dropdownPanel.style.display = 'none';
+    userMenu.classList.remove('open'); // Reset caret rotation
+  }
+});
+
+
+    // logout logic
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('cloverUser');
+      localStorage.removeItem('username');
+      window.location.href = 'index.html';
+    });
+
+    // click outside to close
+    document.addEventListener('click', e => {
+      if (!userMenu.contains(e.target)) {
+        dropdownPanel.style.display = 'none';
+      }
+    });
+  } else {
+    // not logged in → ensure logout menu is hidden
+    if (userMenuContainer) userMenuContainer.innerHTML = '';
+    if (joinBtn) joinBtn.style.display = 'inline-block';
   }
 });

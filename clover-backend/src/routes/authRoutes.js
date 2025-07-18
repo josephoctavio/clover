@@ -182,3 +182,14 @@ router.post('/forgot-password', async (req, res) => {
 });
 
 module.exports = router;
+// Start GitHub auth
+router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
+
+// Callback from GitHub
+router.get('/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login.html' }),
+  (req, res) => {
+    res.redirect('/index.html'); // or dashboard.html
+  }
+);
+// End GitHub auth

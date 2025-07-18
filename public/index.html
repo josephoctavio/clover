@@ -161,11 +161,14 @@
         </div>
       </div>
     </div>
-
 <div class="header-buttons">
-  <button class="create-btn" style="display: none;">Create</button>
-  <a href="login.html" class="login-btn">Join the Community</a>
+  <!-- Join button (shown only when logged out) -->
+  <a href="login.html" class="login-btn" id="join-btn">Join the Community</a>
+
+  <!-- JS will inject the user‑menu (username + dropdown) here when logged in -->
+  <div id="user-menu-container"></div>
 </div>
+
 
 
     </div>
@@ -422,33 +425,46 @@
     }
 
     // Email sign-up toggle
-    emailToggleBtn.addEventListener('click', () => {
-      if (currentForm === 'signup') {
-        hideForms();
-      } else {
-        showForm('signup');
-      }
-    });
-
-    // Footer link toggle
-    footerLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (currentForm === 'signin') {
-        showForm('signup');
-      } else {
-        showForm('signin');
-      }
-    });
-
-    // Mascot animation fix
-    const mascotImage = document.querySelector('.mascot-box img');
-    mascotImage.addEventListener('click', () => {
-      mascotImage.classList.remove('clicked');
-      void mascotImage.offsetWidth;
-      mascotImage.classList.add('clicked');
-    });
+if (emailToggleBtn) {
+  emailToggleBtn.addEventListener('click', function() {
+    if (currentForm === 'signup' || currentForm === 'signin') {
+      hideForms();
+    } else {
+      showForm('signup');
+    }
   });
+}
+
+if (footerLink) {
+  footerLink.addEventListener('click', function() {
+    if (currentForm === 'signup') {
+      showForm('signin');
+    } else {
+      showForm('signup');
+    }
+  });
+}
+
+const mascotImage = document.querySelector('.mascot-box img');
+if (mascotImage) {
+  mascotImage.addEventListener('click', function() {
+    hideForms();
+  });
+}
+
+    });
+
 </script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  if (token) {
+    localStorage.setItem('cloverToken', token);
+    // Optional: you can also update the UI to say "You're logged in"
+    window.history.replaceState({}, '', 'index.html'); // clean URL
+  }
+</script>
+
 
   <script src="scripts/main.js"></script>
   <script src="scripts/snippets.js" defer></script>

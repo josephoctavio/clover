@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
   googleId: { type: String },
   githubId: { type: String },
 
+  
+  verificationToken: { type: String }, 
   isVerified: { type: Boolean, default: false },
 
   // Grouped token fields:
