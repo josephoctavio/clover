@@ -1,0 +1,174 @@
+/* forgot.css */
+
+body {
+  background: #0b0b22;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.forgot-container {
+  width: 100%;
+  max-width: 360px;
+  padding: 1rem;
+}
+
+.forgot-form {
+  background: #0c0c2d;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.forgot-form h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.forgot-form input {
+  width: 90%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background: #14143d;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.95rem;
+  transition: border 0.25s, box-shadow 0.25s;
+}
+
+.forgot-form input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255,255,255,0.3);
+}
+
+.forgot-form input.valid {
+  border: 2px solid #28a745;
+}
+
+.forgot-form input.invalid {
+  border: 2px solid #dc3545;
+}
+
+.forgot-form button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+  background: #b315bf;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.forgot-form button:hover {
+  background: #9e12a7;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.875rem;
+  height: 1.25rem;
+  margin: 0 0 0.5rem;
+}
+.back-home-global {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  text-align: center;
+}
+
+.back-home-btn {
+  display: inline-block;
+  font-size: 0.95rem;
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.back-home-btn i {
+  margin-right: 0.4rem;
+}
+
+.back-home-btn:hover {
+  color: #fff;
+}
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* wrap inputs & toggle in relative container */
+.input-wrapper {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+/* give room on the right for the toggle */
+.input-wrapper input {
+  width: 100%;
+  padding-right: 50px;
+}
+
+/* match your login page’s span styling */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.toggle-password:hover {
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+}
+/* ---------- Toast / Alert Styles ---------- */
+#toast-container {
+  position: relative;
+  z-index: 1000;
+}
+.toast {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  min-width: 200px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
+}
+.toast--success {
+  background: #e6ffed;
+  color: #2d662d;
+}
+.toast--error {
+  background: #ffe6e6;
+  color: #662d2d;
+}
+.toast.fade-out {
+  opacity: 0;
+}
+

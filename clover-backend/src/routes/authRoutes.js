@@ -1,8 +1,9 @@
 // C:\Users\DELL\Desktop\clover\clover-backend\src\routes\authRoutes.js
 const express      = require('express');
+const passport = require('passport');
 const bcrypt       = require('bcryptjs');
 const jwt          = require('jsonwebtoken');
-const User         = require('../models/User');
+ const User         = require('../../models/User');
 const authMiddleware = require('../middleware/authMiddleware');
 const sendMail     = require('../../utils/mailer');
 
@@ -65,40 +66,39 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// @route   POST /api/auth/verify
-// @desc    Verify a user's 6‑digit email code
+// @route   POST /api/auth/reset-password
+// @desc    Reset a user's password using the 6‑digit code
 router.post('/verify', async (req, res) => {
   const { email, code } = req.body;
+  console.log('🔍 Incoming verify request:', { email, code });
 
   try {
-    const user = await User.findOne({ email });
-    if (!user || !user.tokens?.verification) {
-      return res.status(400).json({ message: 'Invalid email or code' });
+    const user = await User.findOne({
+      email,
+      "tokens.reset.code": code
+    });
+
+    console.log('✅ User found?', !!user);
+
+    if (!user) {
+      return res.status(400).json({ error: "Invalid email or code" });
     }
 
-    const { code: savedCode, expires } = user.tokens.verification;
-
-    // 1. Check code match
-    if (savedCode !== code) {
-      return res.status(400).json({ message: 'Invalid code' });
+    console.log('🕒 Checking code expiration...');
+    if (user.tokens.reset.expires < Date.now()) {
+      return res.status(400).json({ error: "Reset code has expired" });
     }
 
-    // 2. Check expiry
-    if (Date.now() > expires) {
-      return res.status(400).json({ message: 'Code expired' });
-    }
+    console.log('✅ Code verified');
+    res.json({ message: "Code verified" });
 
-    // 3. Mark verified & clear token
-    user.isVerified = true;
-    user.tokens.verification = undefined;
-    await user.save();
-
-    return res.json({ message: 'Email verified successfully ✅' });
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Server error' });
+    console.error("❌ Code verification error:", err);
+    res.status(500).json({ error: "Server error during verification" });
   }
 });
+
+
 
 // @route   POST /api/auth/login
 router.post('/login', async (req, res) => {
@@ -183,11 +183,11 @@ router.post('/forgot-password', async (req, res) => {
 
 module.exports = router;
 // Start GitHub auth
-router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
+ router.get('/github', passport.authenticate('github', { scope: ['user:email'], session: false }));
+
 
 // Callback from GitHub
-router.get('/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login.html' }),
+router.get('/github/callback',   passport.authenticate('github', { failureRedirect: '/login.html', session: false }),
   (req, res) => {
     res.redirect('/index.html'); // or dashboard.html
   }

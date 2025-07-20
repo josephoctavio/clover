@@ -2,23 +2,34 @@
 const mongoose = require('mongoose');
 
 const tokenSubSchema = new mongoose.Schema({
-  code:   { type: String },
-  expires:{ type: Date   }
+  code:    { type: String, required: true },
+  expires: { type: Date,   required: true }
 }, { _id: false });
 
 const userSchema = new mongoose.Schema({
-  username: { type: String },
-  email:    { type: String, required: true, unique: true },
-  password: { type: String }, // hashed password
+  username: {
+    type:     String,
+    required: true,
+    unique:   true,
+    minlength: 5,
+    maxlength: 15,
+    match:    /^[A-Za-z0-9_-]+$/  // letters, numbers, underscore, hyphen
+  },
+  email: {
+    type:     String,
+    required: true,
+    unique:   true
+  },
+  password: {
+    type:     String,
+    required: true  // we enforce password strength now
+  },
 
   googleId: { type: String },
   githubId: { type: String },
 
-  
-  verificationToken: { type: String }, 
   isVerified: { type: Boolean, default: false },
 
-  // Grouped token fields:
   tokens: {
     verification: tokenSubSchema,  // { code: '123456', expires: Date }
     reset:        tokenSubSchema   // { code: '654321', expires: Date }
@@ -27,5 +38,5 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-// Export the model
+
 module.exports = mongoose.model('User', userSchema);

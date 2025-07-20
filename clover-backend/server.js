@@ -9,7 +9,7 @@ require('./auth/passport'); // ✅ Import passport strategies
 const sendMail = require('./utils/mailer'); // ✅ Only once!
 console.log('📦 sendMail imported as:', sendMail); // ✅ Good check
 const User     = require('./models/User'); // ✅ Import User model
-
+const rateLimit = require('express-rate-limit');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -18,8 +18,31 @@ const GitHubStrategy = require('passport-github2').Strategy;
 const fetch = require('node-fetch');
 const crypto = require('crypto');
 
+
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const authRoutes = require('./src/routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
 const PORT = process.env.PORT || 5000;
+
+
+ //Passwordpolicy: ≥8 chars, letters & numbers
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,25}$/;
+
+// Rate limiters
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 15, // 15 attempts
+  message: { error: 'Too many login attempts. Try again later.' }
+});
+const codeLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 15, // 15 attempts
+  message: { error: 'Too many code requests. Try again later.' }
+});
 
 
 // — Connect to MongoDB
@@ -31,6 +54,12 @@ mongoose.connect(process.env.MONGO_URI)
 app.use(cors());
 app.use(express.json());
 
+
+// Apply rate limits
+app.post('/api/login', loginLimiter);
+app.post('/api/forgot-password', codeLimiter);
+app.post('/api/verify', codeLimiter);
+app.post('/api/reset-password', codeLimiter);
 // Session middleware (so Passport can persist login)
 
 app.use(passport.initialize());
@@ -39,6 +68,16 @@ app.use(passport.initialize());
 app.post('/api/signup', async (req, res) => {
   console.log('⚡️  POST /api/signup', req.body);
   const { username, email, password } = req.body;
+   // Validate inputs
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: 'Username, email, and password are required' });
+  }
+ if (!passwordRegex.test(password)) {
+  return res.status(400).json({
+    error: 'Password must be 8–25 characters, only letters & numbers, and include at least one letter and one number'
+  });
+}
+
   if (!email || !password) {
     return res.status(400).json({ error: 'Email and password are required' });
   }
@@ -51,18 +90,22 @@ app.post('/api/signup', async (req, res) => {
     // 2. Hash the password
 const hashed = await bcrypt.hash(password, 10);
 
-// ✅ 3. Define token and link
-const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
-const verificationUrl = `http://localhost:3000/verify?token=${verificationToken}`;
-console.log('🔗 [DEV] Verification Link:', verificationUrl);
+// ✅ 3. Generate code & build front‑end verify link
+ const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+ // FRONTEND_URL should be e.g. http://localhost:8080
+ const verificationUrl = `${process.env.FRONTEND_URL}/verify.html?token=${verificationToken}`;
+ console.log('🔗 [DEV] Verification Link:', verificationUrl);
 
-// 4. Create the user
-const user = await User.create({
-  username,
-  email,
-  password: hashed,
-  verificationToken
-});
+// 4. Create the user (capture the returned document)
+     const user = await User.create({
+       username,
+       email,
+       password: hashed,
+      // store under tokens.verification
+      tokens: {
+        verification: { code: verificationToken, expires: Date.now() + 15 * 60 * 1000 }
+      }
+     });
 
     // 5. Attempt to send verification email (errors won’t stop signup)
    (async () => {
@@ -90,13 +133,13 @@ const user = await User.create({
 });
 
 // — LOGIN ROUTE
+// (rate-limited by loginLimiter above)
 app.post('/api/login', async (req, res) => {
   console.log('⚡️  POST /api/login', req.body);
   const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required' });
-  }
+
   try {
+    // Find user
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
@@ -106,6 +149,11 @@ app.post('/api/login', async (req, res) => {
         .status(401)
         .json({ error: 'No local password set—please log in with Google or GitHub' });
     }
+     // Block unverified
+    if (!user.isVerified) {
+      return res.status(403).json({ error: 'Please verify your email before logging in' });  
+     }
+    // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid email or password' });
@@ -145,7 +193,8 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
-
+// — FORGOT-PASSWORD
+// (rate-limited by codeLimiter above)
 app.post('/api/forgot-password', async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'Email is required' });
@@ -185,13 +234,20 @@ app.post('/api/forgot-password', async (req, res) => {
 });
 
 // POST /api/reset-password — using 6-digit code
+// (rate-limited by codeLimiter above)
 app.post('/api/reset-password', async (req, res) => {
   const { email, code, newPassword } = req.body;
 
-  if (!email || !code || !newPassword) {
+    if (!email || !code || !newPassword) {
     return res.status(400).json({ error: 'Email, code, and new password are required' });
   }
+if (!passwordRegex.test(newPassword)) {
+  return res.status(400).json({
+    error: 'Password must be 8–25 characters, only letters & numbers, and include at least one letter and one number'
+  });
+}
 
+  
   try {
     const user = await User.findOne({ email });
 
@@ -227,30 +283,33 @@ app.delete('/api/account', authenticateToken, async (req, res) => {
   }
 });
 
+// GET /api/verify
 app.get('/api/verify', async (req, res) => {
   try {
-    const token = String(req.query.token || '');
-    if (!token) {
-      return res.status(400).json({ error: 'Token is required' });
+    const code = String(req.query.token || '');
+    if (!code) {
+      return res.status(400).json({ error: 'Verification code is required' });
     }
 
-    const user = await User.findOne({ verificationToken: token });
-    if (!user) {
-      return res.status(400).json({ error: 'Invalid or expired token' });
+    // Look up by nested tokens.verification.code
+    const user = await User.findOne({ 'tokens.verification.code': code });
+    if (!user || user.tokens.verification.expires < Date.now()) {
+      return res.status(400).json({ error: 'Invalid or expired code' });
     }
 
     user.isVerified = true;
-    user.verificationToken = undefined;
+    // Clear out the verification token
+    user.tokens.verification = undefined;
     await user.save();
 
     console.log(`✅ Verified user: ${user.email}`);
-    // Return a success JSON instead of redirect
-    return res.json({ message: 'Email verified successfully' });
+    return res.json({ message: 'Email verified successfully 🌱' });
   } catch (err) {
     console.error('❌ Verification error:', err);
     return res.status(500).json({ error: 'Server error during verification' });
   }
 });
+
 // Passport strategies for Google and GitHub
 passport.use(new GoogleStrategy({
   clientID:     process.env.GOOGLE_CLIENT_ID,
@@ -367,8 +426,8 @@ app.get('/api/auth/google/callback',
       { expiresIn: '7d' }
     );
     // For SPA, you might redirect to frontend with token in query or cookie:
-   res.redirect(`http://localhost:8080/index.html?token=${token}`);
-
+  // serve index.html from same host/port
+  res.redirect(`/index.html?token=${token}`);
   }
 );
 
@@ -391,7 +450,7 @@ app.get(
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
-   res.redirect(`http://localhost:8080/index.html?token=${token}`);
+  res.redirect(`/index.html?token=${token}`);
 
   }
 );

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forgot Password | Clover</title>
+  <link rel="stylesheet" href="styles/forgot.css" />
+</head>
+<body>
+    <div id="toast-container"></div>
+
+  <div class="forgot-container">
+    <!-- Phase 1: Request Code -->
+    <form id="request-code" class="forgot-form">
+      <h2>Reset Your Password</h2>
+      <input type="email" id="fp-email" placeholder="Enter your email" required />
+      <p id="fp-error-1" class="error-message"></p>
+      <button type="submit">Send Reset Code</button>
+    </form>
+
+    <!-- Phase 2: Verify Code -->
+    <form id="verify-code" class="forgot-form" style="display:none">
+      <h2>Enter Reset Code</h2>
+      <input type="text" id="fp-code" placeholder="6‑digit code" required />
+      <p id="fp-error-2" class="error-message"></p>
+      <button type="submit">Verify Code</button>
+    </form>
+
+    <!-- Phase 3: Set New Password -->
+<form id="reset-pass" class="forgot-form" style="display:none">
+  <h2>Set New Password</h2>
+
+  <div class="input-wrapper">
+    <input type="password" id="fp-new" placeholder="New password" required />
+    <span class="toggle-password" data-target="fp-new">Show</span>
+  </div>
+
+  <div class="input-wrapper">
+    <input type="password" id="fp-confirm" placeholder="Confirm password" required />
+    <span class="toggle-password" data-target="fp-confirm">Show</span>
+  </div>
+
+  <p id="fp-error-3" class="error-message"></p>
+  <button type="submit">Reset Password</button>
+</form>
+
+    <!-- Back to Login Page -->
+  <div class="back-home-global">
+    <a href="login.html" class="back-home-btn">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+  </div>
+
+
+  <script src="scripts/forgot.js"></script>
+</body>
+</html>
