@@ -53,17 +53,13 @@
   <button class="email-btn" id="toggle-email-form">Log in with Email</button>
 </div>
 
-        <p class="terms">
-          By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
-        </p>
-<p class="footer-link">
-  Don’t have an account? <a href="#" id="toggle-signup-form">Sign up</a>
-</p>
-<!-- Back to Home button — bottom center -->
-<div class="back-home-btn">
-  <a href="index.html" class="back-home-btn">
-    <i class="fas fa-arrow-left"></i> Back to Home
-  </a>
+<div class="footer-wrapper">
+  <p class="terms">
+    By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+  </p>
+  <p class="footer-link">
+    Don’t have an account? <a href="#" id="toggle-signup-form">Sign up</a>
+  </p>
 </div>
 
 
@@ -84,7 +80,7 @@
   <h2 class="form-title"><i class="fas fa-lock icon-purple"></i> Login to Your Account</h2>
   <p class="form-subtext">Access exclusive components and collaborate with the community</p>
 
-  <form id="login-form">
+  <form id="login-form" autocomplete="off">
   
     <div class="form-group">
       <input type="email" id="email" placeholder="Email" required />
@@ -104,7 +100,7 @@
   <h2 class="form-title"><i class="fas fa-user-plus icon-purple"></i> Create Your Account</h2>
   <p class="form-subtext">Start sharing and discovering beautiful components</p>
 
-  <form id="signup-form-element">
+  <form id="signup-form-element" autocomplete="off">
   <!-- Full Name -->
   <div class="form-group" style="position: relative;">
     <i class="fas fa-user"></i>
@@ -159,11 +155,15 @@
   <div class="signup-btn-wrapper">
     <button type="submit" id="signup-btn">Create Account</button>
   </div>
-</form>
-
-
-</div>
-
+    </form>
+  </div>
+   </div>
+  <!-- Back to Home button — bottom center of entire page -->
+  
+  
+  <a href="index.html" class="back-home-link-fixed">
+    <i class="fas fa-arrow-left"></i> Back to Home
+  </a>
 <script src="scripts/login.js"></script>
 </body>
 </html>

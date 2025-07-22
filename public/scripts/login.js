@@ -206,39 +206,78 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- Login Handler (unchanged) ---
-  loginForm?.addEventListener('submit', async e => {
-    e.preventDefault();
-    loginError.style.display = 'none';
-    const emailVal = loginForm.querySelector('#email').value.trim();
-    const passVal  = loginForm.querySelector('#password').value;
-    if (!emailVal || !passVal) {
-      loginError.textContent = 'Please fill out both fields.';
+  // --- Verification Loading Animation ---
+function showVerificationLoading() {
+  // Remove any existing loader
+  const oldLoader = document.getElementById('verification-loader');
+  if (oldLoader) oldLoader.remove();
+
+  // Create loader overlay
+  const loader = document.createElement('div');
+  loader.id = 'verification-loader';
+  loader.style.position = 'fixed';
+  loader.style.top = '0';
+  loader.style.left = '0';
+  loader.style.width = '100vw';
+  loader.style.height = '100vh';
+  loader.style.background = 'rgba(11,11,34,0.85)';
+  loader.style.display = 'flex';
+  loader.style.alignItems = 'center';
+  loader.style.justifyContent = 'center';
+  loader.style.zIndex = '10000';
+  loader.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <div class="verification-spinner"></div>
+      <div style="color:#fff;font-family:'Poppins',sans-serif;font-size:1.1rem;margin-top:1.2rem;">Verifying your login...</div>
+    </div>
+  `;
+  document.body.append(loader);
+}
+function hideVerificationLoading() {
+  const loader = document.getElementById('verification-loader');
+  if (loader) loader.remove();
+}
+
+// --- Login Handler (unchanged) ---
+loginForm?.addEventListener('submit', async e => {
+  e.preventDefault();
+  loginError.style.display = 'none';
+  const emailVal = loginForm.querySelector('#email').value.trim();
+  const passVal  = loginForm.querySelector('#password').value;
+  if (!emailVal || !passVal) {
+    loginError.textContent = 'Please fill out both fields.';
+    loginError.style.display = 'block';
+    return;
+  }
+  try {
+    showVerificationLoading();
+    const res  = await fetch('http://localhost:5000/api/login', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ email: emailVal, password: passVal })
+    });
+    const data = await res.json();
+    hideVerificationLoading();
+    if (res.ok) {
+      loginForm.reset();
+      hideForms();
+      localStorage.setItem('cloverUser','true');
+      if (data.user?.username) localStorage.setItem('username', data.user.username);
+      // First verify, then show animation, then redirect (do NOT hide loader before redirect)
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1000); // 5 seconds animation after verification
+    } else {
+      hideVerificationLoading();
+      loginError.textContent = data.error || 'Login failed.';
       loginError.style.display = 'block';
-      return;
     }
-    try {
-      const res  = await fetch('http://localhost:5000/api/login', {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ email: emailVal, password: passVal })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        loginForm.reset();
-        hideForms();
-        localStorage.setItem('cloverUser','true');
-        if (data.user?.username) localStorage.setItem('username', data.user.username);
-        setTimeout(() => window.location.href = 'index.html', 2000);
-      } else {
-        loginError.textContent = data.error || 'Login failed.';
-        loginError.style.display = 'block';
-      }
-    } catch (err) {
-      console.error('Login error:', err);
-      loginError.textContent = 'Server error. Please try again.';
-      loginError.style.display = 'block';
-    }
+  } catch (err) {
+    hideVerificationLoading();
+    console.error('Login error:', err);
+    loginError.textContent = 'Server error. Please try again.';
+    loginError.style.display = 'block';
+  }
   });
 
   // --- Misc protections ---

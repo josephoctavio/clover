@@ -162,15 +162,11 @@
       </div>
     </div>
 <div class="header-buttons">
-  <!-- Join button (shown only when logged out) -->
-  <a href="login.html" class="login-btn" id="join-btn">Join the Community</a>
-  <!-- plus this empty container -->
-<div id="user-menu-container"></div>
-
-  <!-- JS will inject the user‑menu (username + dropdown) here when logged in -->
+  <div class="login-btn-right">
+    <a href="login.html" class="login-btn" id="join-btn">Join the Community</a>
+  </div>
   <div id="user-menu-container"></div>
 </div>
-
 
 
     </div>
@@ -368,18 +364,20 @@
     <button class="browse-button">Browse All Elements</button>
   </a>
 
-  <!-- Mobile-Only Experience Popup -->
-  <div id="mobile-popup" class="popup-overlay">
-    <div class="popup-window">
-      <p class="popup-message">
-        Clover is best experienced on a larger display. For full access to all features and tools, please consider switching to a desktop device.
-      </p>
-      <div class="popup-actions">
-        <button id="gotItBtn" class="popup-btn">Got It</button>
-      </div>
-      <span id="closePopup" class="popup-close">&times;</span>
+ <!-- Mobile-Only Experience Popup -->
+<div id="mobile-popup" class="popup-overlay">
+  <div class="popup-window">
+    <span id="closePopup" class="popup-close">&times;</span>
+    <p class="popup-message">
+      Clover is designed for larger screens to give you the best experience.<br>
+      For full features and smoother navigation, please use a desktop or tablet.
+    </p>
+    <div class="popup-actions">
+      <button id="gotItBtn" class="popup-btn">Continue Anyway</button>
     </div>
   </div>
+</div>
+
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
