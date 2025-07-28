@@ -1,41 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Clover – Explore</title>
-  <link rel="stylesheet" href="styles/snippets.css" />
-  <link rel="stylesheet" href="explore.css" />
-  <style>
-    .explore-header {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-      color: var(--clover-violet, #837484);
-      text-transform: capitalize;
-    }
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>Clover</title>
 
-    .no-results {
-      text-align: center;
-      color: #999;
-      font-size: 1.2rem;
-      margin-top: 3rem;
-    }
-  </style>
+  <!-- Create Button Styles -->
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/create.css" />
+<!-- Add Create Button to Explore Page Header -->
+
+
+
+  <link rel="stylesheet" href="styles/snippets.css" />
+  <link rel="stylesheet" href="styles/explore.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Luckiest+Guy&family=Poppins:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
+  <!-- SVG gradients for icons -->
+  <svg width="0" height="0" style="position: absolute;">
+    <defs>
+      <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#a97aff" />
+        <stop offset="100%" stop-color="#6cd5ff" />
+      </linearGradient>
+    </defs>
+  </svg>
 
-  <main class="explore-container" style="padding: 2rem;">
-    <h1 class="explore-header" id="category-title">Explore</h1>
-
-    <div id="snippet-grid" class="snippet-grid">
-      <!-- Snippet cards will be injected here -->
+ <!-- Page Content Wrapper -->
+<div class="page-content">
+  <header>
+    <div class="left-header">
+      <h1 class="site-title">
+        <a href="index.html">Clover</a>
+      </h1>
+      <div class="explore-dropdown">
+        <button class="explore-btn">
+          Explore
+          <svg
+            class="dropdown-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <!-- Single dropdown-menu container -->
+        <div class="dropdown-menu">
+          <div class="dropdown-grid">
+            <button class="dropdown-item" data-category="all" onclick="goToExplore('all')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clover-icon lucide-clover"><path d="M16.17 7.83 2 22"/><path d="M4.02 12a2.827 2.827 0 1 1 3.81-4.17A2.827 2.827 0 1 1 12 4.02a2.827 2.827 0 1 1 4.17 3.81A2.827 2.827 0 1 1 19.98 12a2.827 2.827 0 1 1-3.81 4.17A2.827 2.827 0 1 1 12 19.98a2.827 2.827 0 1 1-4.17-3.81A1 1 0 1 1 4 12"/><path d="m7.83 7.83 8.34 8.34"/></svg>
+              <span class="item-label">All</span>
+            </button>
+            <button class="dropdown-item" data-category="landing page"  onclick="goToExplore('landing')" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid-icon lucide-layout-grid"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+              <span class="item-label">Landing Page</span>
+            </button>
+            <button class="dropdown-item" data-category="buttons" onclick="goToExplore('buttons')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play-icon lucide-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              <span class="item-label">Buttons</span>
+            </button>
+            <button class="dropdown-item" data-category="switches" onclick="goToExplore('switches')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-right-icon lucide-toggle-right"><circle cx="15" cy="12" r="3"/><rect width="20" height="14" x="2" y="5" rx="7"/></svg>
+              <span class="item-label">Switches</span>
+            </button>
+            <button class="dropdown-item" data-category="inputs" onclick="goToExplore('inputs')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-cursor-input-icon lucide-text-cursor-input"><path d="M12 20h-1a2 2 0 0 1-2-2 2 2 0 0 1-2 2H6"/><path d="M13 8h7a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-7"/><path d="M5 16H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1"/><path d="M6 4h1a2 2 0 0 1 2 2 2 2 0 0 1 2-2h1"/><path d="M9 6v12"/></svg>
+              <span class="item-label">Inputs</span>
+            </button>
+            <button class="dropdown-item" data-category="checkboxes" onclick="goToExplore('checkboxes')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-check-icon lucide-square-check"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+              <span class="item-label">Checkboxes</span>
+            </button>
+            <button class="dropdown-item" data-category="images" onclick="goToExplore('images')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-images-icon lucide-images"><path d="M18 22H4a2 2 0 0 1-2-2V6"/><path d="m22 13-1.296-1.296a2.41 2.41 0 0 0-3.408 0L11 18"/><circle cx="12" cy="8" r="2"/><rect width="16" height="16" x="6" y="2" rx="2"/></svg>
+              <span class="item-label">Images</span>
+            </button>
+            <button class="dropdown-item" data-category="loaders" onclick="goToExplore('loaders')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-pinwheel-icon lucide-loader-pinwheel">
+                <path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/>
+                <path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/>
+                <path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/>
+                <circle cx="12" cy="12" r="10"/>
+              </svg>
+              <span class="item-label">Loaders</span>
+            </button>
+            <button class="dropdown-item" data-category="cards" onclick="goToExplore('cards')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-library-icon lucide-square-library"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7v10"/><path d="M11 7v10"/><path d="m15 7 2 10"/></svg>
+              <span class="item-label">Cards</span>
+            </button>
+            <button class="dropdown-item" data-category="forms" onclick="goToExplore('forms')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text-icon lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+              <span class="item-label">Forms</span>
+            </button>
+            <button class="dropdown-item" data-category="forms" onclick="goToExplore('audio')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-music-icon lucide-file-music"><path d="M10.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v8.4"/><path d="M8 18v-7.7L16 9v7"/><circle cx="14" cy="16" r="2"/><circle cx="6" cy="18" r="2"/></svg>
+              <span class="item-label">Audio</span>
+            </button>
+            <button class="dropdown-item" data-category="color palette" onclick="goToExplore('color')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette-icon lucide-palette"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+              <span class="item-label">Color Palette </span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div id="no-results" class="no-results" style="display: none;">
-      No snippets found for this category.
+    <div class="header-buttons">
+      <div class="login-btn-row">
+        <button
+          class="create-btn"
+          id="create-btn"
+          type="button"
+        >
+          <span class="z-20">Create</span>
+          <span class="shine"></span>
+          <span class="border-top-left"></span>
+          <span class="border-top-right"></span>
+          <span class="border-bottom-left"></span>
+          <span class="border-bottom-right"></span>
+        </button>
+        <a href="login.html" class="login-btn" id="join-btn" style="display: none;">Join the Community</a>
+        <div id="user-menu-container" style="margin-left: 0; display: none;"></div>
+      </div>
     </div>
-  </main>
+  </header>
+</div>
+      <!-- Only the flex row header-buttons block should exist, as above -->
+    </header>
+  </div>
+<div class="radio-container">
+<input id="radio-all" name="radio" type="radio" />
+  <label for="radio-all">All</label>
 
-  <script src="scripts/explore.js"></script>
+  <input id="radio-landing" name="radio" type="radio" />
+  <label for="radio-landing">Landing Page</label>
+
+  <input id="radio-buttons" name="radio" type="radio" />
+  <label for="radio-buttons">Buttons</label>
+
+  <input id="radio-switches" name="radio" type="radio" />
+  <label for="radio-switches">Switches</label>
+
+  <input id="radio-inputs" name="radio" type="radio" />
+  <label for="radio-inputs">Inputs</label>
+
+  <input id="radio-checkboxes" name="radio" type="radio" />
+  <label for="radio-checkboxes">Checkboxes</label>
+
+  <input id="radio-images" name="radio" type="radio" />
+  <label for="radio-images">Images</label>
+
+  <input id="radio-loaders" name="radio" type="radio" />
+  <label for="radio-loaders">Loaders</label>
+
+  <input id="radio-cards" name="radio" type="radio" />
+  <label for="radio-cards">Cards</label>
+
+  <input id="radio-forms" name="radio" type="radio" />
+  <label for="radio-forms">Forms</label>
+
+  <input id="radio-audio" name="radio" type="radio" />
+  <label for="radio-audio">Audio</label>
+
+  <input id="radio-color" name="radio" type="radio" />
+  <label for="radio-color">Color Palette</label>
+
+  <div class="glider-container">
+    <div class="glider"></div>
+  </div>
+</div>
+
+
+
+  <!-- Helper to navigate with category param -->
+  <script>
+    function goToExplore(category) {
+      const encoded = encodeURIComponent(category.toLowerCase());
+      window.location.href = `explore.html?category=${encoded}`;
+    }
+  </script>
+
+  <!-- Core Scripts -->
+  <script src="scripts/main.js" defer></script>
+  <script src="scripts/explore-user-menu.js" defer></script>
+  <script src="scripts/explore.js" defer></script>
+  <script src="scripts/filter.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest" defer></script>
 </body>
 </html>

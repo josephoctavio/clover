@@ -1,0 +1,583 @@
+/* =============================== */
+/* GLOBAL & LAYOUT                */
+/* =============================== */
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#create-page {
+  display: flex;
+  height: 100vh;
+}
+
+/* =============================== */
+/* LEFT: EDITOR PANE              */
+/* =============================== */
+
+#editor-pane {
+  width: 50%;
+  padding: 80px 20px 20px 20px;
+  background-color: #111012;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.editor-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-block label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: #f2e5f3;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.075em;
+  transition: color 0.2s ease-in-out;
+  box-sizing: content-box;
+}
+
+.editor-block label:hover {
+  color: #ffffff;
+}
+
+.editor-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+  transition: transform 0.2s ease;
+  margin-right: 8px;
+  opacity: 0.85;
+}
+
+.editor-block label:hover .editor-icon {
+  transform: scale(1.05);
+}
+
+.editor-block textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #1a191c;
+  border: 1px solid #2e2c31;
+  border-radius: 8px;
+  padding: 12px;
+  resize: none;
+  font-family: monospace;
+  font-size: 14px;
+  color: #ffffff;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.editor-block textarea:focus {
+  border: 1px solid #05737d;
+  box-shadow: 0 0 0 2px rgb(17, 7, 29);
+}
+
+.editor-block.expanded textarea {
+  height: 250px;
+}
+
+/* =============================== */
+/* TAILWIND TOGGLE STYLES         */
+/* =============================== */
+
+.mode-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1f1e22;
+  padding: 6px 12px;
+  border-radius: 8px;
+  width: fit-content;
+  border: 1px solid #2e2c31;
+  margin-bottom: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .slider {
+  background-color: #3b82f6;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.toggle-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
+  white-space: nowrap;
+}
+
+/* =============================== */
+/* RIGHT: PREVIEW PANE            */
+/* =============================== */
+
+#preview-pane {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  background-color: #111;
+  padding: 20px;
+  overflow: hidden;
+}
+
+#preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+#preview-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #f8e7f8;
+}
+
+#preview-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#preview-area {
+  flex: 0 0 450px; /* fixed height, slightly reduced */
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+#live-preview {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* =============================== */
+/* COLOR PICKER                   */
+/* =============================== */
+#color-picker-container {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  background: rgba(18, 18, 20, 0.85);
+  backdrop-filter: blur(16px);
+  border-radius: 8px;
+  padding: 12px;
+  height: auto;
+  width: auto;
+  min-width: 64px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95);
+  transform-origin: bottom right;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 999;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#color-picker-container.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#color-picker-container .iro__slider {
+  width: 12px !important;
+  height: 100px !important;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  background: #1c1c20;
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.05);
+}
+
+#color-picker-container .iro__slider .iro__handle {
+  width: 12px !important;
+  height: 12px !important;
+  left: 0 !important;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 0 6px rgba(161, 98, 247, 0.6), 0 0 0 1.5px rgba(255, 255, 255, 0.1);
+  transform: translateX(0) translateY(-50%) !important;
+}
+
+/* =============================== */
+/* MODAL & TOAST STYLES           */
+/* =============================== */
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(24, 24, 28, 0.85);
+  backdrop-filter: blur(10px);
+  color: #f5ebfa;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Fira Code', monospace;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  z-index: 1001;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.toast.hidden {
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #0f0f10;
+  color: #f0f0f0;
+  padding: 1.25rem 1.75rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  max-width: 280px;
+  width: 90%;
+  animation: fadeInUp 0.25s ease;
+}
+
+.modal-content h3 {
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: #fafafa;
+}
+
+.modal-content p {
+  font-size: 0.85rem;
+  color: #bbb;
+  line-height: 1.4;
+}
+
+.modal-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.modal-buttons button {
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#cancel-reset {
+  background-color: #1e1e1f;
+  color: #dcdcdc;
+}
+
+#cancel-reset:hover {
+  background-color: #2a2a2b;
+  transform: translateY(-1px);
+}
+
+#confirm-reset {
+  background-color: #a8322d;
+  color: #fff;
+}
+
+#confirm-reset:hover {
+  background-color: #d03f38;
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =============================== */
+/* RESPONSIVE DESIGN              */
+/* =============================== */
+@media (max-width: 900px) {
+  #create-page {
+    flex-direction: column;
+    padding: 12px;
+    gap: 20px;
+  }
+
+  #editor-pane,
+  #preview-pane {
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+  }
+
+  #preview-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  #preview-buttons {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  #preview-buttons button {
+    flex: 1 1 auto;
+  }
+
+  #color-picker-container {
+    bottom: 100px;
+    right: 10px;
+    transform: scale(0.9);
+  }
+
+  .toast {
+    right: 10px;
+    left: 10px;
+    width: auto;
+    font-size: 13px;
+  }
+
+  .modal-content {
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 300px;
+  }
+}
+/* Toolbar Layout */
+.editor-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-inline: 0;
+}
+
+/* Button Container */
+.editor-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Buttons: sleek + minimal */
+.editor-buttons button,
+#color-picker-btn {
+  padding: 8px 14px;
+  background-color: #1f2937; /* dark slate */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.editor-buttons button:hover,
+#color-picker-btn:hover {
+  background-color: #374151;
+}
+
+/* Color Picker Button */
+#color-picker-btn {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* Toggle Switch */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+/* Switch Style */
+.tailwind-toggle {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 22px;
+}
+
+.tailwind-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.tailwind-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d1d5db;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.tailwind-slider::before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.tailwind-toggle input:checked + .tailwind-slider {
+  background-color: #3b82f6;
+}
+
+.tailwind-toggle input:checked + .tailwind-slider::before {
+  transform: translateX(20px);
+}
+
+/* Toggle Label Text */
+.toggle-label {
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+
+
+
+
+
+
+ /* ── Toolbar Container ── */
+.editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* First row: your buttons + color picker */
+.toolbar-row1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Left‑side buttons */
+.editor-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Right‑side color picker */
+.color-picker-container {
+  /* no special styling needed */
+}
+
+/* ── Toggle (now only under left buttons) ── */
+.toggle-wrapper {
+  /* remove flex-basis so it won’t stretch full width */
+  /* flex-basis: 100%; */
+  /* push it under the left group */
+  align-self: flex-start;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

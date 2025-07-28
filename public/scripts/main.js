@@ -179,6 +179,7 @@ function filterSnippetsByCategory(category) {
   });
 }
 
+
 // ─── Load and Render Snippets Section ──────────────────────────────────────
 
 function loadSnippetsSection() {
@@ -281,6 +282,16 @@ document.addEventListener('DOMContentLoaded', () => {
   initCategoryNav();
   loadSnippetsSection();
   lucide.createIcons();
+
+  // 1. Get the ?category= value from the URL
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("category")?.toLowerCase() || "all";
+
+  // ✅ NEW: Visually check the correct radio button
+  const radioToCheck = document.getElementById(`radio-${category}`);
+  if (radioToCheck) {
+    radioToCheck.checked = true;
+  }
 });
 function goToExplore(category) {
   window.location.href = `explore.html?category=${encodeURIComponent(category)}`;
@@ -388,6 +399,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (userMenuContainer) userMenuContainer.innerHTML = '';
     if (joinBtn) joinBtn.style.display = 'inline-block';
   }
+<<<<<<< HEAD
 
   // ─── Toast System ───
   const path = window.location.pathname;
@@ -420,3 +432,6 @@ function showToast(message, isError = false) {
     toast.classList.remove('show');
   }, 3000);
 }
+=======
+});
+>>>>>>> a817716 (something with the create page)

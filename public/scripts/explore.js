@@ -3,28 +3,47 @@ document.addEventListener("DOMContentLoaded", () => {
   const grid = document.getElementById("snippet-grid");
   const noResults = document.getElementById("no-results");
 
-  // 1. Get the ?category= value from the URL
   const params = new URLSearchParams(window.location.search);
   const category = params.get("category")?.toLowerCase() || "all";
+// ✅ Set checked state before animation starts
+const radioToCheck = document.getElementById(`radio-${category}`);
+if (radioToCheck) {
+  radioToCheck.checked = true;
+}
+  // Now set the header title
+  title.textContent = category === "all" ? "All Snippets" : capitalize(category);
+  
+  // ...rest of your code remains the same
+});
 
-  // 2. Update the header title
-  title.textContent = category === "all" ? "All Snippets" : `Showing: ${category}`;
+// ✅ NEW: Visually check the correct radio button
+const radioToCheck = document.getElementById(`radio-${category}`);
+if (radioToCheck) {
+  radioToCheck.checked = true;
+}
 
-  // 3. Get all snippets from the DOM or generate them
+  // 2. Update the header title to show selected category
+  title.textContent =
+    category === "all"
+      ? "All Snippets"
+      : capitalize(category);
+
+  // 3. Fetch all snippets from the backend
   fetch("/api/snippets")
     .then(res => res.json())
     .then(data => {
-      let filtered = category === "all"
+      // 4. Filter snippets based on selected category
+      const filtered = category === "all"
         ? shuffleArray(data)
         : data.filter(snippet => snippet.category.toLowerCase() === category);
 
-      // 4. If none match, show fallback
+      // 5. Handle empty results
       if (filtered.length === 0) {
         noResults.style.display = "block";
         return;
       }
 
-      // 5. Build each snippet card
+      // 6. Render snippet cards
       filtered.forEach(snippet => {
         const card = document.createElement("div");
         card.className = "snippet-card";
@@ -37,63 +56,25 @@ document.addEventListener("DOMContentLoaded", () => {
             <p class="snippet-author">By ${snippet.author}</p>
           </div>
         `;
+
         grid.appendChild(card);
       });
     })
-    .catch(err => {
-      console.error("Failed to load snippets:", err);
-      noResults.textContent = "Error loading snippets. Please try again.";
-      noResults.style.display = "block";
-    });
+.catch(err => {
+  console.error("❌ Failed to load snippets:", err);
+  noResults.textContent = "Error loading snippets. Please try again.";
+  noResults.style.display = "block";
 });
 
-// Utility function to shuffle array
+// Utility: Capitalize first letter
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// Utility: Shuffle array randomly
 function shuffleArray(arr) {
   return arr
     .map(value => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value);
 }
-// explore.js — Mock Snippets Display for Testing Explore Page
-
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('snippet-section');
-  const heading = document.getElementById('page-heading');
-
-  // Get category from query string (?category=buttons)
-  const params = new URLSearchParams(window.location.search);
-  const category = params.get('category') || 'All';
-
-  heading.textContent = `Showing: ${category}`;
-
-  // MOCK SNIPPETS — TEMPORARY DATA
-  const mockSnippets = [
-    { title: 'Glassmorphic Button', category: 'buttons', html: '<button class="btn-glass">Click Me</button>' },
-    { title: 'Pulse Loader', category: 'loaders', html: '<div class="loader-pulse"></div>' },
-    { title: 'Frosted Card', category: 'cards', html: '<div class="card-frosted">Card Content</div>' },
-    { title: 'Soft Checkbox', category: 'checkboxes', html: '<input type="checkbox" class="soft-check">' },
-    { title: 'Color Swatch Grid', category: 'color palette', html: '<div class="palette-grid">🎨</div>' },
-  ];
-
-  // FILTER SNIPPETS BASED ON CATEGORY
-  const filtered = category.toLowerCase() === 'all'
-    ? mockSnippets
-    : mockSnippets.filter(snippet => snippet.category.toLowerCase() === category.toLowerCase());
-
-  if (filtered.length === 0) {
-    container.innerHTML = `<div class="no-results">No snippets found for "${category}".</div>`;
-    return;
-  }
-
-  // RENDER SNIPPETS
-  container.innerHTML = '';
-  filtered.forEach(snippet => {
-    const card = document.createElement('div');
-    card.className = 'snippet-card';
-    card.innerHTML = `
-      <h4>${snippet.title}</h4>
-      <div class="preview-box">${snippet.html}</div>
-    `;
-    container.appendChild(card);
-  });
-});

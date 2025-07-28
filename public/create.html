@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Snippet – Clover</title>
+  <link rel="stylesheet" href="styles/create.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+</head>
+<body>
+  <main id="create-page">
+    <!-- Left Pane: Code Editors -->
+    <div id="editor-pane">
+      <div class="editor-block expanded">
+        <label for="html-code" id="html-label">
+          <img src="assets/icons/html5.svg" alt="HTML" class="editor-icon" />
+          HTML
+        </label>
+        <textarea id="html-code" placeholder="Write your HTML here..."></textarea>
+      </div>
+
+      <div class="editor-block expanded">
+        <label for="css-code" id="css-label">
+          <img src="assets/icons/css3.svg" alt="CSS" class="editor-icon" />
+          CSS
+        </label>
+        <textarea id="css-code" placeholder="Write your CSS here..."></textarea>
+      </div>
+    </div>
+
+    <!-- Right Pane: Live Preview -->
+    <div id="preview-pane">
+      <div id="preview-header">
+        <h2>Live Preview</h2>
+        <div id="preview-tools">
+          <!-- Reserved for future tools -->
+        </div>
+      </div>
+
+      <div id="preview-area">
+        <iframe id="live-preview"></iframe>
+      </div>
+
+<div class="editor-toolbar">
+  <!-- Row 1: action buttons + color picker -->
+  <div class="toolbar-row1">
+    <div class="editor-buttons">
+      <button id="reset-btn">Reset</button>
+      <button id="save-draft-btn">Save Draft</button>
+      <button id="load-draft-btn">Load Draft</button>
+    </div>
+    <div class="color-picker-container">
+      <button id="color-picker-btn">🟦</button>
+    </div>
+  </div>
+
+  <!-- Row 2: toggle switch -->
+  <div class="toggle-wrapper">
+    <label class="tailwind-toggle">
+      <input type="checkbox" id="tailwind-toggle">
+      <span class="tailwind-slider"></span>
+    </label>
+    <span class="toggle-label">Tailwind Deactivated</span>
+  </div>
+</div>
+
+  </main>
+
+  <!-- Reset Confirmation Modal -->
+  <div id="reset-confirm-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>⚠️ Confirm Reset</h3>
+      <p>This will erase all code in the editor. Are you sure?</p>
+      <div class="modal-buttons">
+        <button id="cancel-reset">Cancel</button>
+        <button id="confirm-reset">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">✅ Draft saved!</div>
+
+  <!-- Color Picker Container -->
+  <div id="color-picker-container"></div>
+
+  <!-- Toggle behavior script -->
+  <script>
+    const toggle = document.getElementById("tailwind-toggle");
+    const htmlLabel = document.getElementById("html-label");
+    const toggleLabel = document.querySelector(".toggle-label");
+
+    toggle.addEventListener("change", () => {
+      if (toggle.checked) {
+        htmlLabel.innerHTML = `
+          <img src="assets/icons/html5.svg" alt="HTML" class="editor-icon">
+          HTML +
+          <img src="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-light.svg" alt="Tailwind" class="editor-icon">
+          Tailwind
+        `;
+        toggleLabel.textContent = "Tailwind Activated";
+      } else {
+        htmlLabel.innerHTML = `
+          <img src="assets/icons/html5.svg" alt="HTML" class="editor-icon">
+          HTML
+        `;
+        toggleLabel.textContent = "Tailwind Deactivated";
+      }
+    });
+  </script>
+
+  <script src="scripts/create.js"></script>
+</body>
+</html>

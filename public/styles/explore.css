@@ -1,14 +1,426 @@
-.snippet-card {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 10px;
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Luckiest+Guy&family=Poppins:wght@400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.preview-box {
-  margin-top: 0.5rem;
-  padding: 1rem;
-  background: #f8f8f8;
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #000000, #020014, #0d0017);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #e0dce5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
+/* PAGE WRAPPER (for sliding effect) */
+.page-content {
+  transition: transform 0.3s ease;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: relative;
+  z-index: 100;
+}
+
+.site-title {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'Luckiest Guy', cursive;
+  color: #ffffff;
+  text-align: left;
+}
+
+.site-title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.left-header {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+/* ============================ */
+/*     EXPLORE BUTTON + JS     */
+/* ============================ */
+.explore-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.95rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.explore-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #a97aff;
+  transition: width 0.3s ease;
+}
+
+.explore-btn:hover,
+.explore-dropdown.open .explore-btn {
+  color: #a97aff;
+}
+
+.explore-btn:hover::after,
+.explore-dropdown.open .explore-btn::after {
+  width: 100%;
+}
+
+.explore-btn .dropdown-icon {
+  stroke: currentColor;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.explore-btn:hover .dropdown-icon,
+.explore-dropdown.open .explore-btn .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+
+/* ============================ */
+/*       DROPDOWN MENU         */
+/* ============================ */
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  display: none;
+  min-width: 240px;
+  background: #1E1E1E;
   border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+/* Show on hover */
+.explore-dropdown:hover .dropdown-menu,
+.explore-dropdown.open .dropdown-menu {
+  display: block;
+}
+
+/* ============================ */
+/*      HEADER BUTTONS         */
+/* ============================ */
+
+.header-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.login-btn-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.header-btn,
+.btn,
+.button {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.header-btn:hover,
+.btn:hover,
+.button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* =============== */
+/* Dropdown Grid   */
+/* =============== */
+.dropdown-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* You can change to 3 for wider screens */
+  gap: 12px;
+}
+
+/* =============== */
+/* Dropdown Items  */
+/* =============== */
+.dropdown-item {
+  background: #262626;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: #2f2f2f;
+  box-shadow: 0 0 0 1px #a97aff, 0 0 8px rgba(169, 122, 255, 0.3);
+  transform: scale(1.02);
+}
+
+/* Icon Styling for Lucide SVG inside <i> */
+.dropdown-item i svg {
+  width: 20px;
+  height: 20px;
+  stroke: #5900ff;
+  stroke-width: 2;
+  transition:
+    stroke 0.3s ease,
+    transform 0.2s ease,
+    filter 0.3s ease;
+  filter: drop-shadow(0 0 3px rgba(169, 122, 255, 0.4));
+}
+
+.dropdown-item:hover i svg {
+  stroke: #66fcff;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px rgba(102, 252, 255, 0.6));
+}
+
+/* Label */
+.item-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  flex-grow: 1;
+}
+
+/* =============== */
+/* Dropdown Menu Wrapper */
+/* =============== */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  min-width: 500px;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+
+  /* Fade transitions */
+  transition:
+    opacity 0.15s ease 0.2s,
+    visibility 0.15s ease 0.2s;
+}
+
+/* Show dropdown on hover */
+.explore-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s, 0s;
+}
+
+/* Show dropdown when "open" class is added via JS (for click) */
+.explore-dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.left-pane {
+  flex: 0.2;
+  padding: 2rem;
+  background: transparent;
+}
+
+.right-pane {
+  flex: 3.8;
+  padding: 2rem;
+  background: transparent;
+  
+  position: relative;
+}
+
+.no-results {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #888;
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  width: 100%;
+  max-width: 400px;
+}
+
+#category-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+.radio-container {
+  --main-color: #f7e479;
+  --main-color-opacity: #f7e4791c;
+
+  /* total number of categories */
+  --total-radio: 12;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transform: scale(0.93);
+  transform-origin: left;
+  align-items: flex-start; /* Aligns content to the left */
+  padding-left: 0;         /* Remove padding offset */
+  margin-left: 0;          /* Remove margin offset */
+}
+
+.radio-container input {
+  cursor: pointer;
+  appearance: none;
+}
+
+.radio-container .glider-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(27, 27, 27, 1) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  width: 1px;
+}
+
+.radio-container .glider-container .glider {
+  position: relative;
+  height: calc(100% / var(--total-radio));
+  width: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0%,
+    var(--main-color) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  transition: transform 0.5s cubic-bezier(0.37, 1.95, 0.66, 0.56);
+}
+
+.radio-container .glider-container .glider::before {
+  content: "";
+  position: absolute;
+  height: 60%;
+  width: 300%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--main-color);
+  filter: blur(10px);
+}
+
+.radio-container .glider-container .glider::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(
+    90deg,
+    var(--main-color-opacity) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.radio-container label {
+  cursor: pointer;
+  padding: 1rem;
+  position: relative;
+  color: grey;
+  transition: all 0.3s ease-in-out;
+}
+
+.radio-container input:checked + label {
+  color: var(--main-color);
+}
+
+.radio-container input:nth-of-type(1):checked ~ .glider-container .glider {
+  transform: translateY(0);
+}
+.radio-container input:nth-of-type(2):checked ~ .glider-container .glider {
+  transform: translateY(100%);
+}
+.radio-container input:nth-of-type(3):checked ~ .glider-container .glider {
+  transform: translateY(200%);
+}
+.radio-container input:nth-of-type(4):checked ~ .glider-container .glider {
+  transform: translateY(300%);
+}
+.radio-container input:nth-of-type(5):checked ~ .glider-container .glider {
+  transform: translateY(400%);
+}
+.radio-container input:nth-of-type(6):checked ~ .glider-container .glider {
+  transform: translateY(500%);
+}
+.radio-container input:nth-of-type(7):checked ~ .glider-container .glider {
+  transform: translateY(600%);
+}
+.radio-container input:nth-of-type(8):checked ~ .glider-container .glider {
+  transform: translateY(700%);
+}
+.radio-container input:nth-of-type(9):checked ~ .glider-container .glider {
+  transform: translateY(800%);
+}
+.radio-container input:nth-of-type(10):checked ~ .glider-container .glider {
+  transform: translateY(900%);
+}
+.radio-container input:nth-of-type(11):checked ~ .glider-container .glider {
+  transform: translateY(1000%);
+}
+.radio-container input:nth-of-type(12):checked ~ .glider-container .glider {
+  transform: translateY(1100%);
+}
+.main-section {
+  display: flex;
+  height: 100%;
 }
