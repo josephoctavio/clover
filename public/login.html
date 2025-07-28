@@ -31,7 +31,7 @@
        
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" />
             Continue with GitHub
-            </a>
+         
           </button>
 
 
@@ -89,7 +89,7 @@
     <!-- LOGIN FORM -->
 <div class="form-group">
   <input type="password" id="password" placeholder="Password" required />
-  <span class="toggle-password" data-target="password">Show</span> <!-- ✅ fixed -->
+  <span class="toggle-password" data-target="password">Show</span> <!--  toggles the password visibility -->
   <a href="forgot.html" class="forgot-password">Forgot password?</a>
 </div>
     <button type="submit">Log In</button>
@@ -127,7 +127,7 @@
     <i class="fas fa-envelope"></i>
     <input type="email" id="signup-email" placeholder="Email" required />
   </div>
-  <!-- Password field remains with bullet‑list tooltip if you like -->
+  <!-- Password field remains with bullet‑list tooltip  -->
   <div class="form-group">
     <i class="fas fa-lock"></i>
     <input
@@ -149,7 +149,7 @@
 <div class="form-group">
   <i class="fas fa-check"></i>
   <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required />
-  <span class="toggle-password" data-target="signup-confirm-password">Show</span> <!-- ✅ fixed -->
+  <span class="toggle-password" data-target="signup-confirm-password">Show</span> <!-- toggles the password visibility -->
 </div>
 
   <div class="signup-btn-wrapper">
@@ -164,6 +164,22 @@
   <a href="index.html" class="back-home-link-fixed">
     <i class="fas fa-arrow-left"></i> Back to Home
   </a>
-<script src="scripts/login.js"></script>
+ 
+  <script>
+  // Check if token was passed in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
+
+  if (token) {
+    console.log('✅ OAuth login success, token:', token);
+    localStorage.setItem('token', token);
+    
+    // Optionally: redirect again without token in URL
+    window.location.href = '/index.html';
+  }
+</script>
+
+
+<script src="http://localhost:5000/scripts/login.js"></script>
 </body>
 </html>

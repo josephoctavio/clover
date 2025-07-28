@@ -1,0 +1,268 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Settings | Clover</title>
+  <link rel="stylesheet" href="styles/settings.css" />
+</head>
+<body>
+  <div class="app-root">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="left-header">
+        <h1 class="site-title">
+          <a href="index.html">Clover</a>
+        </h1>
+        <nav class="top-nav__links">
+          <a href="#">Dash‑Board</a>
+          <a href="#">My Snippets</a>
+          <a href="#">Favorites</a>
+          <a href="#">Settings</a>
+        </nav>
+      </div>
+      <div class="top-nav__right">
+        <button id="cnote-btn" class="icon-btn cnote-btn">
+          <!-- Bell icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2a7 7 0 0 0-7 7v5H4l1 2h14l1-2h-1V9a7 7 0 0 0-7-7z"/>
+            <path d="M14.5 21a2.5 2.5 0 0 1-5 0h5z"/>
+          </svg>
+          <span class="cnote-text">Cnote</span>
+          <span class="badge hidden" id="cnote-badge"></span>
+        </button>
+        <div id="user-menu-container"></div>
+      </div>
+    </header>
+
+    <!-- Sidebar + Main Content Wrapper -->
+    <div class="content-wrapper">
+<nav id="sidebar" class="sidebar expanded" role="navigation" aria-label="Main navigation">
+  <!-- Toggle handle -->
+  <button id="sidebar-toggle"
+          class="sidebar-toggle"
+          aria-expanded="true"
+          aria-controls="sidebar">
+    <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Nav list -->
+  <ul class="sidebar__nav">
+    <li class="sidebar__item active">
+      <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24">
+        <path d="M3 12l9-9 9 9"/><path d="M9 21V9h6v12"/>
+      </svg>
+      <span class="sidebar__label">General</span>
+    </li>
+    
+    <li class="sidebar__item" data-section="snippets">
+    <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="7" width="18" height="14" rx="2"/>
+              <path d="M3 7l9-4 9 4"/>
+            </svg>
+    <span class="sidebar__label">Snippets Library</span>
+  </li>
+      
+          <li class="sidebar__item">
+            <!-- Settings gear icon -->
+            <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span class="sidebar__label">Settings</span>
+          </li>
+          <li class="sidebar__item">
+            <svg class="sidebar__icon">
+<!-- Apperance icon-->
+
+            </svg>
+            <span class="sidebar__label">Appearance</span>
+    <li class="sidebar__item">
+      <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zM12 8a4 4 0 1 1-4 4a4.005 4.005 0 0 1 4-4z"/>
+        <line x1="12" y1="14" x2="12" y2="16"/>
+        <line x1="12" y1="18" x2="12" y2="20"/>
+      </svg>
+      <span class="sidebar__label">Help</span>
+    </li>
+    <li class="sidebar__item">
+      <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0z"/>
+        <polyline points="16.24 8.24 12 12l-4.24-4.24"/>
+      </svg>
+      <span class="sidebar__label">Logout</span>
+  </ul>
+</nav>
+
+
+
+      <!-- Main Content -->
+      <main id="main-content" class="main-content with-sidebar">
+        <header class="page-header">
+          <h1>General</h1>
+          <p class="subtext">Manage your account overview and basic settings.</p>
+        </header>
+
+       
+      <!-- 5.1 General / Profile Card -->
+      <section class="card">
+        <header class="card__header">
+          <h2>Profile</h2>
+        </header>
+        <div class="card__body">
+          <!-- Avatar field -->
+          <div class="form-row">
+            <label>Avatar</label>
+            <div class="avatar-field">
+              <div class="avatar-preview">
+                <img src="https://ui-avatars.com/api/?name=JD&background=random&color=000" alt="Avatar"/>
+                <div class="avatar-overlay">
+                  <svg width="20" height="20" fill="#fff">
+                    <path d="M4 7h16v12H4z"/><circle cx="14" cy="13" r="3"/>
+                  </svg>
+                </div>
+              </div>
+              <button class="btn primary">Change avatar</button>
+            </div>
+          </div>
+          <!-- Full name -->
+          <div class="form-row">
+            <label for="full-name">Full name</label>
+            <input id="full-name" type="text" value="Jane Doe"/>
+          </div>
+          <!-- Display name -->
+          <div class="form-row">
+            <label for="display-name">Display name</label>
+            <input id="display-name" type="text" value="Janey"/>
+          </div>
+          <!-- Email address -->
+          <div class="form-row">
+            <label for="email">Email address</label>
+            <input id="email" type="email" value="jane@example.com" readonly/>
+            <a href="#" class="link">Change email</a>
+          </div>
+          <div class="card__actions">
+            <button class="btn primary">Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+    
+    <!-- 5.2 Security Card -->
+    <section class="card">
+      <header class="card__header"><h2>Security</h2></header>
+      <div class="card__body">
+        <form>
+          <div class="form-row">
+            <label for="current-password">Current password</label>
+            <div class="input-container">
+              <input id="current-password" type="password"/>
+              <span class="toggle-password">Show</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="new-password">New password</label>
+            <div class="input-container">
+              <input id="new-password" type="password"/>
+              <span class="toggle-password">Show</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="confirm-password">Confirm password</label>
+            <div class="input-container">
+              <input id="confirm-password" type="password"/>
+              <span class="toggle-password">Show</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Two‑factor Authentication</label>
+            <label class="switch">
+              <input type="checkbox"/>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <!-- Nested 2FA options -->
+          <div class="form-row nested">
+            <p>Choose setup method:</p>
+            <!-- SMS / Authenticator placeholders -->
+          </div>
+          <div class="card__actions">
+            <button class="btn primary">Save password</button>
+          </div>
+        </form>
+      
+    
+
+ 
+
+    <!-- 5.5 Email Notifications Card -->
+    <section class="card">
+      <header class="card__header"><h2>Email Notifications</h2></header>
+      <div class="card__body">
+        <div class="form-row">
+          <label>Deploy notifications</label>
+          <label class="switch"><input type="checkbox"/><span class="slider"></span></label>
+        </div>
+        <div class="form-row">
+          <label>Billing alerts</label>
+          <label class="switch"><input type="checkbox"/><span class="slider"></span></label>
+        </div>
+        <div class="form-row">
+          <label>Marketing</label>
+          <label class="switch"><input type="checkbox"/><span class="slider"></span></label>
+        </div>
+        <div class="card__actions">
+          <button class="btn primary">Save</button>
+        </div>
+      </div>
+    </section>
+
+   
+
+    <!-- 5.7 Connected Accounts Card -->
+    <section class="card">
+      <header class="card__header"><h2>Connected accounts</h2></header>
+      <div class="card__body">
+        <div class="form-row">
+          <label>GitHub</label>
+          <button class="btn primary">Connect</button>
+        </div>
+        <div class="form-row">
+          <label>Figma</label>
+          <button class="btn secondary">Manage access</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 5.8 Delete Account Card -->
+    <section class="card">
+      <header class="card__header"><h2>Delete Account</h2></header>
+      <div class="card__body">
+        <p class="warning">This action is irreversible. All your data will be permanently deleted.</p>
+        <button class="btn danger">Delete my account</button>
+      </div>
+    </section>
+        
+        <!-- Footer -->
+        <footer class="footer">
+          <nav class="footer__links">
+            <a href="#">Docs</a>
+            <a href="#">Support</a>
+            <a href="#">Status</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </nav>
+          <p>© 2025 Clover, Inc.</p>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script src="scripts/settings.js"></script>
+</body>
+</html>

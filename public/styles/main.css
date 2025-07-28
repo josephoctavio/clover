@@ -1,3 +1,7 @@
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Luckiest+Guy&family=Poppins:wght@400;500&display=swap');
+
 /* Prevent text highlighting */
 * {
   user-select: none;
@@ -5,9 +9,6 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
-
-/* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Luckiest+Guy&family=Poppins:wght@400;500&display=swap');
 
 * {
   margin: 0;
@@ -1561,7 +1562,7 @@ iframe {
   backdrop-filter: blur(6px);
   cursor: pointer;
   position: relative;
-  max-width: 140px;           /* prevents overflow on long names */
+  max-width: 200px;           /* prevents overflow on long names */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1601,10 +1602,24 @@ iframe {
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 1000;
 }
+.dropdown-toggle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px; /* adjust based on your layout */
+  display: inline-block;
+}
 .user-menu.open .dropdown-content {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.3);
 }
 
 /* Dropdown items */
@@ -1646,4 +1661,96 @@ iframe {
 * {
   scrollbar-width: thin;
   scrollbar-color: #837484 #0b0b22;
+}
+
+
+/* === Logout Modal === */
+.logout-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+.logout-dialog {
+  background: rgba(1, 2, 1, 0.85);
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.logout-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1.5rem;
+  background-color: #f8e7f8;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-radius 0.3s ease;
+}
+
+.btn:hover {
+  border-radius: 999px;
+}
+
+.btn.danger {
+  background-color: #ff4d4f;
+  color: white;
+}
+/* Cancel Button (Better Contrast + Hover Pill) */
+.btn.cancel {
+  background-color: white;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn.cancel:hover {
+  border-radius: 999px;
+  background-color: #f0f0f0;
+  color: black;
+}
+
+
+
+/* === Toast === */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4BB543;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toast.error {
+  background-color: #d62828;
+}
+
+/* === Hidden Utility === */
+.hidden {
+  display: none;
 }

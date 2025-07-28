@@ -1,5 +1,6 @@
 // public/scripts/login.js
 
+
 document.addEventListener('DOMContentLoaded', () => {
   // Only run on login/signup pages
   const hasLoginForm  = document.getElementById('login-form');
@@ -263,6 +264,8 @@ loginForm?.addEventListener('submit', async e => {
       hideForms();
       localStorage.setItem('cloverUser','true');
       if (data.user?.username) localStorage.setItem('username', data.user.username);
+      if (data.token) localStorage.setItem('cloverToken', data.token); // this line adds
+
       // First verify, then show animation, then redirect (do NOT hide loader before redirect)
       setTimeout(() => {
         window.location.href = 'index.html';
@@ -307,11 +310,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-document.querySelector('.oauth-btn.github')
-        .addEventListener('click', () => {
-  window.location.href = '/api/auth/github';
-});
-document.querySelector('.oauth-btn.google-btn')
-        .addEventListener('click', () => {
-  window.location.href = '/api/auth/google';
+document.addEventListener('DOMContentLoaded', () => {
+  const ghBtn = document.querySelector('.oauth-btn.github');
+  const gBtn  = document.querySelector('.oauth-btn.google-btn');
+
+  if (ghBtn) {
+    ghBtn.addEventListener('click', e => {
+      e.preventDefault();
+      console.log('👉 GitHub button clicked, redirecting to API…');
+      window.location.href = 'http://localhost:5000/api/auth/github';
+    });
+  } else {
+    console.warn('⚠️ .oauth-btn.github not found in DOM');
+  }
+
+  if (gBtn) {
+    gBtn.addEventListener('click', e => {
+      e.preventDefault();
+      console.log('👉 Google button clicked, redirecting to API…');
+      window.location.href = 'http://localhost:5000/api/auth/google';
+    });
+  } else {
+    console.warn('⚠️ .oauth-btn.google-btn not found in DOM');
+  }
 });

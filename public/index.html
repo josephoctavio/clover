@@ -3,7 +3,7 @@
 <head>
      <meta charset="UTF-8" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <title>Clover</title>
+     <title>CLOVER | Home-page</title>
 
   <!-- Google Fonts: Anton & Luckiest Guy -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -379,6 +379,20 @@
 </div>
 
 
+<!-- Logout Confirmation Modal -->
+<div id="logout-modal" class="logout-modal hidden">
+  <div class="logout-dialog">
+    <p>Are you sure you want to logout?</p>
+    <div class="logout-actions">
+      <button id="cancel-logout" class="btn cancel">Cancel</button>
+
+      <button id="confirm-logout" class="btn danger">Logout</button>
+    </div>
+  </div>
+</div>
+
+
+
   <script>
   document.addEventListener('DOMContentLoaded', () => {
     const rightPane = document.querySelector('.right-pane');
@@ -456,14 +470,43 @@ if (mascotImage) {
 
 </script>
 <script>
+  // 1. Pull token from URL
   const params = new URLSearchParams(window.location.search);
-  const token = params.get('token');
+  const token  = params.get('token');
+
   if (token) {
-    localStorage.setItem('cloverToken', token);
-    // Optional: you can also update the UI to say "You're logged in"
-    window.history.replaceState({}, '', 'index.html'); // clean URL
+    // 2. Store the token & mark logged‑in
+    localStorage.setItem('token', token);
+    localStorage.setItem('cloverUser', 'true');
+
+    console.log('✅ OAuth login success, token stored');
+
+    // 3. Fetch full user profile
+    fetch('http://localhost:5000/api/auth/me', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch profile');
+        return res.json();
+      })
+      .then(data => {
+        // 4. Store username for your menu logic
+        localStorage.setItem('username', data.user.username);
+
+        // 5. Clean URL (remove ?token) and reload so main.js sees it
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+        window.location.reload();
+      })
+      .catch(err => {
+        console.error('⚠️ Could not load profile:', err);
+        // On failure, clear token/login flag so user can re‑authenticate
+        localStorage.removeItem('token');
+        localStorage.removeItem('cloverUser');
+      });
   }
 </script>
+
 
 
   <script src="scripts/main.js"></script>
@@ -471,5 +514,11 @@ if (mascotImage) {
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="scripts/filter.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- SweetAlert2 CSS + JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Toast -->
+<div id="toast" class="toast hidden">
+  
+</div>
 </body>
 </html>

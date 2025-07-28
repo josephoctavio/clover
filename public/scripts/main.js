@@ -287,105 +287,136 @@ function goToExplore(category) {
 }
 document.addE
 
-
-
-window.addEventListener('DOMContentLoaded', () => {
-  const joinBtn = document.getElementById('join-btn');
-  const logoutBtn = document.getElementById('logout-btn');
-  const isLoggedIn = localStorage.getItem('cloverUser');
-
-  if (isLoggedIn) {
-    if (joinBtn) joinBtn.style.display = 'none';
-    if (logoutBtn) logoutBtn.style.display = 'inline-block';
-  } else {
-    if (joinBtn) joinBtn.style.display = 'inline-block';
-    if (logoutBtn) logoutBtn.style.display = 'none';
-  }
-
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('cloverUser');
-      window.location.href = 'index.html';
-    });
-  }
-});
 window.addEventListener('DOMContentLoaded', () => {
   const joinBtn = document.getElementById('join-btn');
   const userMenuContainer = document.getElementById('user-menu-container');
 
   const isLoggedIn = localStorage.getItem('cloverUser');
-  const username   = localStorage.getItem('username');
-console.log('🛠️ user-menu init:', {
-  isLoggedIn: localStorage.getItem('cloverUser'),
-  username: localStorage.getItem('username'),
-});
+  const username = localStorage.getItem('username');
+
+  console.log('🛠️ user-menu init:', { isLoggedIn, username });
 
   if (isLoggedIn && username) {
-    // hide join button
+    // Hide join button
     if (joinBtn) joinBtn.style.display = 'none';
 
-userMenuContainer.innerHTML = `
-  <div class="user-menu" id="user-menu">
-    <div class="user-menu-box">
-      <div class="username-box">
-        <span class="dropdown-toggle">${username}</span>
-        <span class="dropdown-caret" aria-hidden="true">
-          <svg width="14" height="14" viewBox="0 0 20 20" fill="none"
-               xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 7L10 12L15 7" stroke="white" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
+    const profilePic = localStorage.getItem('profilePic') ||
+      'https://ui-avatars.com/api/?name=' + encodeURIComponent(username) +
+      '&background=random&color=000&bold=true';
+
+    userMenuContainer.innerHTML = `
+      <div class="user-menu" id="user-menu">
+        <div class="user-menu-box">
+          <div class="username-box">
+            <img src="${profilePic}" alt="${username}" class="user-avatar" />
+            <span class="dropdown-toggle">${username}</span>
+            <span class="dropdown-caret" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7L10 12L15 7" stroke="white" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="dropdown-content" id="dropdown-content">
+            <button id="profile-btn">Your Profile</button>
+            <button id="logout-btn">Logout</button>
+          </div>
+        </div>
       </div>
-      <div class="dropdown-content" id="dropdown-content">
-        <button id="logout-btn">Logout</button>
-      </div>
-    </div>
-  </div>
-`;
+    `;
 
-
-// dropdown toggle logic
-const userMenu      = document.getElementById('user-menu');
-const dropdownPanel = document.getElementById('dropdown-content');
-
-// Toggle dropdown on click
-userMenu.addEventListener('click', (e) => {
-  e.stopPropagation(); // Prevent window click event from firing
-  const isOpen = dropdownPanel.style.display === 'block';
-
-  // Toggle dropdown visibility
-  dropdownPanel.style.display = isOpen ? 'none' : 'block';
-
-  // Toggle `.open` class for caret rotation
-  userMenu.classList.toggle('open', !isOpen);
-});
-
-// Close dropdown when clicking outside
-window.addEventListener('click', (e) => {
-  if (!userMenu.contains(e.target)) {
-    dropdownPanel.style.display = 'none';
-    userMenu.classList.remove('open'); // Reset caret rotation
-  }
-});
-
-
-    // logout logic
-    document.getElementById('logout-btn').addEventListener('click', () => {
-      localStorage.removeItem('cloverUser');
-      localStorage.removeItem('username');
-      window.location.href = 'index.html';
+    // Profile click
+    document.getElementById('profile-btn')?.addEventListener('click', () => {
+      window.location.href = '/settings.html';
     });
 
-    // click outside to close
-    document.addEventListener('click', e => {
+    // Dropdown toggle
+    const userMenu = document.getElementById('user-menu');
+    const dropdownPanel = document.getElementById('dropdown-content');
+
+    userMenu.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = dropdownPanel.style.display === 'block';
+      dropdownPanel.style.display = isOpen ? 'none' : 'block';
+      userMenu.classList.toggle('open', !isOpen);
+    });
+
+    window.addEventListener('click', (e) => {
       if (!userMenu.contains(e.target)) {
         dropdownPanel.style.display = 'none';
+        userMenu.classList.remove('open');
+      }
+    });
+
+    // Logout modal logic
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutModal = document.getElementById('logout-modal');
+    const cancelLogoutBtn = document.getElementById('cancel-logout');
+    const confirmLogoutBtn = document.getElementById('confirm-logout');
+
+    logoutBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      logoutModal.classList.remove('hidden');
+    });
+
+    cancelLogoutBtn?.addEventListener('click', () => {
+      logoutModal.classList.add('hidden');
+    });
+
+    confirmLogoutBtn?.addEventListener('click', async () => {
+      try {
+        localStorage.removeItem('cloverUser');
+        localStorage.removeItem('username');
+        localStorage.removeItem('profilePic');
+
+        sessionStorage.setItem('logoutStatus', 'success');
+
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 100);
+      } catch (err) {
+        console.error('Logout failed:', err);
+        sessionStorage.setItem('logoutStatus', 'fail');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 100);
       }
     });
   } else {
-    // not logged in → ensure logout menu is hidden
+    // Not logged in
     if (userMenuContainer) userMenuContainer.innerHTML = '';
     if (joinBtn) joinBtn.style.display = 'inline-block';
   }
+
+  // ─── Toast System ───
+  const path = window.location.pathname;
+  const isHomepage =
+    path === '/' || path === '/index.html' ||
+    path.endsWith('/index.html') || path.endsWith('/');
+
+  const logoutStatus = sessionStorage.getItem('logoutStatus');
+  sessionStorage.removeItem('logoutStatus'); // Remove immediately
+
+  if (isHomepage && logoutStatus) {
+    if (logoutStatus === 'success') {
+      showToast('You have been logged out successfully', false);
+    } else if (logoutStatus === 'fail') {
+      showToast('Logout failed. Please try again later.', true);
+    }
+  }
 });
+
+// Toast function (only once)
+function showToast(message, isError = false) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.className = 'toast show';
+  if (isError) toast.classList.add('error');
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}

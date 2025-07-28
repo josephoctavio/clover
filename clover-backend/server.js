@@ -1,32 +1,72 @@
 require('dotenv').config();
 const express  = require('express');
+const passport = require('passport');
+require('./auth/passport'); //  Import passport strategies
+const authRoutes = require('./src/routes/authRoutes');
 const mongoose = require('mongoose');
 const cors     = require('cors');
 const path     = require('path');
 const bcrypt   = require('bcrypt');
-require('./auth/passport'); // ✅ Import passport strategies
+const session = require('express-session');
 
-const sendMail = require('./utils/mailer'); // ✅ Only once!
-console.log('📦 sendMail imported as:', sendMail); // ✅ Good check
-const User     = require('./models/User'); // ✅ Import User model
+
+
+
+const sendMail = require('./utils/mailer'); //  Import sendMail utility
+console.log('📦 sendMail imported as:', sendMail); //  Good check
+const User     = require('./models/User'); //  Import User model
 const rateLimit = require('express-rate-limit');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const cookieSession = require('cookie-session');
-const GitHubStrategy = require('passport-github2').Strategy;
 const fetch = require('node-fetch');
 const crypto = require('crypto');
+// After your other requires
+const auth = require('./src/middleware/authMiddleware');
+const Snippet = require('./src/models/Snippet');
 
 
 const app = express();
+app.use(cors({
+  origin: 'http://localhost:5500',
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const authRoutes = require('./src/routes/authRoutes');
+  
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'mydefaultsecret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,             // true if you're using HTTPS
+    httpOnly: true,
+    sameSite: 'lax'
+  }
+}));
+
+//  Initialize Passport here so your authRoutes see it
+  app.use(passport.initialize());
+
+// Static folder for uploaded profile pictures and routes
+app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 
+
+// Serve frontend
+const publicPath = path.resolve(__dirname, '../public');
+app.use(express.static(publicPath));
+
+// this is inserted immediately after the static middleware:
+app.get('/profile.html/:tab', (req, res) => {
+  res.sendFile(path.join(publicPath, 'profile.html'));
+});
+app.get('/', (req, res) => res.sendFile(path.join(publicPath, 'index.html')));
 const PORT = process.env.PORT || 5000;
+
+const profileRoutes = require('./src/routes/profile');
+app.use('/api/profile', profileRoutes);
 
 
  //Passwordpolicy: ≥8 chars, letters & numbers
@@ -45,10 +85,44 @@ const codeLimiter = rateLimit({
 });
 
 
-// — Connect to MongoDB
+// server.js
+
+// — Connect to MongoDB and drop & recreate the email index —
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ MongoDB connected'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+  .then(async () => {
+    console.log('✅ MongoDB connected');
+
+    const usersColl = mongoose.connection.db.collection('users');
+
+    // 1) Drop old non‑sparse index
+    try {
+      await usersColl.dropIndex('email_1');
+      console.log('🗑  Dropped old email_1 index');
+    } catch (err) {
+      if (err.codeName === 'IndexNotFound') {
+        console.log('ℹ️  email_1 index not found, skipping drop');
+      } else {
+        console.error('❌ Error dropping index:', err);
+      }
+    }
+
+    // 2) Create the new sparse unique index
+    try {
+      await usersColl.createIndex(
+        { email: 1 },
+        { unique: true, sparse: true }
+      );
+      console.log('⚙️  Created sparse unique index on email');
+    } catch (err) {
+      console.error('❌ Error creating sparse index:', err);
+    }
+
+  })
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err);
+  });
+
+
 
 // — Middleware
 app.use(cors());
@@ -61,9 +135,6 @@ app.post('/api/forgot-password', codeLimiter);
 app.post('/api/verify', codeLimiter);
 app.post('/api/reset-password', codeLimiter);
 // Session middleware (so Passport can persist login)
-
-app.use(passport.initialize());
-
 
 app.post('/api/signup', async (req, res) => {
   console.log('⚡️  POST /api/signup', req.body);
@@ -179,20 +250,6 @@ app.post('/api/login', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
-// Auth middleware to protect routes
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  // Expect header: "Bearer <token>"
-  const token = authHeader && authHeader.split(' ')[1];
-  if (!token) return res.sendStatus(401);            // No token
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);             // Invalid token
-    req.user = user;                                 // { userId, email, iat, exp }
-    next();
-  });
-}
 // — FORGOT-PASSWORD
 // (rate-limited by codeLimiter above)
 app.post('/api/forgot-password', async (req, res) => {
@@ -273,7 +330,7 @@ if (!passwordRegex.test(newPassword)) {
 });
 
 // DELETE /api/account  — protected
-app.delete('/api/account', authenticateToken, async (req, res) => {
+app.delete('/api/account', auth, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.user.userId);
     res.json({ message: 'Account deleted successfully' });
@@ -310,167 +367,7 @@ app.get('/api/verify', async (req, res) => {
   }
 });
 
-// Passport strategies for Google and GitHub
-passport.use(new GoogleStrategy({
-  clientID:     process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL:  'http://localhost:5000/api/auth/google/callback',
-},
-async (accessToken, refreshToken, profile, done) => {
-  try {
-    const email = profile.emails[0].value;
-
-    // 🔍 Check if user already exists by email
-    let user = await User.findOne({ email });
-
-    if (user) {
-      // ✔️ Update to include googleId if not yet linked
-      if (!user.googleId) {
-        user.googleId = profile.id;
-        await user.save();
-      }
-    } else {
-      // ❇️ New user via Google
-      user = await User.create({
-        googleId: profile.id,
-        email,
-        username: profile.displayName,
-        isVerified: true
-      });
-    }
-
-    return done(null, user);
-  } catch (err) {
-    return done(err, null);
-  }
-}));
-
-
-passport.use(new GitHubStrategy({
-    clientID:     process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL:  'http://localhost:5000/api/auth/github/callback'
-  },
-  async (accessToken, refreshToken, profile, done) => {
-    // 1. Fetch the primary email as before
-    let email = profile.emails?.[0]?.value;
-    if (!email) {
-      try {
-        const resp = await fetch('https://api.github.com/user/emails', {
-          headers: { 
-            Authorization: `token ${accessToken}`, 
-            'User-Agent': 'Clover-App' 
-          }
-        });
-        const emails = await resp.json();
-        const primary = emails.find(e => e.primary && e.verified);
-        if (primary) email = primary.email;
-      } catch (err) {
-        console.error('Error fetching GitHub emails:', err);
-      }
-    }
-
-    // 2. Try to find by GitHub ID first
-    let user = await User.findOne({ githubId: profile.id });
-
-    if (!user && email) {
-      // 3. If no GitHub-linked user, see if someone signed up with this email already
-      user = await User.findOne({ email });
-      if (user) {
-        // Link GitHub to their existing account
-        user.githubId   = profile.id;
-        user.isVerified = true;
-        await user.save();
-      }
-    }
-
-    // 4. If still no user, create a brand‑new one
-    if (!user) {
-      user = await User.create({
-        githubId:   profile.id,
-        email,                     // may be null if we couldn’t fetch it
-        username:   profile.username,
-        isVerified: true
-      });
-    }
-
-    done(null, user);
-  }
-));
-
-
-// Serialize/deserialize for session support
-passport.serializeUser((user, done) => done(null, user._id));
-passport.deserializeUser(async (id, done) => {
-  const user = await User.findById(id);
-  done(null, user);
-});
-
-// Redirect to Google
-app.get(
-  '/api/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    session: false
-  })
-);
-
-// Google callback URL
-app.get('/api/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/', session: false }),
-  (req, res) => {
-    // Successful auth: issue JWT and/or set cookie, then redirect
-    const token = jwt.sign(
-      { userId: req.user._id, email: req.user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
-    // For SPA, you might redirect to frontend with token in query or cookie:
-  // serve index.html from same host/port
-  res.redirect(`/index.html?token=${token}`);
-  }
-);
-
-
-
-// Redirect to GitHub
-app.get(
-  '/api/auth/github',
-  passport.authenticate('github', { scope: ['user:email'], session: false })
-);
-
-// GitHub callback (stateless)
-app.get(
-  '/api/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/', session: false }),
-  (req, res) => {
-    // Issue JWT
-    const token = jwt.sign(
-      { userId: req.user._id, email: req.user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
-  res.redirect(`/index.html?token=${token}`);
-
-  }
-);
-
-// ✅ Use absolute path to public directory
-const publicPath = path.resolve(__dirname, '../public');
-app.use(express.static(publicPath));
-
-// ✅ Snippet schema and model
-const snippetSchema = new mongoose.Schema({
-  title: String,
-  code: String,
-  language: String,
-  uploadedBy: {
-    email: String
-  }
-});
-const Snippet = mongoose.model('Snippet', snippetSchema);
-
-// ✅ API route
+//  API route
 app.get('/api/snippets', async (req, res) => {
   try {
     const snippets = await Snippet.find();
@@ -480,12 +377,13 @@ app.get('/api/snippets', async (req, res) => {
   }
 });
 
-// ✅ Serve index.html on root
+//  Serve index.html on root
 app.get('/', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
 });
 
-// ✅ Start server
+//  Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+

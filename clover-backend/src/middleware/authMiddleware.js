@@ -1,21 +1,23 @@
 // src/middleware/authMiddleware.js
-
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 module.exports = function (req, res, next) {
-  const authHeader = req.headers['authorization'];
+  const authHeader = req.headers["authorization"] || "";
+  const token = authHeader.startsWith("Bearer ")
+    ? authHeader.slice(7)
+    : null;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'No token provided' });
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
   }
 
-  const token = authHeader.split(' ')[1];
-
   try {
+    // decoded will be { id, email, iat, exp }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach user info to the request
+    req.user = decoded; 
     next();
   } catch (err) {
-    return res.status(401).json({ message: 'Invalid or expired token' });
+    console.error("⚠️ authMiddleware error:", err);
+    return res.status(401).json({ message: "Invalid or expired token" });
   }
 };

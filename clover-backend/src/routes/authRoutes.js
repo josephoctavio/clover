@@ -12,7 +12,7 @@ const router = express.Router();
 
 // @route   POST /api/auth/register
 router.post('/register', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
   try {
     // 1. Check for existing user
@@ -26,45 +26,49 @@ router.post('/register', async (req, res) => {
 
     // 3. Create new user instance
     const newUser = new User({
+      username,
       email,
-      password: hashedPassword
+      passwordHash: hashedPassword
     });
 
     // 4. Generate a 6‑digit verification code and set expiry (15 minutes)
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-    const expires = Date.now() + 15 * 60 * 1000; // 15 minutes from now
+    const expires = Date.now() + 15 * 60 * 1000;
 
-    // 5. Persist into the nested tokens.verification sub‑document
+    // 5. Save verification token
     newUser.tokens.verification = { code, expires };
 
-    // 6. Save user to database
+    // 6. Save user
     await newUser.save();
 
-    // 7. Send the code via email
+    // 7. Send email
     try {
       await sendMail({
-        to:      email,
+        to: email,
         subject: 'Your Clover Verification Code',
-        html:    `<p>Welcome to <strong>Clover</strong>!</p>
-                  <p>Your verification code is <strong>${code}</strong>.</p>
-                  <p>This code will expire in 15 minutes.</p>`
+        html: `<p>Welcome to <strong>Clover</strong>!</p>
+               <p>Your verification code is <strong>${code}</strong>.</p>
+                <p>Please enter this code to complete your registration.</p>
+                <p>Ignore this email if you did not register.</p>
+                <p>Note: This code is valid for 15 minutes.</p>
+                <p>Thank you for joining CLOVER!</p>`
       });
     } catch (mailErr) {
       console.error('Email send failed:', mailErr);
-      // Optional: you could delete the user or flag for retry here
     }
 
-    // 8. Dev log
     console.log(`🔗 [DEV] Verification Code for ${email}:`, code);
 
     return res
       .status(201)
       .json({ message: 'User registered successfully 🌱. Verification code sent.' });
+
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 // @route   POST /api/auth/reset-password
 // @desc    Reset a user's password using the 6‑digit code
@@ -127,13 +131,25 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// @route   GET /api/auth/me → Return current logged-in user
+// In src/routes/authRoutes.js
+
 router.get('/me', authMiddleware, async (req, res) => {
-  return res.json({
-    message: 'Welcome back 🌿',
-    user: req.user
-  });
+  try {
+    // Use req.user.id (the JWT payload) to look up the full user
+    const fullUser = await User.findById(req.user.id)
+      .select('username email avatar');
+
+    if (!fullUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json({ user: fullUser });
+  } catch (err) {
+    console.error('❌ /api/auth/me error:', err);
+    return res.status(500).json({ error: 'Server error' });
+  }
 });
+
 
 // @route   POST /api/auth/forgot-password
 // @desc    Generate & email a 6‑digit reset code
@@ -183,13 +199,63 @@ router.post('/forgot-password', async (req, res) => {
 
 module.exports = router;
 // Start GitHub auth
- router.get('/github', passport.authenticate('github', { scope: ['user:email'], session: false }));
+ router.get('/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login.html', session: false }),
+  async (req, res) => {
+    try {
+      const user = req.user;
+      const token = jwt.sign(
+        { id: user._id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '2d' }
+      );
 
-
-// Callback from GitHub
-router.get('/github/callback',   passport.authenticate('github', { failureRedirect: '/login.html', session: false }),
-  (req, res) => {
-    res.redirect('/index.html'); // or dashboard.html
+      // Redirect to frontend with token in query string
+      res.redirect(`http://localhost:5000/index.html?token=${token}`);
+    } catch (err) {
+      console.error('GitHub OAuth error:', err);
+      res.redirect('/login.html');
+    }
   }
 );
-// End GitHub auth
+
+// Start Google auth
+router.get('/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login.html', session: false }),
+  async (req, res) => {
+    try {
+      const user = req.user;
+      const token = jwt.sign(
+        { id: user._id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '2d' }
+      );
+
+      res.redirect(`http://localhost:5000/index.html?token=${token}`);
+    } catch (err) {
+      console.error('Google OAuth error:', err);
+      res.redirect('/login.html');
+    }
+  }
+);
+
+// makes sure Google login prompts user to select account
+router.get('/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    prompt: 'select_account'
+  })
+);
+
+
+// AFTER
+router.get('/github', (req, res, next) => {
+  // Pass `login` as an empty string to force GitHub to prompt for credentials
+  passport.authenticate('github', {
+    scope: ['user:email'],
+    allow_signup: true,
+    login: ''  
+  })(req, res, next);
+});
+
+
