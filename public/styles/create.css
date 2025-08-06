@@ -1,3 +1,455 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Luckiest+Guy&family=Poppins:wght@400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg,   #020202,   #020202,  #020202);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #e0dce5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
+/* PAGE WRAPPER (for sliding effect) */
+.page-content {
+  transition: transform 0.3s ease;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: relative;
+  z-index: 100;
+}
+
+.site-title {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'Luckiest Guy', cursive;
+  color: #ffffff;
+  text-align: left;
+}
+
+.site-title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.left-header {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+/* ============================ */
+/*     EXPLORE BUTTON + JS     */
+/* ============================ */
+.explore-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.95rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.explore-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #a97aff;
+  transition: width 0.3s ease;
+}
+
+.explore-btn:hover,
+.explore-dropdown.open .explore-btn {
+  color: #a97aff;
+}
+
+.explore-btn:hover::after,
+.explore-dropdown.open .explore-btn::after {
+  width: 100%;
+}
+
+.explore-btn .dropdown-icon {
+  stroke: currentColor;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.explore-btn:hover .dropdown-icon,
+.explore-dropdown.open .explore-btn .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+
+/* ============================ */
+/*       DROPDOWN MENU         */
+/* ============================ */
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  display: none;
+  min-width: 240px;
+  background: #1E1E1E;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+/* Show on hover */
+.explore-dropdown:hover .dropdown-menu,
+.explore-dropdown.open .dropdown-menu {
+  display: block;
+}
+
+/* ============================ */
+/*      HEADER BUTTONS         */
+/* ============================ */
+
+.header-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.login-btn-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.header-btn,
+.btn,
+.button {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.header-btn:hover,
+.btn:hover,
+.button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* =============== */
+/* Dropdown Grid   */
+/* =============== */
+.dropdown-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* You can change to 3 for wider screens */
+  gap: 12px;
+}
+
+/* =============== */
+/* Dropdown Items  */
+/* =============== */
+.dropdown-item {
+  background: #262626;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: #2f2f2f;
+  box-shadow: 0 0 0 1px #a97aff, 0 0 8px rgba(169, 122, 255, 0.3);
+  transform: scale(1.02);
+}
+
+/* Icon Styling for Lucide SVG inside <i> */
+.dropdown-item i svg {
+  width: 20px;
+  height: 20px;
+  stroke: #5900ff;
+  stroke-width: 2;
+  transition:
+    stroke 0.3s ease,
+    transform 0.2s ease,
+    filter 0.3s ease;
+  filter: drop-shadow(0 0 3px rgba(169, 122, 255, 0.4));
+}
+
+.dropdown-item:hover i svg {
+  stroke: #66fcff;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px rgba(102, 252, 255, 0.6));
+}
+
+/* Label */
+.item-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  flex-grow: 1;
+}
+
+/* =============== */
+/* Dropdown Menu Wrapper */
+/* =============== */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  min-width: 500px;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+
+  /* Fade transitions */
+  transition:
+    opacity 0.15s ease 0.2s,
+    visibility 0.15s ease 0.2s;
+}
+
+/* Show dropdown on hover */
+.explore-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s, 0s;
+}
+
+/* Show dropdown when "open" class is added via JS (for click) */
+.explore-dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.create-btn {
+  position: relative;
+  background: linear-gradient(135deg, #0d0d0f, #1a1a26);
+  color: #eae6f8;
+  padding: 6px 16px;
+  border: 1px solid #7f56d9;
+  font-size: 12px;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+  box-shadow: 0 0 6px rgba(127, 86, 217, 0.25);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+}
+
+.create-btn:hover {
+  background: linear-gradient(135deg, #1b1b2f, #292952);
+  transform: translateY(-1px);
+  box-shadow: 0 0 8px rgba(127, 86, 217, 0.4);
+}
+
+/* Subtle shine */
+.create-btn .shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transform: skewX(-15deg);
+  animation: shineMove 3s infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes shineMove {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Discreet corner dots */
+.create-btn .border-top-left,
+.create-btn .border-top-right,
+.create-btn .border-bottom-left,
+.create-btn .border-bottom-right {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #eae6f8;
+  opacity: 0.06;
+  border-radius: 1px;
+}
+
+.create-btn .border-top-left { top: 0; left: 0; }
+.create-btn .border-top-right { top: 0; right: 0; }
+.create-btn .border-bottom-left { bottom: 0; left: 0; }
+.create-btn .border-bottom-right { bottom: 0; right: 0; }
+
+
+/* User menu */
+.user-menu {
+  position: relative;
+  display: inline-block;
+  font-family: Poppins, sans-serif;
+}
+
+/* ================================
+   Modern Minimalistic User Button
+   ================================ */
+
+/* Username button */
+.username-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  position: relative;
+  max-width: 200px;           /* prevents overflow on long names */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 12px;         /* gives breathing room from edge */
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+.username-box:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px); /* subtle lift */
+}
+
+/* Caret icon */
+.dropdown-caret {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.25s ease;
+}
+.user-menu.open .dropdown-caret {
+  transform: rotate(180deg);
+}
+
+/* Dropdown container */
+.dropdown-content {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 180px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 6px 0;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+.dropdown-toggle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px; /* adjust based on your layout */
+  display: inline-block;
+}
+.user-menu.open .dropdown-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Dropdown items */
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: #eee;
+  background: transparent;
+  border: none;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+.dropdown-content button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.header-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 12px;
+}
+
+
+
+
+
+
+
 /* =============================== */
 /* GLOBAL & LAYOUT                */
 /* =============================== */
@@ -11,32 +463,36 @@ html, body {
   display: flex;
   height: 100vh;
 }
-
 /* =============================== */
 /* LEFT: EDITOR PANE              */
 /* =============================== */
 
 #editor-pane {
   width: 50%;
-  padding: 80px 20px 20px 20px;
-  background-color: #111012;
+  padding: 60px 20px 20px 20px;
+  background-color:  #020202;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  overflow-y: auto;
-  border-right: 1px solid rgba(255,255,255,0.1);
+  gap: 8px;
+
+  /* ✅ Remove scrollbar */
+  overflow: hidden; /* ← disables scrolling */
+  
+  border-right: 1px solid  #020202;
 }
+
 
 .editor-block {
   display: flex;
   flex-direction: column;
+  margin-top: 0;
 }
 
 .editor-block label {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   color: #f2e5f3;
   font-size: 0.875rem;
   font-weight: 500;
@@ -47,14 +503,14 @@ html, body {
 }
 
 .editor-block label:hover {
-  color: #ffffff;
+  color: #ebffed;
 }
 
 .editor-icon {
   width: 20px;
   height: 20px;
   object-fit: contain;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 1px 1px rgb(0, 0, 0));
   transition: transform 0.2s ease;
   margin-right: 8px;
   opacity: 0.85;
@@ -63,29 +519,433 @@ html, body {
 .editor-block label:hover .editor-icon {
   transform: scale(1.05);
 }
+.editor-block {
+  margin-bottom: 2rem;
+}
 
-.editor-block textarea {
+.editor-inner {
+  position: relative;
   width: 100%;
-  box-sizing: border-box;
-  background-color: #1a191c;
-  border: 1px solid #2e2c31;
-  border-radius: 8px;
-  padding: 12px;
+}
+
+.editor-inner textarea {
+  width: 100%;
+  height: 200px;
   resize: none;
+  padding: 1rem;
   font-family: monospace;
   font-size: 14px;
-  color: #ffffff;
+  border-radius: 8px;
+  background-color: #111;
+  color: #f8f8f2;
+  border: none;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.editor-inner textarea:focus {
   outline: none;
-  transition: border 0.3s;
+  box-shadow: 0 0 0 2px #ffc0cb88;
+}
+#color-picker-container {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
 }
 
-.editor-block textarea:focus {
-  border: 1px solid #05737d;
-  box-shadow: 0 0 0 2px rgb(17, 7, 29);
+/* only when you add `.visible` do you show it: */
+#color-picker-container.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
 }
 
-.editor-block.expanded textarea {
-  height: 250px;
+
+/* ==========================================================================
+   COLOR PICKER PANEL
+   ========================================================================== */
+
+/* Container */
+#color-picker-container {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  width: 260px;
+  padding: 16px;
+  background: rgb(0, 0, 0);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(63, 0, 107, 0.655);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.442);
+  transform: scale(0.95);
+  transform-origin: bottom right;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 999;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#color-picker-container.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+#color-picker-container #eyedropper-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: transparent; 
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+#color-picker-container #eyedropper-btn:hover {
+  background: rgb(3, 3, 3); 
+}
+
+#color-picker-container #eyedropper-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+#color-inputs input[type="number"],
+#color-inputs select {
+  background: rgba(10, 10, 10, 0.9); 
+  border: 1px solid #300042;
+  border-radius: 6px;
+  color: #ffffff;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  width: 60px;
+  appearance: textfield;
+  transition: border 0.2s ease;
+}
+
+#color-inputs input[type="number"]:focus,
+#color-inputs select:focus {
+  outline: none;
+  border-color: #310229;
+}
+
+#color-inputs input::-webkit-outer-spin-button,
+#color-inputs input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+#color-picker-container #color-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 6px; /* Increased gap for spacing between inputs */
+  margin-top: 8px;
+}
+
+
+
+/* =============================== */
+/* CODEMIRROR EDITOR STYLING      */
+/* =============================== */
+
+.CodeMirror {
+  height: auto !important;
+
+  /* 
+    👇 Editor Box Height Control 
+    Adjust this value to increase or decrease the visible height of the code editor
+    Example: 240px, 260px, 280px...
+  */
+  max-height: 260px;
+  min-height: 260px; /* ✅ Gives it height even if empty */
+
+  overflow: hidden;
+  background-color: #020102 !important;
+  color: #ffffff;
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  border: 1px solid #35004b;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  margin-top: 0;
+}
+
+.CodeMirror-scroll {
+  max-height: 260px;
+  overflow: auto !important;
+}
+
+.CodeMirror-gutters {
+  background-color:  #020102  !important;
+  color: #ffffff !important;
+  border-right: 1px solid #35004b !important;
+}
+ 
+/* =============================== */
+/* RIGHT: PREVIEW PANE            */
+/* =============================== */
+#preview-pane {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  background-color: #020202;
+  padding: 20px;
+  overflow: hidden;
+}
+
+#preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0 10px;             /* optional horizontal padding */
+}
+
+#preview-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #f8e7f8;
+}
+
+#preview-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#open-settings-btn {
+  background-color: #1f1f1f;
+  color: #f8e7f8;
+  border: none;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#open-settings-btn:hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+#preview-area {
+  height: 700px;
+  max-height: 80vh;
+  overflow: hidden;
+  background-color: #000000;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(74, 74, 74, 0.2);
+  display: flex;
+  align-items: stretch;
+  position: relative;
+}
+
+#live-preview {
+  width: 100%;
+  height: 100%;
+  border: none;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* =============================== */
+/* SETTINGS MODAL & OVERLAY       */
+/* =============================== */
+
+/* Overlay behind modal */
+.settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+  display: none; /* hidden by default, shown via JS */
+}
+
+/* Modal container */
+.settings-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hidden state */
+.settings-modal.hidden {
+  display: none;
+}
+
+/* Open state — scales up and fades in */
+.settings-modal.open {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Modal content */
+.settings-content {
+  background-color: #121212;       /* Morpheon Black */
+  color: #f8e7f8;
+  width: 500px;                    /* Increased width */
+  height: 400px;                   /* Increased height */
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow-y: auto;                /* Scroll if content overflows */
+}
+
+/* Tooltip for oversized components */
+#preview-warning {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0,0,0,0.7);
+  color: #ffc0cb;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  display: none;
+  z-index: 10;
+}
+
+#preview-warning.show {
+  display: block;
+}
+
+/* =============================== */
+/* FLOATING COLOR PICKER BUTTON   */
+/* =============================== */
+
+.floating-color-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-color-btn:hover {
+  background: rgb(0, 0, 0);
+}
+
+.color-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: linear-gradient(45deg, #f00, #0f0, #00f, #ff0);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+/* =============================== */
+/* EDITOR TOOLBAR BUTTONS         */
+/* Minimal Dev/VSCode style buttons */
+/* =============================== */
+
+.editor-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.editor-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.editor-buttons button {
+  padding: 6px 12px;
+  background-color: #1e1e1e;      /* VS Code dark background */
+  color: #d4d4d4;                 /* VS Code foreground */
+  border: 1px solid #3c3c3c;      /* subtle border */
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-family: 'Consolas', 'Courier New', monospace;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.editor-buttons button:hover {
+  background-color: #2a2a2a;
+  border-color: #555;
+  transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   CODEMIRROR CUSTOM SCROLLBAR
+   ========================================================================== */
+
+.CodeMirror-scroll::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.CodeMirror-scroll::-webkit-scrollbar-thumb {
+  background-color: red !important;
+  border-radius: 10px !important;
+}
+
+
+/* ==========================================================================
+   PRIMARY / CONFIRM ACCENT BUTTONS (Toolbar)
+   ========================================================================== */
+
+button#confirm-reset,
+button#save-unsaved-btn {
+  border-color: #4FE0E9;
+}
+
+button#confirm-reset:hover,
+button#save-unsaved-btn:hover {
+  background: rgba(79, 224, 233, 0.2);
+}
+
+
+/* ==========================================================================
+   SPECIFIC BUTTON LAYOUT CONTROLS
+   ========================================================================== */
+
+button#cancel-unsaved-btn {
+  flex: 1 1 100%;
+  order: 2;
+}
+
+button#save-unsaved-btn,
+button#quit-anyway-btn {
+  flex: 1 1 auto;
+  order: 1;
 }
 
 /* =============================== */
@@ -154,101 +1014,6 @@ input:checked + .slider:before {
   font-weight: 500;
   color: #ccc;
   white-space: nowrap;
-}
-
-/* =============================== */
-/* RIGHT: PREVIEW PANE            */
-/* =============================== */
-
-#preview-pane {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  background-color: #111;
-  padding: 20px;
-  overflow: hidden;
-}
-
-#preview-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-#preview-header h2 {
-  margin: 0;
-  font-size: 20px;
-  color: #f8e7f8;
-}
-
-#preview-tools {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#preview-area {
-  flex: 0 0 450px; /* fixed height, slightly reduced */
-  background-color: #ffffff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
-
-#live-preview {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* =============================== */
-/* COLOR PICKER                   */
-/* =============================== */
-#color-picker-container {
-  position: fixed;
-  bottom: 60px;
-  right: 20px;
-  background: rgba(18, 18, 20, 0.85);
-  backdrop-filter: blur(16px);
-  border-radius: 8px;
-  padding: 12px;
-  height: auto;
-  width: auto;
-  min-width: 64px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  transform: scale(0.95);
-  transform-origin: bottom right;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s ease;
-  z-index: 999;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-#color-picker-container.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#color-picker-container .iro__slider {
-  width: 12px !important;
-  height: 100px !important;
-  border-radius: 6px;
-  overflow: hidden;
-  position: relative;
-  background: #1c1c20;
-  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.05);
-}
-
-#color-picker-container .iro__slider .iro__handle {
-  width: 12px !important;
-  height: 12px !important;
-  left: 0 !important;
-  border-radius: 50%;
-  background-color: #ffffff;
-  box-shadow: 0 0 6px rgba(161, 98, 247, 0.6), 0 0 0 1.5px rgba(255, 255, 255, 0.1);
-  transform: translateX(0) translateY(-50%) !important;
 }
 
 /* =============================== */
@@ -382,6 +1147,32 @@ input:checked + .slider:before {
   }
 }
 
+/* ──────────────── Custom Slim Scrollbar ──────────────── */
+/* Overlay slim scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  position: absolute;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff00dd;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #000000;
+}
+
+/* Firefox overlay slim scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #392f4a #00000c;
+}
+
+
 /* =============================== */
 /* RESPONSIVE DESIGN              */
 /* =============================== */
@@ -433,62 +1224,21 @@ input:checked + .slider:before {
     max-width: 300px;
   }
 }
-/* Toolbar Layout */
-.editor-toolbar {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  padding-inline: 0;
-}
 
-/* Button Container */
-.editor-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-/* Buttons: sleek + minimal */
-.editor-buttons button,
-#color-picker-btn {
-  padding: 8px 14px;
-  background-color: #1f2937; /* dark slate */
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.editor-buttons button:hover,
-#color-picker-btn:hover {
-  background-color: #374151;
-}
-
-/* Color Picker Button */
-#color-picker-btn {
-  margin-top: 0.5rem;
-  font-size: 1.2rem;
-  line-height: 1;
-}
-
-/* Toggle Switch */
+/* ── Futuristic Minimalistic Toggle Switch ── */
 .toggle-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.75rem;
   margin-top: 0.5rem;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Switch Style */
 .tailwind-toggle {
   position: relative;
   display: inline-block;
-  width: 42px;
-  height: 22px;
+  width: 48px;
+  height: 24px;
 }
 
 .tailwind-toggle input {
@@ -504,35 +1254,131 @@ input:checked + .slider:before {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #d1d5db;
-  transition: 0.4s;
-  border-radius: 34px;
+  background: #1f2937;
+  transition: background 0.4s ease-in-out, box-shadow 0.3s ease;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 1px #4b5563;
 }
 
 .tailwind-slider::before {
-  position: absolute;
   content: "";
-  height: 16px;
-  width: 16px;
+  position: absolute;
+  height: 18px;
+  width: 18px;
   left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
+  top: 3px;
+  background-color: #ffffff;
   border-radius: 50%;
+  transition: transform 0.4s ease, background 0.3s ease;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 .tailwind-toggle input:checked + .tailwind-slider {
-  background-color: #3b82f6;
+  background: linear-gradient(90deg, #00f5a0, #00d9f5);
+  box-shadow: 0 0 8px #00f5a0aa, inset 0 0 2px #ffffff30;
 }
 
 .tailwind-toggle input:checked + .tailwind-slider::before {
-  transform: translateX(20px);
+  transform: translateX(24px);
+  background: #e0faff;
+  box-shadow: 0 0 12px #00f5a0;
+  animation: togglePulse 1.2s infinite;
 }
 
-/* Toggle Label Text */
+.tailwind-toggle input:focus + .tailwind-slider {
+  box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.3);
+}
+
+@keyframes togglePulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 245, 160, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 245, 160, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 245, 160, 0); }
+}
+
+/* ── Futuristic Minimalistic Toggle Switch ── */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.tailwind-toggle {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.tailwind-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.tailwind-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1f2937;
+  transition: background 0.4s ease-in-out, box-shadow 0.3s ease;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 1px #4b5563;
+}
+
+.tailwind-slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  top: 3px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.4s ease, background 0.3s ease;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.tailwind-toggle input:checked + .tailwind-slider {
+  background: linear-gradient(90deg, #00f5a0, #00d9f5);
+  box-shadow: 0 0 8px #00f5a0aa, inset 0 0 2px #ffffff30;
+}
+
+.tailwind-toggle input:checked + .tailwind-slider::before {
+  transform: translateX(24px);
+  background: #e0faff;
+  box-shadow: 0 0 12px #00f5a0;
+  animation: togglePulse 1.2s infinite;
+}
+
+.tailwind-toggle input:focus + .tailwind-slider {
+  box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.3);
+}
+
+@keyframes togglePulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 245, 160, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 245, 160, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 245, 160, 0); }
+}
+
 .toggle-label {
-  font-size: 0.9rem;
-  color: #374151;
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  font-weight: 400;
+  user-select: none;
+  letter-spacing: 0.25px;
+  text-transform: uppercase;
+  opacity: 0.85;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.toggle-label:hover {
+  color: #f0f9ff;
+  opacity: 1;
 }
 
 
@@ -576,4 +1422,140 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+/* === Modal Base Styles === */
+
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-content {
+  background: rgba(30, 30, 35, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  padding: 2rem;
+  width: min(400px, 90%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.modal-content h2,
+.modal-content h3 {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.modal-content p {
+  margin: 0;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+/* === Button Layout === */
+
+.modal-actions,
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modal-actions {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.modal-actions button,
+.modal-buttons button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.75rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  color: #fff;
+}
+
+.modal-actions button:hover,
+.modal-buttons button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-actions button:active,
+.modal-buttons button:active {
+  transform: scale(0.98);
+}
+
+
+/* Minimalist Shortcut Panel — Bottom Left */
+#shortcut-panel {
+  position: fixed;
+  bottom: 42px;               /* Push it up from bottom */
+  left: 20px;
+  width: 240px;
+  background: rgba(255, 255, 255, 0.05); /* Light transparent glassy bg */
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+  backdrop-filter: blur(12px);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 13px;
+  z-index: 10000;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#shortcut-panel.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+#shortcut-panel h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ddd;
+}
+
+#shortcut-panel ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#shortcut-panel li {
+  margin-bottom: 6px;
+  color: #ccc;
+  font-weight: 400;
+}
+#editor-container {
+  all: unset; /* Reset any unintended styles */
+  display: contents; /* Acts as invisible wrapper, won’t affect layout */
 }

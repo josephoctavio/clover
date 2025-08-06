@@ -1,32 +1,27 @@
-/* Import Highlight.js GitHub Dark Theme (already in HTML) */
-/* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
 
-/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body & Background */
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(
     to bottom,
-    #080808 0%,      /* pure black at top */
-    #080808 20%,     /* hold black down to 20% of the viewport */
-    #16162B 50%,     /* blend from black → purple between 20% and 50% */
-    #16162B 100%     /* pure purple from 50% down */
+    #080808 0%,
+    #080808 20%,
+    #16162B 50%,
+    #16162B 100%
   );
   color: #fff;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* HEADER */
 header {
   display: flex;
   justify-content: space-between;
@@ -55,9 +50,6 @@ header {
   gap: 4rem;
 }
 
-
-
-/* Main Container */
 .container {
   max-width: 1180px;
   margin: 2rem auto;
@@ -67,7 +59,6 @@ header {
   gap: 2rem;
 }
 
-/* Preview + Code Wrapper */
 .preview-container {
   display: flex;
   flex-direction: row;
@@ -82,11 +73,10 @@ header {
   margin-top: 1rem;
 }
 
-/* Live Preview Box */
 .live-preview {
-  background: transparent; /* 👈 removes the grey box background */
-  padding: 0;              /* 👈 removes internal spacing */
-  margin-top: 1.8rem;      /* keep this if it’s what you used to align with code preview */
+  background: transparent;
+  padding: 0;
+  margin-top: 1.8rem;
   flex: 1 1 47%;
   min-width: 350px;
   height: 400px;
@@ -97,199 +87,23 @@ header {
   flex-shrink: 0;
 }
 
-
-/* Code Section */
 .code-section {
   flex: 1 1 47%;
   min-width: 450px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  justify-content: space-between; /* ensure proper vertical spacing */
+  justify-content: space-between;
 }
 
-
-/* Tabs */
-.code-tabs {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.tab-button {
-  background: #1a1a1a;
-  color: #ccc;
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 0.25rem 0.75rem;
-  font-size: 0.85rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  outline: none;
-}
-.tab-button:hover {
-  background: #2a2a2a;
-}
-.tab-button.active {
-  background: #6cd5ff;
-  color: #010201;
-  font-weight: 500;
-}
-
-/* Code Preview Styling */
-pre {
-  background: #0d1117; /* override in case theme doesn't take */
-  border-radius: 8px;
-  padding: 1.5rem;
-  font-family: 'Fira Code', monospace;
-  font-size: 0.95rem;
-  height: 400px;
-  overflow-x: auto;
-  overflow-y: auto;
-  line-height: 1.5;
-}
-
-/* Highlight.js Overrides (optional, can remove if theme is working) */
-.hljs {
-  background: transparent;
-  color: inherit;
-}
-
-/* Metadata & Description */
-.meta-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.metadata {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.875rem;
-}
-.metadata span {
-  background: #1a1a1a;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-}
-.description {
-  background: #080808;
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 8px;
-  padding: 1rem;
-  line-height: 1.5;
-}
-
-/* Back Button */
-.back-button-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-}
-.back-button {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  background: rgba(255,255,255,0.05);
-  color: #fff;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: background 0.2s ease;
-}
-.back-button:hover {
-  background: rgba(255, 0, 0, 0.1);
-}
-
-/* Responsive for Small Screens */
-@media (max-width: 768px) {
-  .preview-container {
-    flex-direction: column;
-  }
-  .live-preview,
-  .code-section {
-    min-width: 100%;
-    height: auto;
-  }
-  pre {
-    height: 250px;
-  }
-}
-
-
-/* Tab Switch Wrapper - Smaller */
-.tab-switch {
-  position: relative;
-  display: flex;
-  background: #1a1a1a;
-  border-radius: 999px;
-  padding: 2px;
-  width: fit-content;
-  margin-bottom: 1rem;
-  height: 36px;
-}
-
-/* Slider (Pill) - Smaller and centered */
-.tab-slider {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 50%;
-  height: 32px;
-  background: #6cd5ff;
-  border-radius: 999px;
-  transition: all 0.25s ease;
-  z-index: 0;
-}
-
-/* Tab Buttons - Slimmer */
-.tab-btn {
-  position: relative;
-  flex: 1;
-   padding: 0.25rem 1.5rem; /* 👈 Increase this for more length */
-  border: none;
-  background: none;
-  font-size: 0.75rem;
-  font-family: 'Poppins', sans-serif;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 999px;
-  z-index: 1;
-  transition: color 0.3s ease;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tab-btn.active {
-  color: #010201;
-  font-weight: 500;
-}
-.code-tabs,
-.tab-switch {
-  margin-bottom: 1rem;
-  margin-top: auto;
-}
-.tab-switch {
-  margin-top: -1.5rem; /* raises the switch upward */
-  margin-bottom: 1rem;
-}
-.live-preview {
-  margin-top: 1.8rem; /* or try 2rem, adjust as needed */
-}
-pre, .hljs {
-  background-color: #232323 !important; /* or #0d0d0d, #1a1a1a, etc */
-}
-/* Toggle & Author Row */
 .code-tabs {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* 👈 this aligns both toggle and author text vertically */
+  align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
 }
 
-
-/* Toggle Switch Styling (you already have this) */
 .tab-switch {
   position: relative;
   display: inline-flex;
@@ -297,29 +111,10 @@ pre, .hljs {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
   overflow: hidden;
+  margin-top: -1.5rem;
+  margin-bottom: 1rem;
 }
 
-.tab-btn {
-  background: transparent;
-  border: none;
-  padding: 0.5rem 1.25rem; /* ↑ increase top/bottom padding slightly */
-  color: #ccc;
-  font-size: 0.9rem;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-  transition: color 0.2s ease;
-  display: flex;
-  align-items: center; /* ensure content is vertically centered */
-}
-
-
-.tab-btn.active {
-  color: #000;
-  font-weight: 500;
-}
-
-/* The animated sliding pill */
 .tab-slider {
   position: absolute;
   top: 0;
@@ -332,7 +127,94 @@ pre, .hljs {
   transition: transform 0.3s ease;
 }
 
-/* Author Info Styling */
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  color: #ccc;
+  font-size: 0.9rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.tab-btn.active {
+  color: #000;
+  font-weight: 500;
+}
+
+pre {
+  background: #0d1117;
+  border-radius: 8px;
+  padding: 1.5rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+  height: 400px;
+  overflow-x: auto;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+.hljs {
+  background: transparent;
+  color: inherit;
+}
+
+pre, .hljs {
+  background-color: #232323 !important;
+}
+
+.meta-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.metadata {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
+.metadata span {
+  background: #1a1a1a;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.description {
+  background: #080808;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 1rem;
+  line-height: 1.5;
+}
+
+.back-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.back-button {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: background 0.2s ease;
+}
+
+.back-button:hover {
+  background: rgba(255, 0, 0, 0.1);
+}
+
 .author-info {
   font-size: 0.85rem;
   color: #bbb;
@@ -340,4 +222,18 @@ pre, .hljs {
   text-align: right;
   white-space: nowrap;
   margin-left: 1rem;
+}
+
+@media (max-width: 768px) {
+  .preview-container {
+    flex-direction: column;
+  }
+  .live-preview,
+  .code-section {
+    min-width: 100%;
+    height: auto;
+  }
+  pre {
+    height: 250px;
+  }
 }

@@ -4,66 +4,254 @@
   <meta charset="UTF-8" />
   <title>Create Snippet – Clover</title>
   <link rel="stylesheet" href="styles/create.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/style.css" />
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/theme/material.min.css" />
+
+
+
+
+  <!-- iro.js color picker -->
   <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 </head>
 <body>
-  <main id="create-page">
-    <!-- Left Pane: Code Editors -->
-    <div id="editor-pane">
-      <div class="editor-block expanded">
-        <label for="html-code" id="html-label">
-          <img src="assets/icons/html5.svg" alt="HTML" class="editor-icon" />
-          HTML
-        </label>
-        <textarea id="html-code" placeholder="Write your HTML here..."></textarea>
-      </div>
-
-      <div class="editor-block expanded">
-        <label for="css-code" id="css-label">
-          <img src="assets/icons/css3.svg" alt="CSS" class="editor-icon" />
-          CSS
-        </label>
-        <textarea id="css-code" placeholder="Write your CSS here..."></textarea>
-      </div>
-    </div>
-
-    <!-- Right Pane: Live Preview -->
-    <div id="preview-pane">
-      <div id="preview-header">
-        <h2>Live Preview</h2>
-        <div id="preview-tools">
-          <!-- Reserved for future tools -->
+<!-- Page Content Wrapper -->
+<div class="page-content">
+  <header>
+    <div class="left-header">
+      <h1 class="site-title">
+        <a href="index.html">Clover</a>
+      </h1>
+      <div class="explore-dropdown">
+        <button class="explore-btn">
+          Explore
+          <svg
+            class="dropdown-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <!-- Single dropdown-menu container -->
+        <div class="dropdown-menu">
+          <div class="dropdown-grid">
+            <button class="dropdown-item" data-category="all" onclick="goToExplore('all')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clover-icon lucide-clover"><path d="M16.17 7.83 2 22"/><path d="M4.02 12a2.827 2.827 0 1 1 3.81-4.17A2.827 2.827 0 1 1 12 4.02a2.827 2.827 0 1 1 4.17 3.81A2.827 2.827 0 1 1 19.98 12a2.827 2.827 0 1 1-3.81 4.17A2.827 2.827 0 1 1 12 19.98a2.827 2.827 0 1 1-4.17-3.81A1 1 0 1 1 4 12"/><path d="m7.83 7.83 8.34 8.34"/></svg>
+              <span class="item-label">All</span>
+            </button>
+            <button class="dropdown-item" data-category="landing page"  onclick="goToExplore('landing')" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid-icon lucide-layout-grid"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+              <span class="item-label">Landing Page</span>
+            </button>
+            <button class="dropdown-item" data-category="buttons" onclick="goToExplore('buttons')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play-icon lucide-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              <span class="item-label">Buttons</span>
+            </button>
+            <button class="dropdown-item" data-category="switches" onclick="goToExplore('switches')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-right-icon lucide-toggle-right"><circle cx="15" cy="12" r="3"/><rect width="20" height="14" x="2" y="5" rx="7"/></svg>
+              <span class="item-label">Switches</span>
+            </button>
+            <button class="dropdown-item" data-category="inputs" onclick="goToExplore('inputs')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-cursor-input-icon lucide-text-cursor-input"><path d="M12 20h-1a2 2 0 0 1-2-2 2 2 0 0 1-2 2H6"/><path d="M13 8h7a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-7"/><path d="M5 16H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1"/><path d="M6 4h1a2 2 0 0 1 2 2 2 2 0 0 1 2-2h1"/><path d="M9 6v12"/></svg>
+              <span class="item-label">Inputs</span>
+            </button>
+            <button class="dropdown-item" data-category="checkboxes" onclick="goToExplore('checkboxes')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-check-icon lucide-square-check"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+              <span class="item-label">Checkboxes</span>
+            </button>
+            <button class="dropdown-item" data-category="images" onclick="goToExplore('images')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-images-icon lucide-images"><path d="M18 22H4a2 2 0 0 1-2-2V6"/><path d="m22 13-1.296-1.296a2.41 2.41 0 0 0-3.408 0L11 18"/><circle cx="12" cy="8" r="2"/><rect width="16" height="16" x="6" y="2" rx="2"/></svg>
+              <span class="item-label">Images</span>
+            </button>
+            <button class="dropdown-item" data-category="loaders" onclick="goToExplore('loaders')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-pinwheel-icon lucide-loader-pinwheel">
+                <path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/>
+                <path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/>
+                <path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/>
+                <circle cx="12" cy="12" r="10"/>
+              </svg>
+              <span class="item-label">Loaders</span>
+            </button>
+            <button class="dropdown-item" data-category="cards" onclick="goToExplore('cards')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-library-icon lucide-square-library"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7v10"/><path d="M11 7v10"/><path d="m15 7 2 10"/></svg>
+              <span class="item-label">Cards</span>
+            </button>
+            <button class="dropdown-item" data-category="forms" onclick="goToExplore('forms')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text-icon lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+              <span class="item-label">Forms</span>
+            </button>
+            <button class="dropdown-item" data-category="forms" onclick="goToExplore('audio')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-music-icon lucide-file-music"><path d="M10.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v8.4"/><path d="M8 18v-7.7L16 9v7"/><circle cx="14" cy="16" r="2"/><circle cx="6" cy="18" r="2"/></svg>
+              <span class="item-label">Audio</span>
+            </button>
+            <button class="dropdown-item" data-category="color palette" onclick="goToExplore('color')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette-icon lucide-palette"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+              <span class="item-label">Color Palette </span>
+            </button>
+          </div>
         </div>
       </div>
-
-      <div id="preview-area">
-        <iframe id="live-preview"></iframe>
-      </div>
-
-<div class="editor-toolbar">
-  <!-- Row 1: action buttons + color picker -->
-  <div class="toolbar-row1">
-    <div class="editor-buttons">
-      <button id="reset-btn">Reset</button>
-      <button id="save-draft-btn">Save Draft</button>
-      <button id="load-draft-btn">Load Draft</button>
     </div>
-    <div class="color-picker-container">
-      <button id="color-picker-btn">🟦</button>
+    <div class="header-buttons">
+      <div class="login-btn-row">
+        <button
+          class="create-btn"
+          id="create-btn"
+          type="button"
+        >
+          <span class="z-20">Create</span>
+          <span class="shine"></span>
+          <span class="border-top-left"></span>
+          <span class="border-top-right"></span>
+          <span class="border-bottom-left"></span>
+          <span class="border-bottom-right"></span>
+        </button>
+        <a href="login.html" class="login-btn" id="join-btn" style="display: none;">Join the Community</a>
+        <div id="user-menu-container" style="margin-left: 0; display: none;"></div>
+      </div>
+    </div>
+  </header>
+</div>
+<div class="header-divider"></div>
+<main id="create-page">
+  <!-- Left Pane: Code Editors -->
+  <div id="editor-pane">
+    <div class="editor-block expanded">
+      <label for="html-code" id="html-label">
+        <img src="assets/icons/html5.svg" alt="HTML" class="editor-icon" />
+        HTML
+      </label>
+      <textarea id="html-code" placeholder="Write your HTML here..."></textarea>
+    </div>
+
+    <div class="editor-block expanded">
+      <label for="css-code" id="css-label">
+        <img src="assets/icons/css3.svg" alt="CSS" class="editor-icon" />
+        CSS
+      </label>
+      <textarea id="css-code" placeholder="Write your CSS here..."></textarea>
     </div>
   </div>
+<!-- Right Pane: Live Preview -->
+<div id="preview-pane">
+  <div id="preview-header" style="display: flex; align-items: center; justify-content: space-between; padding: 0 16px; margin-bottom: 12px; border-bottom: 1px solid #444;">
+    <h2 style="margin: 0; font-size: 20px; color: #f8e7f8;">Preview</h2>
+    <div class="header-actions" style="display: flex; align-items: center; gap: 8px;">
+      <div id="preview-tools">
+        <!-- Reserved for future tools -->
+      </div>
+      <button id="open-settings-btn" style="background: none; border: none; padding: 4px 8px; display: flex; align-items: center; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease; border-radius: 4px;">
+        <!-- Gear/Settings SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+        <span style="color: white; margin-left: 4px; font-size: 14px;">Advanced Options</span>
+      </button>
+    </div>
+  </div>
+<div id="settings-overlay" class="settings-overlay"></div>
 
-  <!-- Row 2: toggle switch -->
-  <div class="toggle-wrapper">
-    <label class="tailwind-toggle">
-      <input type="checkbox" id="tailwind-toggle">
-      <span class="tailwind-slider"></span>
-    </label>
-    <span class="toggle-label">Tailwind Deactivated</span>
+<div id="settings-modal" class="settings-modal hidden">
+  <div class="settings-content">
+
   </div>
 </div>
 
-  </main>
+
+  <div id="preview-area">
+    <iframe id="live-preview"></iframe>
+    <div id="preview-warning">
+      ⚠️ Large component may not display fully. Try reducing its size.
+    </div>
+
+    <!-- 🎨 Floating color picker toggle button -->
+    <button id="color-picker-btn" class="floating-color-btn" title="Pick Theme Color">
+      <span class="color-icon"></span>
+    </button>
+
+    <!-- Color picker panel -->
+    <div id="color-picker-container" class="visible">
+      <!-- iro.js will render the Box + Hue slider here -->
+      <!-- Eyedropper + Inputs -->
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px;">
+        <!-- Eyedropper button -->
+        <button id="eyedropper-btn" title="Use Eyedropper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#multiGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+            <defs>
+              <linearGradient id="multiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FF4D4D"/>
+                <stop offset="25%" stop-color="#FFA500"/>
+                <stop offset="50%" stop-color="#00FF00"/>
+                <stop offset="75%" stop-color="#00FFFF"/>
+                <stop offset="100%" stop-color="#4D4DFF"/>
+              </linearGradient>
+            </defs>
+            <path d="M21 2l-1.5-1.5c-.4-.4-1-.4-1.4 0l-2.1 2.1-1.1-1.1c-.4-.4-1-.4-1.4 0L11 3.9c-.4.4-.4 1 0 1.4l1.1 1.1L4 15v5h5l8.1-8.1 1.1 1.1c.4.4 1 .4 1.4 0l2.9-2.9c.4-.4.4-1 0-1.4l-1.1-1.1 2.1-2.1c.4-.4.4-1 0-1.4L21 2z"/>
+          </svg>
+        </button>
+
+        <!-- Numeric inputs only -->
+        <div id="color-inputs">
+          <input id="value-1" type="number" min="0" max="255" />
+          <input id="value-2" type="number" min="0" max="255" />
+          <input id="value-3" type="number" min="0" max="255" />
+        </div>
+      </div>
+
+      <!-- Color Picker (iro.js will inject here) -->
+      <div id="color-picker-core"></div>
+    </div>
+  </div>
+
+  <!-- Bottom Toolbar (now properly placed below preview!) -->
+  <div class="editor-toolbar">
+    <div class="toolbar-row1">
+      <div class="editor-buttons">
+        <button id="reset-btn">Reset</button>
+        <button id="save-draft-btn">Save Draft</button>
+        <button id="load-draft-btn">Load Draft</button>
+      </div>
+    </div>
+    <div class="toggle-wrapper">
+      <label class="tailwind-toggle">
+        <input type="checkbox" id="tailwind-toggle">
+        <span class="tailwind-slider"></span>
+      </label>
+      <span class="toggle-label">Tailwind Deactivated</span>
+   </div>
+  </div>
+</div>
+
+</main>
+<!-- Shortcut Panel -->
+<div id="shortcut-panel" class="hidden">
+  <h3>⌨️ Keyboard Shortcuts</h3>
+  <ul>
+    <li><strong>Ctrl + S</strong> — Save Snippet</li>
+    <li><strong>Ctrl + K</strong> — Toggle Color Picker</li>
+    <li><strong>Ctrl + /</strong> — Comment Code</li>
+    <li><strong>Ctrl + Shift + S</strong> — Open Settings Panel</li>
+    <li><strong>Ctrl + B</strong> — Toggle Tailwind On/Off</li>
+    <li><strong>Ctrl + Shift + X</strong> — Reset Snippet</li>
+  </ul>
+</div>
+
+
+
 
   <!-- Reset Confirmation Modal -->
   <div id="reset-confirm-modal" class="modal hidden">
@@ -77,37 +265,125 @@
     </div>
   </div>
 
-  <!-- Toast Notification -->
+  <!-- Toast Notifications -->
   <div id="toast" class="toast">✅ Draft saved!</div>
+  <div id="auto-toast" class="toast auto-toast"></div>
 
   <!-- Color Picker Container -->
   <div id="color-picker-container"></div>
-
-  <!-- Toggle behavior script -->
-  <script>
-    const toggle = document.getElementById("tailwind-toggle");
-    const htmlLabel = document.getElementById("html-label");
-    const toggleLabel = document.querySelector(".toggle-label");
-
-    toggle.addEventListener("change", () => {
-      if (toggle.checked) {
-        htmlLabel.innerHTML = `
-          <img src="assets/icons/html5.svg" alt="HTML" class="editor-icon">
-          HTML +
-          <img src="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-light.svg" alt="Tailwind" class="editor-icon">
-          Tailwind
-        `;
-        toggleLabel.textContent = "Tailwind Activated";
-      } else {
-        htmlLabel.innerHTML = `
-          <img src="assets/icons/html5.svg" alt="HTML" class="editor-icon">
-          HTML
-        `;
-        toggleLabel.textContent = "Tailwind Deactivated";
-      }
-    });
+<script>
+    function goToExplore(category) {
+      const encoded = encodeURIComponent(category.toLowerCase());
+      window.location.href = `explore.html?category=${encoded}`;
+    }
   </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const iframe      = document.getElementById('live-preview');
+    const previewArea = document.getElementById('preview-area');
+    const warning     = document.getElementById('preview-warning');
 
+    function checkOverflow() {
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if (!doc || !doc.body) return;
+
+      const contentHeight = doc.body.scrollHeight;
+
+      if (contentHeight > previewArea.clientHeight + 50) {
+        warning.classList.add('show');
+        // Auto-hide after 3s
+        setTimeout(() => warning.classList.remove('show'), 3000);
+      } else {
+        warning.classList.remove('show'); // clean up if it’s already visible
+      }
+    }
+
+    // Wrap updatePreview
+    const orig = window.updatePreview;
+    if (orig) {
+      window.updatePreview = function() {
+        orig();
+        setTimeout(checkOverflow, 100);
+      };
+    }
+
+    // Also check after iframe loads
+    iframe.addEventListener('load', () => setTimeout(checkOverflow, 100));
+
+    // ❌ No need for early check on DOM load anymore
+  });
+</script>
+
+
+<script>
+  // Create button logic and header login/user menu toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    var createBtn = document.getElementById('create-btn');
+    var joinBtn = document.getElementById('join-btn');
+    var userMenu = document.getElementById('user-menu-container');
+    // Check login status
+    var token = localStorage.getItem('cloverToken');
+    var user = localStorage.getItem('cloverUser');
+    var isLoggedIn = (
+      (token && typeof token === 'string' && token.trim() !== '' && token !== 'null' && token !== 'undefined') ||
+      (user && typeof user === 'string' && user.trim() !== '' && user !== 'null' && user !== 'undefined')
+    );
+    if (isLoggedIn) {
+      if (userMenu) userMenu.style.display = '';
+      if (joinBtn) joinBtn.style.display = 'none';
+    } else {
+      if (userMenu) userMenu.style.display = 'none';
+      if (joinBtn) joinBtn.style.display = '';
+    }
+    if (createBtn) {
+      createBtn.addEventListener('click', function() {
+        if (isLoggedIn) {
+          window.location.href = 'create.html';
+        } else {
+          window.location.href = 'login.html';
+        }
+      });
+    }
+  });
+</script>
+
+<script>
+  const openBtn  = document.getElementById('open-settings-btn');
+  const overlay  = document.getElementById('settings-overlay');
+  const modal    = document.getElementById('settings-modal');
+
+  function openModal() {
+    if (overlay && modal) {
+      overlay.style.display = 'block';
+      modal.classList.remove('hidden');
+
+      // Wait a tick before adding 'open' for smooth transition
+      requestAnimationFrame(() => modal.classList.add('open'));
+    }
+  }
+
+  openBtn?.addEventListener('click', openModal);
+</script>
+
+  <!-- CodeMirror Core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>
+
+  <!-- CodeMirror Modes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/htmlmixed/htmlmixed.min.js"></script>
+
+  <!-- CodeMirror Addons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/edit/closetag.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/edit/closebrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/selection/active-line.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/fold/xml-fold.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/edit/matchtags.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Your Script -->
   <script src="scripts/create.js"></script>
+  <script src="scripts/main.js"></script>
 </body>
 </html>

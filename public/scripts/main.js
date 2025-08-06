@@ -485,6 +485,6 @@ const profilePic = makeAvatarUrl(username, avatarBg);
   }
 }
 
-});
 
+});
 

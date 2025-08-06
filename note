@@ -14,790 +14,521 @@ THIS VERSION INCLUDES THE FOLLOWING FEATURES:
 - Clover logo text is using luckiest guy font 
 - clover brand primry color is purple blue pink blue 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Component | Clover</title>
-  <link rel="stylesheet" href="styles/main.css" />
-  <link rel="stylesheet" href="styles/create.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
-  <style>
-    #colorTrigger {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-      border-radius: 4px;
-      border: 1px solid white;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
-      cursor: pointer;
-      z-index: 10;
-    }
 
-    #previewCanvasContainer {
-      position: relative;
-      background-color: white;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      overflow: hidden;
-    }
+-IMPORTANT 
+WHEN YOU RESUME TOMMOROW 
 
-    #livePreview {
-      width: 100%;
-      height: 300px;
-      border: none;
-    }
-  </style>
-</head>
-<body>
 
-<main id="createContainer">
-  <section id="startFormSection">
-    <h1>🚀 Start Building a Component</h1>
-    <select id="componentType" required>
-      <option value="">Select a component type</option>
-      <option value="buttons">Buttons</option>
-      <option value="forms">Forms</option>
-      <option value="cards">Cards</option>
-      <option value="loaders">Loaders</option>
-      <option value="inputs">Inputs</option>
-      <option value="switches">Switches</option>
-      <option value="checkboxes">Checkboxes</option>
-    </select>
-    <label for="componentTitle">📝 Title (opt.)</label>
-    <input type="text" id="componentTitle" placeholder="e.g. Fancy Glow Button" />
-    <label for="componentTags">🏷️ Tags (opt.)</label>
-    <input type="text" id="componentTags" placeholder="hover, glassmorphism" />
-    <button id="startBuildingButton">Start Building</button>
-    <p id="altFlow">
-      Not building a component? 
-      <a href="create-other.html">Something else?</a>
-    </p>
-  </section>
 
-  <section id="builderSection" style="display:none;">
-    <div id="builderGrid">
-      <div id="codeInputs">
-        <h2>🧱 Build Your Component</h2>
+COPILOT : YOU WERE WORKING ON THE PREVEIW ENLARGING NIMATION ITS WORKING BUT ITS NOT SMOOTH WAIT FOR REASON TO LOAD 
+TaYE: Make una forget gpt i go fix this thing now 
+- PLEASE MAKE SURE TO CHECK THE NEW FEATURES AND PROVIDE FEEDBACK
+- Also you are meant to work on this components thats are beign crated or built should inactive in a form that when i crete a component like this 
+<label class="custum-file-upload" for="file">
+<div class="icon">
+<svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <path fill="" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" clip-rule="evenodd" fill-rule="evenodd"></path> </g></svg>
+</div>
+<div class="text">
+   <span>Click to upload image</span>
+   </div>
+   <input type="file" id="file">
+</label>
 
-        <label for="htmlCode">HTML</label>
-        <textarea id="htmlCode" rows="6"></textarea>
+when clicking it i shouldnt be directed to open any image and it shouldnt work so on and so on 
 
-        <label for="cssCode" id="cssLabel">CSS</label>
-        <div class="css-block-wrapper">
-          <textarea id="cssCode" rows="6" placeholder="Write your CSS here..."></textarea>
-          <div class="css-disabled-overlay hidden" id="cssOverlay">
-            <div class="overlay-lock-icon">🔒</div>
-          </div>
-        </div>
 
-        <div class="builder-buttons">
-          <button id="previewButton">Preview</button>
-          <button id="submitButton">Submit</button>
-        </div>
-      </div>
+also try creating a pattern using clover editor oull be suprised by the result
+remember to add a no hightlight feature users should not be able to highlight anything in the page
+add a copy button that appears inside the code editor css and html hidden at default  fades in at the top right of the editor on hover and when clicked it copies the code inside the editor to clipboard
 
-      <div id="livePreviewWrapper">
-        <h2>👀 Live Preview</h2>
-        <div id="previewCanvasContainer">
 
-          <iframe id="livePreview" sandbox="allow-same-origin"></iframe>
-          <button id="colorTrigger" title="Change canvas background"></button>
-        </div>
 
-        <div class="builder-preview-actions">
-          <div class="action-buttons-row">
-            <button id="loadDraftButton" class="action-btn">Load Last Draft</button>
-            <button id="resetButton" class="action-btn secondary">Reset</button>
-          </div>
-          <div class="technology-switch-container">
-            <span class="tech-switch-label">Technology:</span>
-            <div class="techSwitch">
-              <button class="techOption active" data-tech="css">CSS</button>
-              <button class="techOption" data-tech="tailwind">Tailwind</button>
-              <div class="techSlider"></div>
-            </div>
+
+
+
+
+
+
+
+
+
+      <div class="explore-dropdown">
+        <button class="explore-btn">
+          Explore
+          <svg
+            class="dropdown-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <!-- Single dropdown-menu container -->
+        <div class="dropdown-menu">
+          <div class="dropdown-grid">
+            <button class="dropdown-item" data-category="all" onclick="goToExplore('all')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clover-icon lucide-clover"><path d="M16.17 7.83 2 22"/><path d="M4.02 12a2.827 2.827 0 1 1 3.81-4.17A2.827 2.827 0 1 1 12 4.02a2.827 2.827 0 1 1 4.17 3.81A2.827 2.827 0 1 1 19.98 12a2.827 2.827 0 1 1-3.81 4.17A2.827 2.827 0 1 1 12 19.98a2.827 2.827 0 1 1-4.17-3.81A1 1 0 1 1 4 12"/><path d="m7.83 7.83 8.34 8.34"/></svg>
+              <span class="item-label">All</span>
+            </button>
+            <button class="dropdown-item" data-category="landing page"  onclick="goToExplore('landing')" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid-icon lucide-layout-grid"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+              <span class="item-label">Landing Page</span>
+            </button>
+            <button class="dropdown-item" data-category="buttons" onclick="goToExplore('buttons')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play-icon lucide-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              <span class="item-label">Buttons</span>
+            </button>
+            <button class="dropdown-item" data-category="switches" onclick="goToExplore('switches')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-right-icon lucide-toggle-right"><circle cx="15" cy="12" r="3"/><rect width="20" height="14" x="2" y="5" rx="7"/></svg>
+              <span class="item-label">Switches</span>
+            </button>
+            <button class="dropdown-item" data-category="inputs" onclick="goToExplore('inputs')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-cursor-input-icon lucide-text-cursor-input"><path d="M12 20h-1a2 2 0 0 1-2-2 2 2 0 0 1-2 2H6"/><path d="M13 8h7a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-7"/><path d="M5 16H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1"/><path d="M6 4h1a2 2 0 0 1 2 2 2 2 0 0 1 2-2h1"/><path d="M9 6v12"/></svg>
+              <span class="item-label">Inputs</span>
+            </button>
+            <button class="dropdown-item" data-category="checkboxes" onclick="goToExplore('checkboxes')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-check-icon lucide-square-check"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+              <span class="item-label">Checkboxes</span>
+            </button>
+            <button class="dropdown-item" data-category="images" onclick="goToExplore('images')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-images-icon lucide-images"><path d="M18 22H4a2 2 0 0 1-2-2V6"/><path d="m22 13-1.296-1.296a2.41 2.41 0 0 0-3.408 0L11 18"/><circle cx="12" cy="8" r="2"/><rect width="16" height="16" x="6" y="2" rx="2"/></svg>
+              <span class="item-label">Images</span>
+            </button>
+            <button class="dropdown-item" data-category="loaders" onclick="goToExplore('loaders')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-pinwheel-icon lucide-loader-pinwheel">
+                <path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/>
+                <path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/>
+                <path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/>
+                <circle cx="12" cy="12" r="10"/>
+              </svg>
+              <span class="item-label">Loaders</span>
+            </button>
+            <button class="dropdown-item" data-category="cards" onclick="goToExplore('cards')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-library-icon lucide-square-library"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7v10"/><path d="M11 7v10"/><path d="m15 7 2 10"/></svg>
+              <span class="item-label">Cards</span>
+            </button>
+            <button class="dropdown-item" data-category="forms" onclick="goToExplore('forms')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text-icon lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+              <span class="item-label">Forms</span>
+            </button>
+            <button class="dropdown-item" data-category="forms" onclick="goToExplore('audio')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-music-icon lucide-file-music"><path d="M10.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v8.4"/><path d="M8 18v-7.7L16 9v7"/><circle cx="14" cy="16" r="2"/><circle cx="6" cy="18" r="2"/></svg>
+              <span class="item-label">Audio</span>
+            </button>
+            <button class="dropdown-item" data-category="color palette" onclick="goToExplore('color')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette-icon lucide-palette"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+              <span class="item-label">Color Palette </span>
+            </button>
           </div>
         </div>
       </div>
     </div>
+
+    
+    <div class="header-buttons">
+      <div class="login-btn-row" style="display: flex; gap: 0.5rem; align-items: center;">
+        <a href="login.html" class="login-btn" id="join-btn" style="display: none;">Join the Community</a>
+        <div id="user-menu-container" style="margin-left: 0; display: none;"></div>
+      </div>
+    </div>
+  </header>
+</div>
+
+      <!-- Mobile Hamburger Icon -->
+      <div class="hamburger">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <line x1="4" y1="6" x2="20" y2="6" stroke-width="2" stroke-linecap="round"/>
+          <line x1="4" y1="12" x2="20" y2="12" stroke-width="2" stroke-linecap="round"/>
+          <line x1="4" y1="18" x2="20" y2="18" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </header>
+  </div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Building the Future of Web Design</h1>
+    </div>
   </section>
 
-  <div id="toast" class="clover-toast hidden">✅ Draft saved!</div>
+<!-- Desktop Search (hidden on mobile) -->
+<section class="search-section">
+  <div class="grid"></div>
+  <div id="poda">
+    <div class="glow"></div>
+    <div class="darkBorderBg"></div>
+    <div class="darkBorderBg"></div>
+    <div class="darkBorderBg"></div>
 
-  <div id="confirmModal" class="clover-modal hidden">
-    <div class="modalContent">
-      <p>⚠️ Are you sure you want to reset all code? This cannot be undone.</p>
-      <div class="modalActions">
-        <button id="cancelReset" class="cancel">Cancel</button>
-        <button id="confirmReset" class="confirm">Reset</button>
+    <div class="white"></div>
+
+    <div class="border"></div>
+
+    <div id="main">
+      <!-- added autocomplete & spellcheck off -->
+      <input
+        class="input"
+        name="text"
+        type="text"
+        placeholder="Search..."
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <div id="pink-mask"></div>
+      <div class="filterBorder"></div>
+      <div id="filter-icon">
+        <svg
+          fill="none"
+          viewBox="4.8 4.56 14.832 15.408"
+          width="27"
+          height="27"
+          preserveAspectRatio="none"
+        >
+          <path
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-miterlimit="10"
+            stroke-width="1"
+            stroke="#d6d6e6"
+            d="M8.16 6.65002H15.83C16.47 6.65002 16.99 7.17002 16.99 7.81002V9.09002C16.99 9.56002 16.7 10.14 16.41 10.43L13.91 12.64C13.56 12.93 13.33 13.51 13.33 13.98V16.48C13.33 16.83 13.1 17.29 12.81 17.47L12 17.98C11.24 18.45 10.2 17.92 10.2 16.99V13.91C10.2 13.5 9.97 12.98 9.73 12.69L7.52 10.36C7.23 10.08 7 9.55002 7 9.20002V7.87002C7 7.17002 7.52 6.65002 8.16 6.65002Z"
+          ></path>
+        </svg>
+      </div>
+      <div id="search-icon">
+        <svg
+          class="feather feather-search"
+          fill="none"
+          height="24"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="11" cy="11" r="8" stroke="url(#search)"></circle>
+          <line
+            x1="22"
+            x2="16.65"
+            y1="22"
+            y2="16.65"
+            stroke="url(#searchl)"
+          ></line>
+          <defs>
+            <linearGradient id="search" gradientTransform="rotate(50)">
+              <stop offset="0%" stop-color="#f8e7f8"></stop>
+              <stop offset="50%" stop-color="#b6a9b7"></stop>
+            </linearGradient>
+            <linearGradient id="searchl">
+              <stop offset="0%" stop-color="#b6a9b7"></stop>
+              <stop offset="50%" stop-color="#837484"></stop>
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
     </div>
   </div>
-</main>
+</section>
 
-<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr"></script>
-<script src="scripts/create.js"></script>
+<!-- Advanced Filter Sidebar (outside of #poda for correct positioning) -->
+<!-- Filter Panel -->
+<div id="advanced-filters">
+  <h3>Filter Snippets</h3>
 
-</body>
-</html>
+  <div class="accordion">
+    <!-- Group: UI Elements -->
+    <div class="accordion-item">
+      <button class="accordion-header">UI Elements</button>
+      <div class="accordion-body">
+        <label><input type="checkbox" value="buttons" /> Buttons</label>
+        <label><input type="checkbox" value="switches" /> Switches</label>
+        <label><input type="checkbox" value="inputs" /> Inputs</label>
+        <label><input type="checkbox" value="checkboxes" /> Checkboxes</label>
+        <label><input type="checkbox" value="forms" /> Forms</label>
+      </div>
+    </div>
+
+    <!-- Group: Layouts & Pages -->
+    <div class="accordion-item">
+      <button class="accordion-header">Layouts & Pages</button>
+      <div class="accordion-body">
+        <label><input type="checkbox" value="landing page" /> Landing Page</label>
+        <label><input type="checkbox" value="cards" /> Cards</label>
+      </div>
+    </div>
+
+<!-- Asset Type Accordion -->
+<div class="accordion-group">
+  <div class="accordion-header">Asset Type</div>
+  <div class="accordion-body">
+    <label><input type="checkbox" value="free"> Free</label>
+    <label><input type="checkbox" value="premium"> %%</label>
+  </div>
+</div>
+
+  </div>
+
+  <!-- Filter Actions -->
+  <button id="clear-filters" class="filter-action-btn clear">Clear Filters</button>
+  <button id="apply-filters" class="filter-action-btn apply">Apply Filters</button>
+</div>
+
+
+  <!-- Mobile Search (hidden on desktop) -->
+  <section class="search-section-mobile">
+    <div class="mobile-search">
+      <button class="mobile-search-btn" aria-label="Start search">
+        <!-- Mobile search icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+      <input
+        id="mobileSearchInput"
+        type="search"
+        class="mobile-input"
+        placeholder=""
+        aria-label="Search components"
+      />
+    </div>
+  </section>
+
+  <nav class="category-nav">
+    <ul class="nav-links">
+      <li class="nav-link active">All</li>
+      <li class="nav-link">Landing Page</li>
+      <li class="nav-link">Buttons</li>
+      <li class="nav-link">Switches</li>
+      <li class="nav-link">Inputs</li>
+      <li class="nav-link">Checkboxes</li>
+      <li class="nav-link">Forms</li>
+      <li class="nav-link">Loaders</li>
+      <li class="nav-link">Cards</li>
+    </ul>
+  </nav>
+
+<!-- Snippet Section Placeholder -->
+<div id="snippet-section"></div>
+
+<div id="no-results-message" style="display: none; grid-column: 1 / -1; justify-content: center; align-items: center; text-align: center; padding: 2rem; color: #aaa;">
+  <p>No results found for your search.</p>
+</div>
+
+  <!-- “Load More” button placeholder (will appear after 5 rows) -->
+  <div class="load-more-container" hidden>
+    <button id="load-more-btn">Load More</button>
+  </div>
+
+  <a href="/browse" class="browse-container">
+    <button class="browse-button">Browse All Elements</button>
+  </a>
+
+ <!-- Mobile-Only Experience Popup -->
+<div id="mobile-popup" class="popup-overlay">
+  <div class="popup-window">
+    <span id="closePopup" class="popup-close">&times;</span>
+    <p class="popup-message">
+      Clover is designed for larger screens to give you the best experience.<br>
+      For full features and smoother navigation, please use a desktop or tablet.
+    </p>
+    <div class="popup-actions">
+      <button id="gotItBtn" class="popup-btn">Continue Anyway</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Logout Confirmation Modal -->
+<div id="logout-modal" class="logout-modal hidden">
+  <div class="logout-dialog">
+    <p>Are you sure you want to logout?</p>
+    <div class="logout-actions">
+      <button id="cancel-logout" class="btn cancel">Cancel</button>
+
+      <button id="confirm-logout" class="btn danger">Logout</button>
+    </div>
+  </div>
+</div>
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  const startBtn       = document.getElementById('startBuildingButton');
-  const formSec        = document.getElementById('startFormSection');
-  const buildSec       = document.getElementById('builderSection');
-  const saveBtn        = document.getElementById('previewButton');
-  const loadDraftBtn   = document.getElementById('loadDraftButton');
-  const resetButton    = document.getElementById('resetButton');
-  const confirmModal   = document.getElementById('confirmModal');
-  const confirmReset   = document.getElementById('confirmReset');
-  const cancelReset    = document.getElementById('cancelReset');
-  const htmlInput      = document.getElementById('htmlCode');
-  const cssInput       = document.getElementById('cssCode');
-  const iframe         = document.getElementById('livePreview');
-  const cssLabel       = document.getElementById('cssLabel');
-  const toast          = document.getElementById('toast');
-  const techButtons    = document.querySelectorAll('.techOption');
-  const techSlider     = document.querySelector('.techSlider');
-  const cssOverlay     = document.getElementById('cssOverlay');
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const rightPane = document.querySelector('.right-pane');
+    const mascotBox = document.getElementById('mascot-box');
+    const signupFormBox = document.getElementById('signup-form');
+    const signinFormBox = document.getElementById('signin-form');
 
-  let usingTailwind = false;
+    const emailToggleBtn = document.getElementById('show-signup-form');
+    const footerLink = document.getElementById('switch-to-signin');
 
-  const savedDraft = JSON.parse(localStorage.getItem('cloverDraft') || 'null');
-  if (savedDraft) {
-    htmlInput.value = savedDraft.html;
-    cssInput.value  = savedDraft.css;
-    formSec.style.display  = 'none';
-    buildSec.style.display = 'flex';
-    renderPreview();
-  }
+    let currentForm = null;
 
-  const savedTech = localStorage.getItem('cloverTech');
-  if (savedTech === 'tailwind') {
-    usingTailwind = true;
-  }
-  setActiveTech(usingTailwind ? 1 : 0);
+    function showForm(form) {
+      currentForm = form;
+      rightPane.classList.add('form-visible');
+      mascotBox.style.opacity = '0';
 
-  setInterval(() => {
-    const draft = {
-      html: htmlInput.value,
-      css: cssInput.value,
-      component: document.getElementById('componentType')?.value || 'unknown',
-      timestamp: Date.now()
-    };
-    localStorage.setItem('cloverDraft', JSON.stringify(draft));
-  }, 10000);
+      // Reset all form states
+      signupFormBox.classList.remove('active');
+      signinFormBox.classList.remove('active');
 
-  startBtn.addEventListener('click', () => {
-    const category = document.getElementById('componentType').value;
-    if (!category) return showToast('⚠️ Please select a component type.');
-    formSec.style.display  = 'none';
-    buildSec.style.display = 'flex';
-    renderPreview();
-  });
-
-  saveBtn.textContent = 'Save Draft';
-  saveBtn.addEventListener('click', () => {
-    const draft = {
-      html: htmlInput.value,
-      css: cssInput.value,
-      component: document.getElementById('componentType')?.value || 'unknown',
-      timestamp: Date.now()
-    };
-    localStorage.setItem('cloverDraft', JSON.stringify(draft));
-    showToast('💾 Draft saved!');
-  });
-
-  loadDraftBtn.addEventListener('click', () => {
-    const saved = JSON.parse(localStorage.getItem('cloverDraft') || 'null');
-    if (!saved) return showToast('⚠️ No saved draft found.');
-    htmlInput.value = saved.html;
-    cssInput.value  = saved.css;
-    renderPreview();
-    showToast('📦 Draft loaded!');
-  });
-
-  resetButton.addEventListener('click', () => {
-    confirmModal.classList.remove('hidden');
-  });
-  cancelReset.addEventListener('click', () => {
-    confirmModal.classList.add('hidden');
-  });
-  confirmReset.addEventListener('click', () => {
-    htmlInput.value = '';
-    cssInput.value  = '';
-    localStorage.removeItem('cloverDraft');
-    confirmModal.classList.add('hidden');
-    renderPreview();
-    showToast('🗑️ All code reset.');
-  });
-
-  ['input','change'].forEach(evt => {
-    htmlInput.addEventListener(evt, renderPreview);
-    cssInput.addEventListener(evt, renderPreview);
-  });
-
-  techButtons.forEach((btn, index) => {
-    btn.addEventListener('click', () => setActiveTech(index));
-  });
-
-  cssInput.addEventListener('mousedown', (e) => {
-    if (usingTailwind) {
-      e.preventDefault();
-      cssInput.classList.add('disabled-tooltip');
-      setTimeout(() => cssInput.classList.remove('disabled-tooltip'), 3000);
-    }
-  });
-
-  function setActiveTech(index) {
-    usingTailwind = (index === 1);
-    techButtons.forEach(b => b.classList.remove('active'));
-    techButtons[index].classList.add('active');
-    techSlider.style.left = index === 0 ? '4px' : '100px';
-
-    cssLabel.textContent = usingTailwind ? 'Tailwind Utilities' : 'CSS';
-    cssInput.disabled    = usingTailwind;
-    cssOverlay.classList.toggle('hidden', !usingTailwind);
-
-    localStorage.setItem('cloverTech', usingTailwind ? 'tailwind' : 'css');
-    renderPreview();
-  }
-
-  function renderPreview() {
-    const doc = iframe.contentDocument || iframe.contentWindow.document;
-    const tailwindCDN = usingTailwind
-      ? '<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">'
-      : '';
-    doc.open();
-    doc.write(`
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8"/>
-        <title>Preview</title>
-        ${tailwindCDN}
-        <style>
-          body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-          }
-          ${cssInput.value}
-        </style>
-      </head>
-      <body>
-        ${htmlInput.value}
-      </body>
-      </html>
-    `);
-    doc.close();
-  }
-
-  function showToast(message = '✅ Saved!') {
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-  }
-
-  if (buildSec.style.display === 'flex') renderPreview();
-
-  const pickr = Pickr.create({
-    el: '#colorTrigger',
-    theme: 'classic',
-    default: '#ffffff',
-    components: {
-      preview: true,
-      opacity: true,
-      hue: true,
-      interaction: {
-        hex: true,
-        rgba: true,
-        input: true,
-        save: true
+      if (form === 'signup') {
+        signupFormBox.classList.add('active');
+        emailToggleBtn.textContent = 'Cancel';
+        footerLink.textContent = "Already have an account? Log in";
+        footerLink.id = 'switch-to-signin';
+      } else {
+        signinFormBox.classList.add('active');
+        emailToggleBtn.textContent = 'Cancel';
+        footerLink.textContent = "Don't have an account? Sign up";
+        footerLink.id = 'switch-to-signup';
       }
     }
-  });
 
-  pickr.on('change', (color) => {
-    const hex = color.toHEXA().toString();
-    const previewContainer = document.getElementById('previewCanvasContainer');
-    if (previewContainer) {
-      previewContainer.style.backgroundColor = hex;
+    function hideForms() {
+      currentForm = null;
+      rightPane.classList.remove('form-visible');
+      mascotBox.style.opacity = '1';
+      signupFormBox.classList.remove('active');
+      signinFormBox.classList.remove('active');
+      emailToggleBtn.textContent = 'Sign up with Email';
+      footerLink.textContent = "Already have an account? Log in";
+      footerLink.id = 'switch-to-signin';
+    }
+
+    // Email sign-up toggle
+if (emailToggleBtn) {
+  emailToggleBtn.addEventListener('click', function() {
+    if (currentForm === 'signup' || currentForm === 'signin') {
+      hideForms();
+    } else {
+      showForm('signup');
     }
   });
-});
+}
+
+if (footerLink) {
+  footerLink.addEventListener('click', function() {
+    if (currentForm === 'signup') {
+      showForm('signin');
+    } else {
+      showForm('signup');
+    }
+  });
+}
+
+const mascotImage = document.querySelector('.mascot-box img');
+if (mascotImage) {
+  mascotImage.addEventListener('click', function() {
+    hideForms();
+  });
+}
+
+    });
+
+</script>
+<script>
+  // 1. Pull token from URL
+  const params = new URLSearchParams(window.location.search);
+  const token  = params.get('token');
+
+  if (token) {
+    // 2. Store the token & mark logged‑in
+    localStorage.setItem('token', token);
+    localStorage.setItem('cloverUser', 'true');
+
+    console.log('✅ OAuth login success, token stored');
+
+    // 3. Fetch full user profile
+    fetch('http://localhost:5000/api/auth/me', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch profile');
+        return res.json();
+      })
+      .then(data => {
+        // 4. Store username for your menu logic
+        localStorage.setItem('username', data.user.username);
+
+        // 5. Clean URL (remove ?token) and reload so main.js sees it
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+        window.location.reload();
+      })
+      .catch(err => {
+        console.error('⚠️ Could not load profile:', err);
+        // On failure, clear token/login flag so user can re‑authenticate
+        localStorage.removeItem('token');
+        localStorage.removeItem('cloverUser');
+      });
+  }
+</script>
 
 
 
+  <script src="scripts/main.js"></script>
+  <script src="scripts/snippets.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="scripts/filter.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- SweetAlert2 CSS + JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Toast -->
+<div id="toast" class="toast hidden">
+  
+</div>
+<script>
+  function goToExplore(category) {
+    const formatted = encodeURIComponent(category.toLowerCase());
+    window.location.href = `/explore.html?category=${formatted}`;
+  }
+</script>
 
-body, .component-box, .component-box * {
-  user-select: none;
-  -webkit-user-select: none; 
-  -moz-user-select: none; 
-  -ms-user-select: none;    
-}
-
-body {
-  margin: 0;
-  background: #010201;
-  font-family: 'Poppins', sans-serif;
-  color: white;
-}
-
-#createContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  padding: 2rem;
-}
-
-#startFormSection {
-  background-color: #111;
-  padding: 2rem;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  border: 1px solid #2a2a2a;
-}
-
-#startFormSection h1 {
-  font-size: 1.6rem;
-  color: #f8e7f8;
-  text-align: center;
-}
-
-label {
-  font-size: 0.9rem;
-  margin-bottom: 0.2rem;
-  color: #ccc;
-}
-
-input,
-select {
-  padding: 0.75rem 1rem;
-  background: #222;
-  color: white;
-  border: 1px solid #444;
-  border-radius: 10px;
-  font-size: 0.9rem;
-}
-
-input::placeholder {
-  color: #777;
-}
-
-button#startBuildingButton {
-  background: #837484;
-  color: white;
-  padding: 0.9rem 1.2rem;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-button#startBuildingButton:hover {
-  background: #b6a9b7;
-}
-
-#altFlow {
-  text-align: center;
-  font-size: 0.85rem;
-  color: #aaa;
-}
-
-#altFlow a {
-  color: #f8e7f8;
-  text-decoration: underline;
-  font-weight: 500;
-}
-
-#builderSection {
-  flex-direction: column;
-  padding: 2rem;
-  width: 100%;
-  gap: 2rem;
-}
-
-#builderGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-#codeInputs,
-#livePreviewWrapper {
-  background: #111;
-  padding: 1.5rem;
-  border-radius: 16px;
-  border: 1px solid #2a2a2a;
-}
-
-#codeInputs h2,
-#livePreviewWrapper h2 {
-  color: #f8e7f8;
-  margin-bottom: 1rem;
-}
-
-textarea {
-  width: 100%;
-  background: #222;
-  color: white;
-  border: 1px solid #444;
-  border-radius: 10px;
-  font-family: monospace;
-  font-size: 0.9rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-  resize: none;
-}
-
-.builder-buttons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-#previewButton,
-#submitButton {
-  background: #837484;
-  color: white;
-  padding: 0.8rem 1.2rem;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-#previewButton:hover,
-#submitButton:hover {
-  background: #b6a9b7;
-}
-
-#livePreview {
-  width: 100%;
-  height: 400px;
-  background: white;
-  border: none;
-  border-radius: 10px;
-}
-
-.builder-preview-actions {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  align-items: flex-start;
-}
-
-.builder-preview-actions .action-buttons-row {
-  display: flex;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-.builder-preview-actions .action-buttons-row .action-btn {
-  flex: 1;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.builder-preview-actions .action-buttons-row .action-btn.secondary {
-  background-color: #333;
-  color: #fff;
-}
-
-.builder-preview-actions .action-buttons-row .action-btn:not(.secondary) {
-  background-color: #5d3fd3;
-  color: #fff;
-}
-
-.technology-switch-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 0.5rem;
-  font-family: 'Poppins', sans-serif;
-  color: var(--clover-glow);
-}
-
-.tech-switch-label {
-  font-weight: 500;
-}
-
-.tech-switch-toggle {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 26px;
-}
-
-.tech-switch-toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.tech-switch-toggle .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #837484;
-  transition: 0.4s;
-  border-radius: 34px;
-}
-
-.tech-switch-toggle .slider::before {
-  position: absolute;
-  content: "";
-  height: 20px; width: 20px;
-  left: 3px; bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-.tech-switch-toggle input:checked + .slider {
-  background-color: #b6a9b7;
-}
-
-.tech-switch-toggle input:checked + .slider::before {
-  transform: translateX(24px);
-}
-
-.clover-toast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #111;
-  color: #f8e7f8;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 999;
-}
-.clover-toast.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.clover-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-.clover-modal.hidden {
-  display: none;
-}
-.clover-modal .modalContent {
-  background: #010201;
-  color: #f8e7f8;
-  padding: 24px;
-  border-radius: 12px;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-}
-.modalActions {
-  margin-top: 16px;
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-}
-.modalActions .cancel {
-  background: transparent;
-  border: 1px solid #b6a9b7;
-  color: #b6a9b7;
-  padding: 8px 16px;
-  border-radius: 6px;
-}
-.modalActions .confirm {
-  background: #f8e7f8;
-  color: #010201;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: bold;
-}
-
-.techSwitchContainer {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-.techSwitch {
-  position: relative;
-  display: flex;
-  background: #1a1a1a;
-  border-radius: 999px;
-  border: 1px solid #837484;
-  padding: 4px;
-  width: 200px;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-}
-
-.techOption {
-  flex: 1;
-  padding: 8px 0;
-  text-align: center;
-  background: transparent;
-  border: none;
-  color: #b6a9b7;
-  font-size: 14px;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-  transition: color 0.2s ease;
-  border-radius: 999px;
-}
-
-.techOption.active {
-  color: #010201;
-  font-weight: 600;
-}
-
-.techSlider {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 96px;
-  height: calc(100% - 8px);
-  background: #f8e7f8;
-  border-radius: 999px;
-  z-index: 1;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(248, 231, 248, 0.4);
-}
-
-textarea:disabled {
-  background: linear-gradient(135deg, #f3f3f3, #e0dfe2);
-  color: #999;
-  cursor: not-allowed;
-  opacity: 0.8;
-  border: 1px dashed #bbb;
-  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(2px);
-  transition: all 0.2s ease-in-out;
-}
-
-.css-block-wrapper {
-  position: relative;
-}
-
-.css-disabled-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(240, 240, 240, 0.6);
-  backdrop-filter: blur(2px);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.css-disabled-overlay.hidden {
-  display: none;
-}
-
-.overlay-lock-icon {
-  font-size: 1.8rem;
-  color: #888;
-  opacity: 0.8;
-}
-
-textarea.disabled-tooltip:hover::after {
-  opacity: 1;
-}
-
-textarea.disabled-tooltip::after {
-  content: "🔒 You're using Tailwind. Switch back to enable this field.";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #333;
-  color: white;
-  padding: 6px 10px;
-  font-size: 0.85rem;
-  border-radius: 4px;
-  margin-top: 4px;
-  opacity: 0;
-  pointer-events: none;
-  white-space: nowrap;
-  z-index: 10;
-  transition: opacity 0.2s ease-in-out;
-}
-
-#previewCanvasContainer {
-  position: relative;
-  width: 100%;
-  height: 320px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #ddd;
-  box-shadow: 0 0 6px rgba(0,0,0,0.08);
-}
-
-#previewCanvasContainer iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 12px;
-}
-
-#colorTrigger {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 28px;
-  height: 28px;
-  background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-  border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
-  cursor: pointer;
-  border: 1px solid #fff;
-  z-index: 100;
-}
-
-/* Pickr container fix */
-.pickr {
-  position: absolute;
-  bottom: 50px;
-  right: 10px;
-  z-index: 9999;
-}
+<script>
+  // Create button logic and header login/user menu toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    var createBtn = document.getElementById('create-btn');
+    var joinBtn = document.getElementById('join-btn');
+    var userMenu = document.getElementById('user-menu-container');
+    // Check login status
+    var token = localStorage.getItem('cloverToken');
+    var user = localStorage.getItem('cloverUser');
+    var isLoggedIn = (
+      (token && typeof token === 'string' && token.trim() !== '' && token !== 'null' && token !== 'undefined') ||
+      (user && typeof user === 'string' && user.trim() !== '' && user !== 'null' && user !== 'undefined')
+    );
+    if (isLoggedIn) {
+      if (userMenu) userMenu.style.display = '';
+      if (joinBtn) joinBtn.style.display = 'none';
+    } else {
+      if (userMenu) userMenu.style.display = 'none';
+      if (joinBtn) joinBtn.style.display = '';
+    }
+    if (createBtn) {
+      createBtn.addEventListener('click', function() {
+        if (isLoggedIn) {
+          window.location.href = 'create.html';
+        } else {
+          window.location.href = 'login.html';
+        }
+      });
+    }
+  });
+</script>
+<script src="scripts/main.js"></script>
+<script src="scripts/snippets.js" defer></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="scripts/filter.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+</body>
+</html>

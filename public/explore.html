@@ -193,7 +193,37 @@
       window.location.href = `explore.html?category=${encoded}`;
     }
   </script>
-
+<script>
+  // Create button logic and header login/user menu toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    var createBtn = document.getElementById('create-btn');
+    var joinBtn = document.getElementById('join-btn');
+    var userMenu = document.getElementById('user-menu-container');
+    // Check login status
+    var token = localStorage.getItem('cloverToken');
+    var user = localStorage.getItem('cloverUser');
+    var isLoggedIn = (
+      (token && typeof token === 'string' && token.trim() !== '' && token !== 'null' && token !== 'undefined') ||
+      (user && typeof user === 'string' && user.trim() !== '' && user !== 'null' && user !== 'undefined')
+    );
+    if (isLoggedIn) {
+      if (userMenu) userMenu.style.display = '';
+      if (joinBtn) joinBtn.style.display = 'none';
+    } else {
+      if (userMenu) userMenu.style.display = 'none';
+      if (joinBtn) joinBtn.style.display = '';
+    }
+    if (createBtn) {
+      createBtn.addEventListener('click', function() {
+        if (isLoggedIn) {
+          window.location.href = 'create.html';
+        } else {
+          window.location.href = 'login.html';
+        }
+      });
+    }
+  });
+</script>
   <!-- Core Scripts -->
   <script src="scripts/main.js" defer></script>
   <script src="scripts/explore-user-menu.js" defer></script>
