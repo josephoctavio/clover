@@ -565,10 +565,6 @@ input:checked + .slider:before {
   gap: 0.75rem;
 }
 
-/* Right‑side color picker */
-.color-picker-container {
-  /* no special styling needed */
-}
 
 /* ── Toggle (now only under left buttons) ── */
 .toggle-wrapper {

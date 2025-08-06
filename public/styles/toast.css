@@ -1,0 +1,42 @@
+.dynamic-toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 10000;
+}
+.dynamic-toast.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.dynamic-toast.success {
+  background-color: #28a745;
+}
+.dynamic-toast.error {
+  background-color: #dc3545;
+}
+.dynamic-toast.fade-out {
+  opacity: 0;
+}
+
+
+/* Spinner inside button */
+.spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+

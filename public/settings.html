@@ -1,4 +1,4 @@
-<!-- dashboard.html -->
+<!-- settings.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +6,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Settings | Clover</title>
+   <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('cloverTheme');
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme','dark');
+        }
+      } catch (e) { /* silently fail */ }
+    })();
+  </script>
+   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Luckiest+Guy&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/settings.css" />
 </head>
 <body>
@@ -33,7 +44,7 @@
           <span class="cnote-text">Cnote</span>
           <span class="badge hidden" id="cnote-badge"></span>
         </button>
-        <div id="user-menu-container"></div>
+      
       </div>
     </header>
 
@@ -52,22 +63,32 @@
 
   <!-- Nav list -->
   <ul class="sidebar__nav">
-    <li class="sidebar__item active">
+    <li class="sidebar__item active" data-section="general" data-label="General">
       <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24">
         <path d="M3 12l9-9 9 9"/><path d="M9 21V9h6v12"/>
       </svg>
       <span class="sidebar__label">General</span>
     </li>
     
-    <li class="sidebar__item" data-section="snippets">
+    <li class="sidebar__item" data-section="snippets" data-label="Snippets">
     <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="7" width="18" height="14" rx="2"/>
               <path d="M3 7l9-4 9 4"/>
             </svg>
     <span class="sidebar__label">Snippets Library</span>
   </li>
+
+  
+
+  <li class="sidebar__item" data-section="notifications" data-label="Notifications">
+    <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+      <path d="M13.73 21a2 2 0 01-3.46 0"/>
+    </svg>
+    <span class="sidebar__label">Notifications</span>
+  </li>
       
-          <li class="sidebar__item">
+          <li class="sidebar__item" data-section="settings" data-label="Settings">
             <!-- Settings gear icon -->
             <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="3"/>
@@ -75,27 +96,21 @@
             </svg>
             <span class="sidebar__label">Settings</span>
           </li>
-          <li class="sidebar__item">
-            <svg class="sidebar__icon">
-<!-- Apperance icon-->
+         <li class="sidebar__item" data-section="appearance" data-label="Appearance">
+  <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4.25 3a.75.75 0 000 1.5h11.5a.75.75 0 000-1.5H4.25z"/>
+    <path fill-rule="evenodd" d="M3 6.75A2.75 2.75 0 015.75 4h8.5A2.75 2.75 0 0117 6.75v6.5A2.75 2.75 0 0114.25 16h-8.5A2.75 2.75 0 013 13.25v-6.5zm2.75-1.25a1.25 1.25 0 00-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h8.5c.69 0 1.25-.56 1.25-1.25v-6.5a1.25 1.25 0 00-1.25-1.25h-8.5z" clip-rule="evenodd"/>
+    <path d="M8.5 9.25a.75.75 0 011.5 0v2.5a.75.75 0 01-1.5 0v-2.5z"/>
+  </svg>
+  <span class="sidebar__label">Appearance</span>
+</li>
 
-            </svg>
-            <span class="sidebar__label">Appearance</span>
-    <li class="sidebar__item">
-      <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zM12 8a4 4 0 1 1-4 4a4.005 4.005 0 0 1 4-4z"/>
-        <line x1="12" y1="14" x2="12" y2="16"/>
-        <line x1="12" y1="18" x2="12" y2="20"/>
-      </svg>
-      <span class="sidebar__label">Help</span>
-    </li>
-    <li class="sidebar__item">
-      <svg class="sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0z"/>
-        <polyline points="16.24 8.24 12 12l-4.24-4.24"/>
-      </svg>
-      <span class="sidebar__label">Logout</span>
+  
   </ul>
+
+  <footer class="sidebar__footer">
+      <div id="user-menu-container"></div>
+  </footer>
 </nav>
 
 
@@ -103,150 +118,10 @@
       <!-- Main Content -->
       <main id="main-content" class="main-content with-sidebar">
         <header class="page-header">
-          <h1>General</h1>
+
           <p class="subtext">Manage your account overview and basic settings.</p>
         </header>
 
-       
-      <!-- 5.1 General / Profile Card -->
-      <section class="card">
-        <header class="card__header">
-          <h2>Profile</h2>
-        </header>
-        <div class="card__body">
-          <!-- Avatar field -->
-          <div class="form-row">
-            <label>Avatar</label>
-            <div class="avatar-field">
-              <div class="avatar-preview">
-                <img src="https://ui-avatars.com/api/?name=JD&background=random&color=000" alt="Avatar"/>
-                <div class="avatar-overlay">
-                  <svg width="20" height="20" fill="#fff">
-                    <path d="M4 7h16v12H4z"/><circle cx="14" cy="13" r="3"/>
-                  </svg>
-                </div>
-              </div>
-              <button class="btn primary">Change avatar</button>
-            </div>
-          </div>
-          <!-- Full name -->
-          <div class="form-row">
-            <label for="full-name">Full name</label>
-            <input id="full-name" type="text" value="Jane Doe"/>
-          </div>
-          <!-- Display name -->
-          <div class="form-row">
-            <label for="display-name">Display name</label>
-            <input id="display-name" type="text" value="Janey"/>
-          </div>
-          <!-- Email address -->
-          <div class="form-row">
-            <label for="email">Email address</label>
-            <input id="email" type="email" value="jane@example.com" readonly/>
-            <a href="#" class="link">Change email</a>
-          </div>
-          <div class="card__actions">
-            <button class="btn primary">Save Changes</button>
-          </div>
-        </div>
-      </section>
-
-    
-    <!-- 5.2 Security Card -->
-    <section class="card">
-      <header class="card__header"><h2>Security</h2></header>
-      <div class="card__body">
-        <form>
-          <div class="form-row">
-            <label for="current-password">Current password</label>
-            <div class="input-container">
-              <input id="current-password" type="password"/>
-              <span class="toggle-password">Show</span>
-            </div>
-          </div>
-          <div class="form-row">
-            <label for="new-password">New password</label>
-            <div class="input-container">
-              <input id="new-password" type="password"/>
-              <span class="toggle-password">Show</span>
-            </div>
-          </div>
-          <div class="form-row">
-            <label for="confirm-password">Confirm password</label>
-            <div class="input-container">
-              <input id="confirm-password" type="password"/>
-              <span class="toggle-password">Show</span>
-            </div>
-          </div>
-          <div class="form-row">
-            <label>Two‑factor Authentication</label>
-            <label class="switch">
-              <input type="checkbox"/>
-              <span class="slider"></span>
-            </label>
-          </div>
-          <!-- Nested 2FA options -->
-          <div class="form-row nested">
-            <p>Choose setup method:</p>
-            <!-- SMS / Authenticator placeholders -->
-          </div>
-          <div class="card__actions">
-            <button class="btn primary">Save password</button>
-          </div>
-        </form>
-      
-    
-
- 
-
-    <!-- 5.5 Email Notifications Card -->
-    <section class="card">
-      <header class="card__header"><h2>Email Notifications</h2></header>
-      <div class="card__body">
-        <div class="form-row">
-          <label>Deploy notifications</label>
-          <label class="switch"><input type="checkbox"/><span class="slider"></span></label>
-        </div>
-        <div class="form-row">
-          <label>Billing alerts</label>
-          <label class="switch"><input type="checkbox"/><span class="slider"></span></label>
-        </div>
-        <div class="form-row">
-          <label>Marketing</label>
-          <label class="switch"><input type="checkbox"/><span class="slider"></span></label>
-        </div>
-        <div class="card__actions">
-          <button class="btn primary">Save</button>
-        </div>
-      </div>
-    </section>
-
-   
-
-    <!-- 5.7 Connected Accounts Card -->
-    <section class="card">
-      <header class="card__header"><h2>Connected accounts</h2></header>
-      <div class="card__body">
-        <div class="form-row">
-          <label>GitHub</label>
-          <button class="btn primary">Connect</button>
-        </div>
-        <div class="form-row">
-          <label>Figma</label>
-          <button class="btn secondary">Manage access</button>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- 5.8 Delete Account Card -->
-    <section class="card">
-      <header class="card__header"><h2>Delete Account</h2></header>
-      <div class="card__body">
-        <p class="warning">This action is irreversible. All your data will be permanently deleted.</p>
-        <button class="btn danger">Delete my account</button>
-      </div>
-    </section>
         
         <!-- Footer -->
         <footer class="footer">
@@ -264,5 +139,15 @@
   </div>
 
   <script src="scripts/settings.js"></script>
+ 
+
+
+  <div id="cancel-modal">
+  <div class="modal">
+    <p>Discard unsaved changes?</p>
+    <button id="confirm-discard">Yes, discard</button>
+    <button id="cancel-discard">No, keep editing</button>
+  </div>
+</div>
 </body>
 </html>

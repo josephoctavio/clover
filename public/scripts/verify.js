@@ -14,7 +14,7 @@
     const data = await res.json();
 
     if (res.ok) {
-      messageEl.textContent = '✅ Email verified successfully!You can log in now Redirecting…';
+      messageEl.textContent = ' Email verified successfully!You can log in now Redirecting…';
       // Give the user a moment to read, then navigate:
       setTimeout(() => {
         window.location.href = 'login.html?verified=true';

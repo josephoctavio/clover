@@ -35,12 +35,17 @@ const socialLinksSchema = new mongoose.Schema({
 }, { _id: false });
 
 const userSchema = new mongoose.Schema({
+
+   fullName: {
+    type: String,
+    required: true,
+  },
   username: {
     type:      String,
     required:  true,
     unique:    true,
     minlength: 5,
-    maxlength: 15,
+    maxlength: 25,
     match:     /^[A-Za-z0-9_-]+$/
   },
 

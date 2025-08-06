@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join the Community | Clover</title>
   <link rel="stylesheet" href="styles/login.css" />
+  <link rel="stylesheet" href="styles/toast.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,7 +119,7 @@
     />
     <!-- Single‑message tooltip -->
     <div class="tooltip" id="tooltip-signup-username">
-      Username must be 5–15 characters, only letters, numbers, “_” or “–”.
+      Username must be 5–25 characters, only letters, numbers, “_” or “–”.
     </div>
   </div>
 
@@ -171,7 +172,7 @@
   const token = urlParams.get('token');
 
   if (token) {
-    console.log('✅ OAuth login success, token:', token);
+    console.log(' OAuth login success, token:', token);
     localStorage.setItem('token', token);
     
     // Optionally: redirect again without token in URL
@@ -181,5 +182,7 @@
 
 
 <script src="http://localhost:5000/scripts/login.js"></script>
+<script src="scripts/toast.js"></script>
+
 </body>
 </html>

@@ -17,6 +17,8 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
                                               <!-- Main CSS -->
   <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/toast.css" />
+
   <!-- Snippet Section Styles -->
   <link rel="stylesheet" href="styles/snippets.css" />
   <!-- Create Button Styles -->
@@ -470,10 +472,10 @@ if (mascotImage) {
 
   if (token) {
     // 2. Store the token & mark logged‑in
-    localStorage.setItem('token', token);
+    localStorage.setItem('cloverToken', token);
     localStorage.setItem('cloverUser', 'true');
 
-    console.log('✅ OAuth login success, token stored');
+    console.log(' OAuth login success, token stored');
 
     // 3. Fetch full user profile
     fetch('http://localhost:5000/api/auth/me', {
@@ -483,17 +485,23 @@ if (mascotImage) {
         if (!res.ok) throw new Error('Failed to fetch profile');
         return res.json();
       })
-      .then(data => {
-        // 4. Store username for your menu logic
-        localStorage.setItem('username', data.user.username);
+     .then(data => {
+  localStorage.setItem('username', data.user.username);
+  localStorage.setItem('fullName', data.user.fullName || '');
+  if (data.user.email) {
+    localStorage.setItem('email', data.user.email);
+  } else {
+    localStorage.removeItem('email');
+  }
 
-        // 5. Clean URL (remove ?token) and reload so main.js sees it
-        const cleanUrl = window.location.origin + window.location.pathname;
-        window.history.replaceState({}, document.title, cleanUrl);
-        window.location.reload();
-      })
+  // clean up URL & reload
+  const cleanUrl = window.location.origin + window.location.pathname;
+  window.history.replaceState({}, document.title, cleanUrl);
+  window.location.reload();
+})
+
       .catch(err => {
-        console.error('⚠️ Could not load profile:', err);
+        console.error(' Could not load profile:', err);
         // On failure, clear token/login flag so user can re‑authenticate
         localStorage.removeItem('token');
         localStorage.removeItem('cloverUser');
@@ -556,6 +564,8 @@ if (mascotImage) {
   });
 </script>
 <script src="scripts/main.js"></script>
+<script src="scripts/toast.js"></script>
+
 <script src="scripts/snippets.js" defer></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="scripts/filter.js"></script>

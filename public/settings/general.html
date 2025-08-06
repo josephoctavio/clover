@@ -1,0 +1,217 @@
+
+<section id="general" class="section-general">
+  <!-- Overview Card -->
+  <div class="overview-card">
+    <div class="overview-avatar">
+      <img
+        id="overview-avatar-img"
+        src=""
+        alt="User Avatar"
+      />
+    </div>
+    <div class="overview-info">
+      <h2 id="overview-username"></h2>
+      <p  id="overview-bio"></p>
+      <p  id="overview-joined"></p>
+    </div>
+  </div>
+       
+   <!-- Section Title -->
+  <h3 class="section-title">General Settings</h3>
+
+  <div class="section-general-content">
+ <!-- Left: Vertical sub‑nav -->
+<nav class="general-subnav">
+  <button data-card="profile" class="subnav-btn active">
+    Profile
+  </button>
+
+  <button data-card="notifications" class="subnav-btn">
+    Notifications
+  </button>
+
+  <button data-card="connected-accounts" class="subnav-btn">
+    Connected Accounts
+  </button>
+
+  <button data-card="appearance" class="subnav-btn">
+    Appearance
+  </button>
+
+  <button data-card="danger" class="subnav-btn">
+    Danger Zone
+  </button>
+</nav>
+
+
+  <!-- Cards Container -->
+  <div class="general-cards">
+    <!-- Profile Card -->
+    <section id="card-profile" class="card profile-card">
+       <div class="profile-section-header">
+      <h3>Personal Profile Information</h3>
+      <p class="profile-section-subtext">Manage your profile details and avatar.</p>
+       <hr />
+    </div>
+      <div class="form-row avatar-row">
+        <label>Avatar</label>
+        <div class="avatar-field">
+          <div class="avatar-preview">
+            <img id="profile-avatar-img" src="" alt="Avatar" />
+          </div>
+          <button id="btn-edit-avatar" class="btn secondary hidden">Change avatar</button>
+          <input id="input-avatar-file" type="file" accept="image/*" hidden />
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="full-name">Full name</label>
+        <input id="full-name" type="text" readonly />
+      </div>
+      <div class="form-row">
+        <label for="username">Username</label>
+        <input id="username" type="text" readonly />
+      </div>
+    <div class="form-row" id="email-row">
+    <label for="email">Email address</label>
+    <input id="email" type="email" readonly />
+  </div>
+      <div class="card__actions">
+        <button id="btn-edit-profile" class="btn primary">Edit profile</button>
+        <button id="btn-save-profile" class="btn primary hidden">Save</button>
+        <button id="btn-cancel-profile" class="btn secondary hidden">Cancel</button>
+      </div>
+    </section>
+
+   
+    
+
+ 
+
+   <!-- 5.5 Email Notifications Card -->
+<section id="card-notifications" class="card">
+  <header class="card__header"><h2>Notifications</h2></header>
+  <div class="card__body">
+
+    <!-- Default Notification Toggles (Max 3 shown) -->
+    <div class="notification-toggle">
+      <label>New snippet added to followed tag</label>
+      <input type="checkbox" class="notification-switch">
+    </div>
+    <div class="notification-toggle">
+      <label>Comment on your snippet</label>
+      <input type="checkbox" class="notification-switch">
+    </div>
+    <div class="notification-toggle">
+      <label>Weekly digest from Clover</label>
+      <input type="checkbox" class="notification-switch">
+    </div>
+
+    <!-- Add More -->
+    <div class="add-more-wrapper">
+      <button class="btn-link" id="open-notification-modal">+ Add More</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Notification Modal -->
+<div id="notification-modal" class="notification-modal">
+  <div class="modal-content">
+    <!-- Close Button -->
+<button class="modal-close-btn" id="close-notification-modal">X</button>
+   
+    <!-- Available Notifications -->
+    <div class="notification-list available">
+      <h3>Available</h3>
+      <ul>
+        <li>Followed user uploads <button class="add-btn">+</button></li>
+        <li>New comment on followed snippet <button class="add-btn">+</button></li>
+        <li>Snippet liked by someone <button class="add-btn">+</button></li>
+      </ul>
+    </div>
+
+    <!-- Divider -->
+    <div class="modal-divider"></div>
+
+    <!-- Selected Notifications -->
+    <div class="notification-list selected">
+      <h3>Your Notifications</h3>
+      <ul>
+        <li>Comment on your snippet <button class="remove-btn">–</button></li>
+        <li>Weekly digest from Clover <button class="remove-btn">–</button></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+   
+
+ <!-- 5.7 Connected Accounts Card -->
+<section id="card-connected-accounts" class="card">
+  <header class="card__header">
+    <h2>Connected accounts</h2>
+  </header>
+  <div class="card__body" id="connected-accounts-container">
+    <div class="empty-state" id="connected-empty">
+      Connect your social account
+    </div>
+    <!-- Connected items will be injected here -->
+  </div>
+</section>
+
+<!-- Connected Accounts Modal -->
+<div id="modal-connected-accounts" class="modal hidden">
+  <div class="modal-content">
+    <button class="close-modal" id="close-connected-modal">✕</button>
+    <div class="modal-columns">
+      
+      <!-- Available Platforms -->
+      <div class="modal-section available">
+        <h3>Available Platforms</h3>
+        <ul id="available-platforms">
+          <!-- Populated via JS -->
+        </ul>
+      </div>
+
+      <!-- Connected Platforms -->
+      <div class="modal-section connected">
+        <h3>Your Connected</h3>
+        <ul id="connected-platforms">
+          <!-- Populated via JS -->
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+     <!-- Appearance Card -->
+<section id="card-appearance" class="card">
+  <header class="card__header">
+    <h2>Appearance</h2>
+  </header>
+  <div class="card__body">
+    <div class="form-row">
+      <label for="theme-toggle">Theme</label>
+      <div class="theme-options">
+        <button id="theme-light" class="btn appearance-btn">Light</button>
+        <button id="theme-dark"  class="btn appearance-btn">Dark</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+     <!-- Danger Zone Card -->
+    <section id="card-danger"  class="card">
+      <!-- Existing delete‑account content can move here -->
+      <header class="card__header"><h2>Danger Zone</h2></header>
+      <div class="card__body">
+        <p class="warning">This action is irreversible. All your data will be permanently deleted.</p>
+        <button class="btn danger">Delete my account</button>
+      </div>
+    </section>
+   </div>
+  </div>
+</section>

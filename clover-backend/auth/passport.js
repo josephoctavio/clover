@@ -38,6 +38,7 @@ async (accessToken, refreshToken, profile, done) => {
         googleId: profile.id,
         email,
         username: name,
+        fullName: profile.displayName || '',
         isVerified: true
       });
     }
@@ -70,6 +71,7 @@ passport.use(new GitHubStrategy({
       user = await User.create({
         githubId:   profile.id,
         username:   name,
+        fullName: profile.displayName || profile.username ,
         isVerified: true
       });
 

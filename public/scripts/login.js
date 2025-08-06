@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Field Validation & Tooltips ---
   const fieldRules = {
     'signup-username': {
-      validate: v => /^(?=.{5,15}$)(?=(?:.*\d){3,})[A-Za-z0-9_-]+$/.test(v),
+     validate: v => /^(?=.{5,25}$)(?=(?:.*\d){3,})[A-Za-z0-9_-]+$/.test(v),
       tooltip:  document.getElementById('tooltip-signup-username')
     },
     'signup-email': {
@@ -157,55 +157,67 @@ document.addEventListener('DOMContentLoaded', () => {
       t.classList.add('fade-out');
       setTimeout(() => t.remove(), 400);
     }, 5000);
-  }
+  }// --- Signup Handler with loader & minimum delay ---
+signupForm?.addEventListener('submit', async e => {
+  e.preventDefault();
 
-  // --- Signup Handler ---
-  signupForm?.addEventListener('submit', async e => {
-    e.preventDefault();
+  // Gather values & validate as before…
+  const fn = document.getElementById('signup-name').value.trim();
+  const u  = document.getElementById('signup-username').value;
+  const em = document.getElementById('signup-email').value;
+  const p  = passwordInput.value;
+  const c  = confirmInput.value;
+  const allOK = fieldRules['signup-username'].validate(u)
+             && fieldRules['signup-email'].validate(em)
+             && fieldRules['signup-password'].validate(p)
+             && (c === p);
 
-    // Validate all
-    const u = document.getElementById('signup-username').value;
-    const em= document.getElementById('signup-email').value;
-    const p = passwordInput.value;
-    const c = confirmInput.value;
-    const allOK = fieldRules['signup-username'].validate(u)
-               && fieldRules['signup-email'].validate(em)
-               && fieldRules['signup-password'].validate(p)
-               && (c === p);
+  if (!fn) return showToastError('Please enter your full name');
+  if (!u)  return showToastError('Please enter a username');
+  if (!em) return showToastError('Please enter an email address');
+  if (!p)  return showToastError('Please enter a password');
+  if (!c)  return showToastError('Please confirm your password');
+  if (p !== c) return showToastError('Passwords do not match');
+  if (!allOK) return showToastError('Please fix errors before creating your account');
 
-    if (!allOK) {
-      return showToast('Please fix errors before creating your account');
-    }
+  // 1) Start loader state
+  signupBtn.disabled = true;
+  // inject spinner + text (you can style .spinner in CSS)
+  signupBtn.innerHTML = `<span class="spinner"></span> Creating Account…`;
 
-    // Proceed as before
-    try {
-      const res  = await fetch('http://localhost:5000/api/signup', {
-        method: 'POST',
-        headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ username: u, email: em, password: p })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        // Success toast
-        const t = document.createElement('div');
-        t.className = 'toast toast--success';
-        t.textContent = data.message;
-        document.body.append(t);
-        setTimeout(() => {
-          t.classList.add('fade-out');
-          setTimeout(() => t.remove(), 400);
-        }, 5000);
-
-        signupForm.reset();
-        hideForms();
-      } else {
-        showToast(data.error || 'Signup failed');
-      }
-    } catch (err) {
-      console.error('Signup error:', err);
-      showToast('Something went wrong.');
-    }
+  // 2) Fire off both fetch & delay in parallel
+  const payload = { fullName: fn, username: u, email: em, password: p };
+  const fetchPromise = fetch('http://localhost:5000/api/signup', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify(payload)
   });
+  const delayPromise = new Promise(res => setTimeout(res, 5000));
+
+  try {
+    const [res] = await Promise.all([fetchPromise, delayPromise]);
+    const data    = await res.json();
+
+    if (res.ok) {
+      // 3a) Success: reset form, close, show green toast
+      signupForm.reset();
+      hideForms();
+      showToastSuccess('Account created successfully. Check your email to verify');
+    } else {
+      // 3b) API returned error: re-enable & show red toast
+      showToastError(data.error || 'Could not create account. Please try again later');
+      signupBtn.disabled = false;
+      signupBtn.textContent  = 'Create Account';
+    }
+  } catch (err) {
+    console.error('Signup error:', err);
+    showToastError('Could not create account. Please try again later');
+    signupBtn.disabled = false;
+    signupBtn.textContent  = 'Create Account';
+  }
+});
+
+
 
   // --- Verification Loading Animation ---
 function showVerificationLoading() {
@@ -252,19 +264,23 @@ loginForm?.addEventListener('submit', async e => {
   }
   try {
     showVerificationLoading();
-    const res  = await fetch('http://localhost:5000/api/login', {
+    const res  = await fetch('http://localhost:5000/api/auth/login', {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
       body: JSON.stringify({ email: emailVal, password: passVal })
     });
     const data = await res.json();
+   console.log('✉️  /api/auth/login returned:', data);
+
     hideVerificationLoading();
     if (res.ok) {
       loginForm.reset();
       hideForms();
       localStorage.setItem('cloverUser','true');
       if (data.user?.username) localStorage.setItem('username', data.user.username);
-      if (data.token) localStorage.setItem('cloverToken', data.token); // this line adds
+      if (data.user?.fullName) localStorage.setItem('fullName', data.user.fullName);
+      if (data.user?.email) localStorage.setItem('email', data.user.email);
+      if (data.token) localStorage.setItem('cloverToken', data.token); 
 
       // First verify, then show animation, then redirect (do NOT hide loader before redirect)
       setTimeout(() => {

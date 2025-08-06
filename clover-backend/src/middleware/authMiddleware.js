@@ -12,9 +12,10 @@ module.exports = function (req, res, next) {
   }
 
   try {
-    // decoded will be { id, email, iat, exp }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; 
+const id = decoded.userId || decoded.id;
+req.user = { id, email: decoded.email, iat: decoded.iat, exp: decoded.exp };
+
     next();
   } catch (err) {
     console.error("⚠️ authMiddleware error:", err);

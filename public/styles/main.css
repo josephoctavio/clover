@@ -18,7 +18,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-background: linear-gradient(135deg, #000000, #020014, #0d0017);
+background: linear-gradient(135deg, #bea1c2, #584eb0, #4f1b77);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: 100% 100vh; /* Lock gradient to 1 screen height */
@@ -1579,33 +1579,11 @@ iframe {
   background-color: #f0f0f0;
   color: black;
 }
+/* =========================
+   Create Button (Stylized)
+   ========================= */
 
 
-
-/* === Toast === */
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #4BB543;
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  z-index: 9999;
-}
-
-.toast.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.toast.error {
-  background-color: #d62828;
-}
 
 /* === Hidden Utility === */
 .hidden {
@@ -1621,9 +1599,9 @@ iframe {
   box-shadow: 0 2px 8px 0 rgba(169,122,255,0.10), 0 1.5px 4px 0 rgba(108,213,255,0.08);
   padding: 0.5rem 1.2rem;
   text-transform: uppercase;
-  color: #fff;
+  color:  linear-gradient(135deg, #a843b8, #271d83, #2a0546);;
   font-size: 0.85rem;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1631,6 +1609,7 @@ iframe {
   overflow: hidden;
   outline-offset: 4px;
   transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  
 }
 .create-btn:active {
   transform: scale(0.97);
@@ -1709,3 +1688,28 @@ iframe {
   bottom: 0;
 
 }
+}
+/* main.css — static logout toast */
+#toast.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4BB543;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 9999;
+}
+#toast.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+#toast.toast.error {
+  background-color: #d62828;
+}
+
+

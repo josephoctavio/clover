@@ -36,7 +36,15 @@ exports.getMyProfile = async (req, res, next) => {
  exports.updateProfileData = async (req, res, next) => {
    try {
      // allow changing username now, plus bio and other profile fields
-     const allowed = ['username','bio','socialLinks','location','birthday'];
+     const allowed = [
+      'fullName',
+      'username',
+      'bio',
+      'socialLinks',
+      'location',
+      'birthday'
+
+    ];
     const updates = {};
     allowed.forEach(f => { if (req.body[f] !== undefined) updates[f] = req.body[f] });
 

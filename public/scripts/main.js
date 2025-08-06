@@ -1,4 +1,29 @@
 // scripts/main.js
+// Deterministic HSL → hex (copied from settings.js)
+function hslToHex(h, s, l) {
+  s /= 100; l /= 100;
+  const k = n => (n + h/30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = n =>
+    l - a * Math.max(-1,
+      Math.min(k(n) - 3,
+        Math.min(9 - k(n), 1)
+      )
+    );
+  return [f(0), f(8), f(4)]
+    .map(x => Math.round(x * 255)
+      .toString(16)
+      .padStart(2, '0')
+    )
+    .join('');
+}
+
+// Avatar URL builder
+const AVATAR_FG = 'ffffff';
+function makeAvatarUrl(name, bgHex) {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}`
+       + `&background=${bgHex}&color=${AVATAR_FG}&bold=true`;
+}
 
 // ─── Initialization Functions ──────────────────────────────────────────────
 
@@ -273,7 +298,35 @@ if (errorEl) errorEl.style.display = 'none';
 
 // ─── DOM Ready ─────────────────────────────────────────────────────────────
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  const token = localStorage.getItem('cloverToken');
+  if (token) {
+    try {
+      // 1) Fetch the latest profile
+      const res = await fetch('/api/profile/me', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error('Not authorized');
+      const profile = await res.json();
+
+      // 2) Persist to localStorage
+      localStorage.setItem('username', profile.username);
+      localStorage.setItem('fullName', profile.fullName);
+      if (profile.email) {
+        localStorage.setItem('email', profile.email);
+      } else {
+        localStorage.removeItem('email');
+      }
+      // leave profilePic in localStorage as‐is (it’s generated client‐side)
+
+    } catch (err) {
+      console.warn('Could not fetch profile on init:', err);
+      // Optionally: clear storage and redirect to login
+      // localStorage.clear();
+      // return window.location.href = '/login.html';
+    }
+  }
+
   initSidebar();
   initSearchPlaceholder();
   initSeeMoreToggle();
@@ -311,9 +364,21 @@ window.addEventListener('DOMContentLoaded', () => {
     // Hide join button
     if (joinBtn) joinBtn.style.display = 'none';
 
-    const profilePic = localStorage.getItem('profilePic') ||
-      'https://ui-avatars.com/api/?name=' + encodeURIComponent(username) +
-      '&background=random&color=000&bold=true';
+// Deterministic avatarBg key
+const USER_KEY = `avatarBg_${username}`;
+let avatarBg  = localStorage.getItem(USER_KEY);
+
+// Generate & persist if missing
+if (!avatarBg) {
+  const h = Math.floor(Math.random() * 360);
+  const s = 30 + Math.random() * 20;
+  const l = 25 + Math.random() * 10;
+  avatarBg = hslToHex(h, s, l);
+  localStorage.setItem(USER_KEY, avatarBg);
+}
+
+// Build the URL with the same helper you use in settings.js
+const profilePic = makeAvatarUrl(username, avatarBg);
 
     userMenuContainer.innerHTML = `
       <div class="user-menu" id="user-menu">
@@ -378,7 +443,10 @@ window.addEventListener('DOMContentLoaded', () => {
     confirmLogoutBtn?.addEventListener('click', async () => {
       try {
         localStorage.removeItem('cloverUser');
+        localStorage.removeItem('cloverToken');
         localStorage.removeItem('username');
+        localStorage.removeItem('fullName');
+        localStorage.removeItem('email');
         localStorage.removeItem('profilePic');
 
         sessionStorage.setItem('logoutStatus', 'success');
@@ -399,7 +467,6 @@ window.addEventListener('DOMContentLoaded', () => {
     if (userMenuContainer) userMenuContainer.innerHTML = '';
     if (joinBtn) joinBtn.style.display = 'inline-block';
   }
-<<<<<<< HEAD
 
   // ─── Toast System ───
   const path = window.location.pathname;
@@ -411,27 +478,13 @@ window.addEventListener('DOMContentLoaded', () => {
   sessionStorage.removeItem('logoutStatus'); // Remove immediately
 
   if (isHomepage && logoutStatus) {
-    if (logoutStatus === 'success') {
-      showToast('You have been logged out successfully', false);
-    } else if (logoutStatus === 'fail') {
-      showToast('Logout failed. Please try again later.', true);
-    }
+  if (logoutStatus === 'success') {
+    showToastSuccess('You have been logged out successfully');
+  } else {
+    showToastError('Logout failed. Please try again later.');
   }
-});
-
-// Toast function (only once)
-function showToast(message, isError = false) {
-  const toast = document.getElementById('toast');
-  if (!toast) return;
-
-  toast.textContent = message;
-  toast.className = 'toast show';
-  if (isError) toast.classList.add('error');
-
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 3000);
 }
-=======
+
 });
->>>>>>> a817716 (something with the create page)
+
+

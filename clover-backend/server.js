@@ -138,7 +138,7 @@ app.post('/api/reset-password', codeLimiter);
 
 app.post('/api/signup', async (req, res) => {
   console.log('⚡️  POST /api/signup', req.body);
-  const { username, email, password } = req.body;
+  const { username, email, password,fullName } = req.body;
    // Validate inputs
   if (!username || !email || !password) {
     return res.status(400).json({ error: 'Username, email, and password are required' });
@@ -149,9 +149,8 @@ app.post('/api/signup', async (req, res) => {
   });
 }
 
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required' });
-  }
+
+  // Check if user already exists
   try {
     // 1. Check for existing user
     if (await User.findOne({ email })) {
@@ -171,7 +170,8 @@ const hashed = await bcrypt.hash(password, 10);
      const user = await User.create({
        username,
        email,
-       password: hashed,
+       fullName,
+       passwordHash: hashed,
       // store under tokens.verification
       tokens: {
         verification: { code: verificationToken, expires: Date.now() + 15 * 60 * 1000 }

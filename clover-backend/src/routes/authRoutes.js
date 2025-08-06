@@ -3,7 +3,7 @@ const express      = require('express');
 const passport = require('passport');
 const bcrypt       = require('bcryptjs');
 const jwt          = require('jsonwebtoken');
- const User         = require('../../models/User');
+const User         = require('../../models/User');
 const authMiddleware = require('../middleware/authMiddleware');
 const sendMail     = require('../../utils/mailer');
 
@@ -12,7 +12,7 @@ const router = express.Router();
 
 // @route   POST /api/auth/register
 router.post('/register', async (req, res) => {
-  const { email, password, username } = req.body;
+  const { fullName, email, password, username  } = req.body;
 
   try {
     // 1. Check for existing user
@@ -26,6 +26,7 @@ router.post('/register', async (req, res) => {
 
     // 3. Create new user instance
     const newUser = new User({
+      fullName,
       username,
       email,
       passwordHash: hashedPassword
@@ -112,7 +113,7 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
     const token = jwt.sign(
@@ -123,7 +124,13 @@ router.post('/login', async (req, res) => {
 
     return res.json({
       token,
-      user: { id: user._id, email: user.email, role: user.role }
+      user: {
+         id: user._id,
+     email: user.email,
+     role: user.role,
+     username: user.username,   // ← add this
+     fullName: user.fullName
+        }
     });
   } catch (err) {
     console.error(err);
